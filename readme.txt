@@ -13,16 +13,13 @@ Invoice software designed specifically for freelance web designers / developers.
 Wp3i is a WordPress plugin to manage invoices for freelance web designers / developers. 
 
 * Create and track your invoices and quotes
-
 * Create a custom php template for both invoices and quotes
-
-* invoice templates use native wordpress code to make life easy
-
+* invoice templates use native WordPress code to make life easy
 * See live statistics of your income
-
 * Well designed interface
-
 * Completely FREE! 
+
+**Please Vote. Thanks**
 
 == Installation ==
 
