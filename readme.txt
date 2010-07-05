@@ -6,7 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.0
 Stable tag: 3.0
 
-Invoice software designed specifically for freelance web designers / developers. This plugin uses the new custom post type to reduce code, run smoothly and look cleaner. Create an invoice or quote, then view it on a custom template which you can edit with ease.
+Invoice software designed specifically for freelance web designers / developers. Invoices powered by custom php templates with statistics and more!
 
 == Description ==
 
@@ -19,10 +19,6 @@ Wp3i is a WordPress plugin to manage invoices for freelance web designers / deve
 * Completely FREE! 
 
 == Installation ==
-
-This section describes how to install the plugin and get it working.
-
-e.g.
 
 1. Upload 'wp3-invoice.php' to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
@@ -40,4 +36,3 @@ See demo videos [here]: http://www.elliotcondon.com/wordpress/wordpress-3-invoic
 
 = 1.0 =
 * The first release of WP3I.
-
