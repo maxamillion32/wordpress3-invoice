@@ -173,16 +173,29 @@ function wp3i_init()
 		{
 			//include(TEMPLATEPATH . "/single-".$wp->query_vars["post_type"].".php");
 			$invoiceStatus = get_post_meta($post->ID, 'invoice_status', true);
-			if($invoiceStatus = 'Quote')
+			if($invoiceStatus == 'Quote')
 			{
-				include('template/quote.php');
-				die();
+				if(file_exists(TEMPLATEPATH . '/invoice/quote.php'))
+				{
+					include(TEMPLATEPATH . '/invoice/quote.php');
+				}
+				else
+				{
+					include('template/quote.php');
+				}
 			}
 			else
 			{
-				include('template/invoice.php');
-				die();
+				if(file_exists(TEMPLATEPATH . '/invoice/invoice.php'))
+				{
+					include(TEMPLATEPATH . '/invoice/invoice.php');
+				}
+				else
+				{
+					include('template/invoice.php');
+				}
 			}
+			die();
 		}
 	}
 	add_action('template_redirect', 'wp3i_template_redirect');
