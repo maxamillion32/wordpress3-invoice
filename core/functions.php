@@ -155,7 +155,14 @@
 	function invoice_template_url()
 	{
 		global $invoice_template_url;
-		echo $invoice_template_url;
+		if(file_exists(TEMPLATEPATH . '/invoice/invoice.php'))
+		{
+			echo bloginfo('template_url') . '/invoice';
+		}
+		else
+		{
+			echo $invoice_template_url;
+		}
 	}
 
 
