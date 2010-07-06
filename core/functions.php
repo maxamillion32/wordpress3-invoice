@@ -182,10 +182,13 @@
 		global $post;
 		$results = array();
 		
-		$terms = get_the_terms($post->ID , 'client');	
-		foreach( $terms as $term ) 
-		{
-			array_push($results	,$term->name);
+		$terms = get_the_terms($post->ID , 'client');
+		if($terms)
+		{	
+			foreach( $terms as $term ) 
+			{
+				array_push($results	,$term->name);
+			}
 		}
 		
 		echo implode(',',$results);
