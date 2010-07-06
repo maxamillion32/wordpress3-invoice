@@ -28,8 +28,10 @@ e.g.
 
 1. Upload 'wp3-invoice.php' to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to Settings -> Permalinks and Save your settings (rebuilds permalinks)
-4. Click on the new 'Invoice' menu item to get started
+3. Copy the template to your active theme folder and rename to "invoice"
+(the file '/wp-content/themes/xxxx/invoice/invoice.php' should exist)
+4. Go to Settings -> Permalinks and Save your settings (rebuilds permalinks)
+5. Click on the new 'Invoice' menu item to get started
 
 == Frequently Asked Questions ==
 
@@ -43,6 +45,7 @@ See demo videos [here]: http://www.elliotcondon.com/wordpress/wordpress-3-invoic
 
 = 1.0.1 =
 * Fixed Permalink Problem. Custom Permalinks should now work.
+* Template files can now be read from your theme folder
 
 = 1.0 =
 * The first release of WP3I.
