@@ -6,26 +6,30 @@ Requires at least: 3.0
 Tested up to: 3.0
 Stable tag: 3.0
 
-Invoice software designed specifically for freelance web designers / developers. Invoices powered by custom php templates with statistics and more!
+Invoice software designed specifically for freelance web designers / developers. This plugin uses the new custom post type to reduce code, run smoothly and look cleaner. Create an invoice or quote, then view it on a custom template which you can edit with ease.
 
 == Description ==
 
 Wp3i is a WordPress plugin to manage invoices for freelance web designers / developers. 
-
 * Create and track your invoices and quotes
 * Create a custom php template for both invoices and quotes
-* invoice templates use native WordPress code to make life easy
+* invoice templates use native wordpress code to make life easy
 * See live statistics of your income
 * Well designed interface
 * Completely FREE! 
 
-**Please Vote. Thanks**
+!! You must go to Settings -> Permalinks and click save if you are using custom permalinks. This will force WordPress to rebuild the permalinks. 
 
 == Installation ==
 
-1. Unzip and Upload 'wp3-invoice' folder to the '/wp-content/plugins/' directory
+This section describes how to install the plugin and get it working.
+
+e.g.
+
+1. Upload 'wp3-invoice.php' to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Click on the new 'Invoice' menu item to get started
+3. Go to Settings -> Permalinks and Save your settings (rebuilds permalinks)
+4. Click on the new 'Invoice' menu item to get started
 
 == Frequently Asked Questions ==
 
@@ -33,9 +37,13 @@ feel free to visit the plugin site and leave any comments.
 
 == Screenshots ==
 
-See demo videos here: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
+See demo videos [here]: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
 
 == Changelog ==
 
+= 1.0.1 =
+* Fixed Permalink Problem. Custom Permalinks should now work.
+
 = 1.0 =
 * The first release of WP3I.
+
