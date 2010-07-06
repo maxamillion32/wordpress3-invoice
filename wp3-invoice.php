@@ -3,7 +3,7 @@
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.elliotcondon.com/
 Description: An online Invoice solution for web designers. Manage invoices through wordpress and customise with html + css invoice templates.
-Version: 1.0
+Version: 1.0.1
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -52,9 +52,11 @@ function wp3i_init()
 		'menu_icon' => plugins_url('admin/images/invoice-icon.gif',__FILE__),
 		'public' => true,
 		'show_ui' => true,
+		'_builtin' =>  false,
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'rewrite' => array("slug" => "invoice"), // Permalinks format
+		'query_var' => "invoice",
 		'supports' => array('title'),
 	));
 	
@@ -131,38 +133,70 @@ function wp3i_init()
 	add_action("manage_posts_custom_column", "my_custom_columns");
 	add_filter("manage_edit-invoice_columns", "wp3i_columns");
 	
+	
+	/* wp3i_add_new_rules
+	----------------------------*/
+	function wp3i_add_new_rules(){
+	
+		global $wp_rewrite;
+	
+		$rewrite_rules = $wp_rewrite->generate_rewrite_rules('test/');
+		$rewrite_rules['test/?$'] = 'index.php?paged=1';
+	
+		foreach($rewrite_rules as $regex => $redirect)
+		{
+			if(strpos($redirect, 'attachment=') === false)
+				{
+					$redirect .= '&post_type=test';
+				}
+			if(0 < preg_match_all('@\$([0-9])@', $redirect, $matches))
+				{
+					for($i = 0; $i < count($matches[0]); $i++)
+					{
+						$redirect = str_replace($matches[0][$i], '$matches['.$matches[1][$i].']', $redirect);
+					}
+				}
+			$wp_rewrite->add_rule($regex, $redirect, 'top');
+		}
+	}
+	wp3i_add_new_rules();
+	
+	
+	/* Template Redirect
+	----------------------------*/
+	function wp3i_template_redirect()
+	{
+		global $wp, $post;
+		$post_type = $wp->query_vars["post_type"];
+
+		if($post_type == 'invoice')
+		{
+			//include(TEMPLATEPATH . "/single-".$wp->query_vars["post_type"].".php");
+			$invoiceStatus = get_post_meta($post->ID, 'invoice_status', true);
+			if($invoiceStatus = 'Quote')
+			{
+				include('template/quote.php');
+				die();
+			}
+			else
+			{
+				include('template/invoice.php');
+				die();
+			}
+		}
+	}
+	add_action('template_redirect', 'wp3i_template_redirect');
+	
 }
 add_action('init', 'wp3i_init');
 
 
 
-	/* Template Redirect
-	----------------------------*/
-	function wp3i_template_redirect()
-	{
-		global $post;
-		$invoiceStatus = get_post_meta($post->ID, 'invoice_status', true);
-		
-		if(get_post_type($post) == 'invoice' && $invoiceStatus != 'Quote')
-		{
-			require_once('template/invoice.php');
-			die();
-		}
-		if(get_post_type($post) == 'invoice' && $invoiceStatus == 'Quote')
-		{
-			require_once('template/quote.php');
-			die();
-		}
-	}
-	add_action('template_redirect', 'wp3i_template_redirect');
-
-
-	
-	/* Includes
-	----------------------------*/
-	require_once('admin/meta-boxes.php');
-	require_once('admin/stats.php');
-	require_once('core/functions.php');
+/* Includes
+----------------------------*/
+require_once('admin/meta-boxes.php');
+require_once('admin/stats.php');
+require_once('core/functions.php');
 	
 	
 function wp3i_menu()
@@ -170,7 +204,3 @@ function wp3i_menu()
 	add_submenu_page('edit.php?post_type=invoice', 'WP3 Invoice Stats', 'Stats', 'manage_options', 'wp3-invoice-stats', 'wp3i_stats');
 }
 add_action('admin_menu', 'wp3i_menu');
-
-
-
-
