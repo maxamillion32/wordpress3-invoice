@@ -3,6 +3,8 @@ var $ = jQuery.noConflict();
 
 $(document).ready(function()
 {
+	var wp3i_currenty = $('input#wp3i_hidden_currency').attr('value');
+	
 	/* Update Sub total
 	--------------------*/
 	function update_subtotal(detail)
@@ -15,6 +17,7 @@ $(document).ready(function()
 		{
 			subtotal = rate;
 			detail.find('span.hr').html('');
+			detail.find('input#detail-duration').attr('value', 'N/A');
 		}
 		else
 		{
@@ -23,7 +26,7 @@ $(document).ready(function()
 		}
 
 		detail.find('input#detail-subtotal').attr('value', subtotal);
-		detail.find('p#detail-subtotal').html('$ '+subtotal);
+		detail.find('p#detail-subtotal').html(wp3i_currenty+' '+subtotal);
 	}
 	
 	
@@ -71,8 +74,8 @@ $(document).ready(function()
                                         <option value="Fixed">Fixed</option>\
                                     </select>\
                                     </li>\
-                                    <li class="rate">$<input onblur="if (this.value == \'\') {this.value = \'0.00\';}" onfocus="if(this.value == \'0.00\') {this.value = \'\';}"  type="text" name="detail-rate[]" id="detail-rate" value="0.00"><span class="hr"></span></li>\
-                                    <li class="duration"><input onblur="if (this.value == \'\') {this.value = \'0.0\';}" onfocus="if(this.value == \'0.0\') {this.value = \'\';}" type="text" name="detail-duration[]" id="detail-duration" value="0.00"></li>\
+                                    <li class="rate">'+wp3i_currenty+'<input onblur="if (this.value == \'\') {this.value = \'0.00\';}" onfocus="if(this.value == \'0.00\') {this.value = \'\';}"  type="text" name="detail-rate[]" id="detail-rate" value="0.00"><span class="hr"></span></li>\
+                                    <li class="duration"><input onblur="if (this.value == \'\') {this.value = \'0.0\';}" onfocus="if(this.value == \'0.0\') {this.value = \'\';}" type="text" name="detail-duration[]" id="detail-duration" value="0.0"></li>\
                                     <li class="subtotal">\
                                     	<input type="hidden" name="detail-subtotal[]" id="detail-subtotal" value="0.00" />\
                                         <p id="detail-subtotal"></p>\

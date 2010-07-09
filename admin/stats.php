@@ -245,7 +245,7 @@ function wp3i_stats_graph()
 				tooltip: {
 					formatter: function() {
 			                return '<b>'+ this.point.name +'</b><br/>'+
-							'Total '+this.series.name+' '+this.x + ': $'+this.y;
+							'Total '+this.series.name+' '+this.x + ': <?php wp3i_currency(); ?>'+this.y;
 					}
 				},
 				legend: {
@@ -337,7 +337,7 @@ function wp3i_stats_invoices()
             <td class="invoice-number"><?php echo get_post_meta($invoice->ID, 'invoice_number', true); ?></td>
             <td><?php edit_post_link($invoice->post_title,'','',$invoice->ID); ?></td>
             <td class="invoice-date"><?php echo get_the_time('d M Y',$invoice->ID); ?></td>
-            <td class="total"><?php echo number_format(wp3i_get_invoice_total($invoice->ID), 2, '.', ''); ?></td>
+            <td class="total"><?php wp3i_currency(); ?><?php echo number_format(wp3i_get_invoice_total($invoice->ID), 2, '.', ''); ?></td>
             <td><?php $invoiceStatusCF = get_post_meta($invoice->ID, 'invoice_status', true); 
 			if($invoiceStatusCF == 'Invoice Paid')
 			{
@@ -411,13 +411,13 @@ function wp3i_stats()
                                 <div id="income" class="postbox">
                                     <h3 class="hndle"><span>Income</span></h3>
                                     <div class="inside">
-                                        <h2>$<?php wp3i_stats_total('Invoice Paid'); ?></h2>
+                                        <h2><?php wp3i_currency(); ?><?php wp3i_stats_total('Invoice Paid'); ?></h2>
                                     </div>
                                 </div>
                                 <div id="outstanding" class="postbox">
                                     <h3 class="hndle"><span>Outstanding</span></h3>
                                     <div class="inside">
-                                        <h2>$<?php wp3i_stats_total('Invoice Sent'); ?></h2>
+                                        <h2><?php wp3i_currency(); ?><?php wp3i_stats_total('Invoice Sent'); ?></h2>
                                     </div>
                                 </div>
                             </div>

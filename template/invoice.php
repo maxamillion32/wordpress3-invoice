@@ -44,7 +44,7 @@
 				<?php if(invoice_has_details()): ?>
                     <?php while(invoice_detail()): ?>
                             <tr class="title">
-                                <td><?php the_detail_title(); ?></td><td><?php the_detail_type(); ?></td><td>$ <?php the_detail_rate(); ?></td><td><?php the_detail_duration(); ?></td><td>$ <?php the_detail_subtotal(); ?></td>
+                                <td><?php the_detail_title(); ?></td><td><?php the_detail_type(); ?></td><td><?php wp3i_currency(); ?> <?php the_detail_rate(); ?></td><td><?php the_detail_duration(); ?></td><td><?php wp3i_currency(); ?> <?php the_detail_subtotal(); ?></td>
                             </tr>
                             <tr class="description">
                                 <td><?php the_detail_description(); ?></td><td colspan="4"></td>
@@ -52,7 +52,7 @@
                     <?php endwhile; ?>
                 <?php endif; ?>
                 <tr class="heading">
-                	<td colspan="3"></td><td>Total</td><td>$ <?php the_invoice_total(); ?></td>
+                	<td colspan="3"></td><td>Total</td><td><?php wp3i_currency(); ?> <?php the_invoice_total(); ?></td>
                 </tr>
             </table>
         </div>

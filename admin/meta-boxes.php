@@ -37,6 +37,7 @@
                 </select></li>
         	
 		</ul>
+        <input type="hidden" name="wp3i_hidden_currency" id="wp3i_hidden_currency"  value="<?php wp3i_currency(); ?>" />
 		<?php
 	}
 	
@@ -114,11 +115,11 @@
                                         <option value="Fixed" <?php if($detailType[$i] == 'Fixed'){echo'selected="selected"';} ?>>Fixed</option>
                                     </select>
                                     </li>
-                                    <li class="rate">$<input onblur="if (this.value == '') {this.value = '0.00';}" onfocus="if(this.value == '0.00') {this.value = '';}"  type="text" name="detail-rate[]" id="detail-rate" value="<?php echo $detailRate[$i]; ?>"><span class="hr"></span></li>
+                                    <li class="rate"><?php wp3i_currency(); ?><input onblur="if (this.value == '') {this.value = '0.00';}" onfocus="if(this.value == '0.00') {this.value = '';}"  type="text" name="detail-rate[]" id="detail-rate" value="<?php echo $detailRate[$i]; ?>"><span class="hr"></span></li>
                                     <li class="duration"><input onblur="if (this.value == '') {this.value = '0.0';}" onfocus="if(this.value == '0.0') {this.value = '';}"  type="text" name="detail-duration[]" id="detail-duration" value="<?php echo $detailDuration[$i]; ?>"></li>
                                     <li class="subtotal">
                                     	<input type="hidden" name="detail-subtotal[]" id="detail-subtotal" value="<?php echo $detailSubtotal[$i]; ?>" />
-                                        <p id="detail-subtotal">$ <?php echo $detailSubtotal[$i]; ?></p>
+                                        <p id="detail-subtotal"><?php wp3i_currency(); ?> <?php echo $detailSubtotal[$i]; ?></p>
                                     </li>
                                 </ul>
                             </td>

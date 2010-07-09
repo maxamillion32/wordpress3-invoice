@@ -30,7 +30,8 @@ Wp3i is a WordPress plugin to manage invoices for freelance web designers / deve
 3. Copy the template to your active theme folder and rename to "invoice"
 (the file '/wp-content/themes/xxxx/invoice/invoice.php' should exist)
 4. Go to Settings -> Permalinks and Save your settings (rebuilds permalinks)
-5. Click on the new 'Invoice' menu item to get started
+5. Click on Invoices -> Options to enter your currency
+6. Click on the new 'Invoice' menu item to get started
 
 == Frequently Asked Questions ==
 
@@ -41,6 +42,12 @@ feel free to visit the plugin site and leave any comments.
 See demo videos here: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
 
 == Changelog ==
+
+= 1.0.2 =
+* Options page
+* added ability to change currency symbol
+* Fixed minor jQuery bugs in admin
+* Added template API documentation
 
 = 1.0.1 =
 * Fixed Permalink Problem. Custom Permalinks should now work.

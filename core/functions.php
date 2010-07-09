@@ -202,4 +202,25 @@
 	}
 	
 	
+	/*--------------------------------------------------------------------------------------------
+										invoice_client		
+	--------------------------------------------------------------------------------------------*/
+	function wp3i_currency()
+	{
+		echo get_wp3i_currency();
+	}
+	
+	function get_wp3i_currency()
+	{
+		$wp3i_currency =  get_option('wp3i_currency');	
+		if($wp3i_currency)
+		{
+			return $wp3i_currency;
+		}
+		else
+		{
+			return '$';	
+		}
+	}
+	
 ?>

@@ -3,7 +3,7 @@
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.elliotcondon.com/
 Description: An online Invoice solution for web designers. Manage invoices through wordpress and customise with html + css invoice templates.
-Version: 1.0.1
+Version: 1.0.2
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -114,7 +114,7 @@ function wp3i_init()
 		if ("ID" == $column) echo $post->ID;
 		elseif ("description" == $column) echo $post->post_content;
 		elseif ("invoice_no" == $column) echo get_post_meta($post->ID, 'invoice_number', true);
-		elseif ("amount" == $column) echo '$'.number_format(wp3i_get_invoice_total($post->ID), 2, '.', '');
+		elseif ("amount" == $column) echo get_wp3i_currency().number_format(wp3i_get_invoice_total($post->ID), 2, '.', '');
 		elseif ("client" == $column) echo get_the_term_list( $post->ID, 'client', '', ', ', '' );  
 		elseif ("status" == $column)
 		{
@@ -207,13 +207,15 @@ add_action('init', 'wp3i_init');
 
 /* Includes
 ----------------------------*/
-require_once('admin/meta-boxes.php');
-require_once('admin/stats.php');
 require_once('core/functions.php');
+require_once('admin/meta-boxes.php');
+require_once('admin/options.php');
+require_once('admin/stats.php');
 	
 	
 function wp3i_menu()
 {
 	add_submenu_page('edit.php?post_type=invoice', 'WP3 Invoice Stats', 'Stats', 'manage_options', 'wp3-invoice-stats', 'wp3i_stats');
+	add_submenu_page('edit.php?post_type=invoice', 'WP3 Invoice Options', 'Options', 'manage_options', 'wp3-invoice-options', 'wp3i_options');
 }
 add_action('admin_menu', 'wp3i_menu');
