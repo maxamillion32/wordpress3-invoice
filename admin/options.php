@@ -35,12 +35,15 @@ function wp3i_options()
                         	<tr>
                             	<td style="width:193px;"><label>Currency</label><p>Enter your currency Symbol</p></td><td><input name="wp3i_currency" value="<?php wp3i_currency(); ?>" type="text" size="1" maxlength="3"></td>
                             </tr>
+                            <tr>
+                            	<td><label>Tax</label><p>Enter Tax Amount (5% = .05)</p></td><td><input name="wp3i_tax" value="<?php wp3i_tax(); ?>" type="text" size="2" maxlength="5"></td>
+                            </tr>
                         </table>
                     </div>
                 </div>
                 
                 <input type="hidden" name="action" value="update" />
-                <input type="hidden" name="page_options" value="wp3i_currency" />
+                <input type="hidden" name="page_options" value="wp3i_currency, wp3i_tax" />
                 
                 <p class="submit">
                 <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
@@ -60,11 +63,13 @@ function wp3i_options()
                             <tr><td><h4>while(invoice_detail()):</h4></td><td><p>Loops through the details for the current invoice</p></td></tr>
                             <tr><td><h4>the_detail_title()</h4></td><td><p>Displays the detail title</p></td></tr>
                             <tr><td><h4>the_detail_type()</h4></td><td><p>Displays the detail type</p></td></tr>
-                            <tr><td><h4>wp3i_currency()</h4></td><td><p>Displays the chosen currency</p></td></tr>
                             <tr><td><h4>the_detail_rate()</h4></td><td><p>Displays the detail rate</p></td></tr>
                             <tr><td><h4>the_detail_duration()</h4></td><td><p>Displays the detail duration</p></td></tr>
                             <tr><td><h4>the_detail_subtotal()</h4></td><td><p>Displays the detail subtotal</p></td></tr>
-                            <tr><td><h4>the_invoice_total()</h4></td><td><p>Displays the current invoice total</p></td></tr>
+                            <tr><td><h4>wp3i_currency()</h4></td><td><p>Displays the chosen currency</p></td></tr>
+                            <tr><td><h4>the_invoice_subtotal()</h4></td><td><p>Displays the invoice subtotal amount</p></td></tr>
+                            <tr><td><h4>the_invoice_tax()</h4></td><td><p>Displays the amount off tax (subtotal * tax)</p></td></tr>
+                            <tr><td><h4>the_invoice_total()</h4></td><td><p>Displays the current invoice total (subtotal + tax)</p></td></tr>
                         </table>
                     </div>
                 </div>

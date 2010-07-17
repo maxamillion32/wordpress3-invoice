@@ -48,8 +48,9 @@
 
 #wp3i-stats .summary {width:140px; float:left;}
 #wp3i-stats .summary .postbox {display:block; width:auto; min-width:5px;}
-#wp3i-stats .summary .postbox .inside {padding:10px 20px;}
-#wp3i-stats .summary .postbox h2 {padding:0px; margin:0px; text-align:center;}
+#wp3i-stats .summary .postbox .inside {padding:5px 0px;}
+#wp3i-stats .summary .postbox h2 {padding:0px; margin:0px; text-align:center; font-size:18px; line-height:18px; margin:10px 0px;}
+#wp3i-stats .summary .postbox h4 {padding:0px; margin:0px; text-align:center; font-size:10px; line-height:10px; color:#999; font-weight:normal; margin:5px 0px;}
 
 #wp3i-stats .wp3i-stats-invoices {width:100%;}
 

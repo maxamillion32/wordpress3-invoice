@@ -299,18 +299,30 @@ function wp3i_stats_graph()
     <?php
 }
 
-function wp3i_get_invoice_total($invoiceID)
+
+/*--------------------------------------------------------------------------------------------
+											Stats Total
+--------------------------------------------------------------------------------------------*/
+function wp3i_get_stats_total($invoiceStatus)
 {
-	$total = 0.00;
-	$detailSubtotal = unserialize(get_post_meta($invoiceID, 'detail_subtotal', true));
-	foreach($detailSubtotal as $subtotal)
-	{
-		$total += floatval($subtotal);
-	}
-	return $total;
+	$total = wp3i_get_stats_subtotal($invoiceStatus) + wp3i_get_stats_tax_total($invoiceStatus);
+	return number_format($total, 2, '.', '');
 }
 
-function wp3i_stats_total($invoiceStatus)
+/*--------------------------------------------------------------------------------------------
+											Stats Tax Total
+--------------------------------------------------------------------------------------------*/
+function wp3i_get_stats_tax_total($invoiceStatus)
+{
+	$total = floatval(wp3i_get_stats_subtotal($invoiceStatus) * get_wp3i_tax());
+	return number_format($total, 2, '.', '');
+}
+
+
+/*--------------------------------------------------------------------------------------------
+											Stats Subtotal
+--------------------------------------------------------------------------------------------*/
+function wp3i_get_stats_subtotal($invoiceStatus)
 {
 	global $invoices;
 	$total = 0.00;
@@ -319,11 +331,12 @@ function wp3i_stats_total($invoiceStatus)
 		$invoiceStatusCF = get_post_meta($invoice->ID, 'invoice_status', true);
 		if($invoiceStatusCF == $invoiceStatus)
 		{
-			$total += wp3i_get_invoice_total($invoice->ID);
+			$total += wp3i_get_invoice_subtotal($invoice->ID);
 		}
 	}
-	echo number_format($total, 2, '.', '');
+	return number_format($total, 2, '.', '');
 }
+
 
 function wp3i_stats_invoices()
 {
@@ -411,13 +424,17 @@ function wp3i_stats()
                                 <div id="income" class="postbox">
                                     <h3 class="hndle"><span>Income</span></h3>
                                     <div class="inside">
-                                        <h2><?php wp3i_currency(); ?><?php wp3i_stats_total('Invoice Paid'); ?></h2>
+                                        <h2><?php wp3i_currency(); ?><?php echo wp3i_get_stats_total('Invoice Paid'); ?></h2>
+                                        <h4>Subtotal: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_subtotal('Invoice Paid'); ?></h4>
+                                    	<h4>Tax: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_tax_total('Invoice Paid'); ?></h4>
                                     </div>
                                 </div>
                                 <div id="outstanding" class="postbox">
                                     <h3 class="hndle"><span>Outstanding</span></h3>
                                     <div class="inside">
-                                        <h2><?php wp3i_currency(); ?><?php wp3i_stats_total('Invoice Sent'); ?></h2>
+                                        <h2><?php wp3i_currency(); ?><?php echo wp3i_get_stats_total('Invoice Sent'); ?></h2>
+                                        <h4>Subtotal: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_subtotal('Invoice Sent'); ?></h4>
+                                    	<h4>Tax: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_tax_total('Invoice Sent'); ?></h4>
                                     </div>
                                 </div>
                             </div>

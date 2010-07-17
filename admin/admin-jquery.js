@@ -4,6 +4,7 @@ var $ = jQuery.noConflict();
 $(document).ready(function()
 {
 	var wp3i_currenty = $('input#wp3i_hidden_currency').attr('value');
+	var wp3i_tax = $('input#wp3i_hidden_tax').attr('value'); wp3i_tax = parseFloat(wp3i_tax);
 	
 	/* Update Sub total
 	--------------------*/
@@ -27,8 +28,34 @@ $(document).ready(function()
 
 		detail.find('input#detail-subtotal').attr('value', subtotal);
 		detail.find('p#detail-subtotal').html(wp3i_currenty+' '+subtotal);
+		
+		$('.detail-footer .invoice-subtotal').html(get_invoice_subtotal().toFixed(2));
+		$('.detail-footer .invoice-tax').html(get_invoice_tax().toFixed(2));
+		$('.detail-footer .invoice-total').html(get_invoice_total().toFixed(2));
 	}
 	
+	
+	
+	function get_invoice_subtotal()
+	{
+		var temp_total = 0;
+		$('input#detail-subtotal').each(function(){
+			temp_total += parseFloat($(this).attr('value'));
+		});	
+		return temp_total;
+	}
+	
+	function get_invoice_tax()
+	{
+		var temp_total = parseFloat(wp3i_tax * get_invoice_subtotal());
+		return temp_total;
+	}
+	
+	function get_invoice_total()
+	{
+		var temp_total = parseFloat(get_invoice_subtotal() + get_invoice_tax());
+		return temp_total;
+	}
 	
 	
 	

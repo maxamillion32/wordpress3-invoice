@@ -33,7 +33,7 @@
 		$detailDuration = unserialize(get_post_meta($post->ID, 'detail_duration', true));
 		$detailSubtotal = unserialize(get_post_meta($post->ID, 'detail_subtotal', true));
 		
-		if(count($detailTitle) > 0)
+		if($detailTitle[0])
 		{
 			return true;	
 		}
@@ -97,6 +97,12 @@
 	/*--------------------------------------------------------------------------------------------
 										the_detail_type
 	--------------------------------------------------------------------------------------------*/
+	function get_the_detail_type()
+	{
+		global $the_detail;
+		return $the_detail[2];
+	}
+	
 	function the_detail_type()
 	{
 		global $the_detail;
@@ -130,23 +136,9 @@
 	function the_detail_subtotal()
 	{
 		global $the_detail;
-		echo $the_detail[5];
+		echo number_format($the_detail[5], 2, '.', ''); 
 	}
 	
-	
-	/*--------------------------------------------------------------------------------------------
-										the_detail_subtotal
-	--------------------------------------------------------------------------------------------*/
-	function the_invoice_total()
-	{
-		$total = 0.00;
-		global $detailSubtotal;
-		foreach($detailSubtotal as $subtotal)
-		{
-			$total += floatval($subtotal);
-		}
-		echo number_format($total, 2, '.', '');
-	}
 
 
 	/*--------------------------------------------------------------------------------------------
@@ -175,10 +167,34 @@
 	function invoice_number() 
 	{
 		global $post;
-		echo get_post_meta($post->ID, 'invoice_number', true);	
+		echo get_post_meta($post->ID, 'invoice_number', true)? get_post_meta($post->ID, 'invoice_number', true): get_next_invoice_number();	
+	}
+	
+	function get_next_invoice_number()
+	{
+		$newNumber = 0;
+		$invoices = get_posts(array('post_type' => 'invoice', 'numberposts' => '-1'));
+		foreach($invoices as $invoice)
+		{
+			$tempNumber = intval(get_post_meta($invoice->ID, 'invoice_number', true));
+			if($tempNumber > $newNumber){$newNumber = $tempNumber;}
+		}
+		$newNumber +=1;
+		return $newNumber;
 	}
 	
 	
+	
+	
+	
+	/*--------------------------------------------------------------------------------------------
+										get_invoice_status
+	--------------------------------------------------------------------------------------------*/
+	function get_invoice_status() 
+	{
+		global $post;
+		echo get_post_meta($post->ID, 'invoice_status', true)? get_post_meta($post->ID, 'invoice_status', true): 'Quote';
+	}
 	
 	
 	/*--------------------------------------------------------------------------------------------
@@ -203,7 +219,7 @@
 	
 	
 	/*--------------------------------------------------------------------------------------------
-										invoice_client		
+											Currency		
 	--------------------------------------------------------------------------------------------*/
 	function wp3i_currency()
 	{
@@ -221,6 +237,91 @@
 		{
 			return '$';	
 		}
+	}
+	
+	
+	/*--------------------------------------------------------------------------------------------
+												Tax	
+	--------------------------------------------------------------------------------------------*/
+	function wp3i_tax()
+	{
+		echo get_wp3i_tax();
+	}
+	
+	function get_wp3i_tax()
+	{
+		$wp3i_currency =  get_option('wp3i_tax');	
+		if($wp3i_currency)
+		{
+			return $wp3i_currency;
+		}
+		else
+		{
+			return '0.00';	
+		}
+	}
+	
+	
+	
+	
+	/*--------------------------------------------------------------------------------------------
+										the_invoice_total
+	--------------------------------------------------------------------------------------------*/
+	function the_invoice_subtotal()
+	{
+		global $post;
+		echo wp3i_get_invoice_subtotal($post->ID);
+	}
+	
+	function the_invoice_tax()
+	{
+		global $post;
+		echo wp3i_get_invoice_tax($post->ID);
+	}
+	
+	function the_invoice_total()
+	{
+		global $post;
+		echo wp3i_get_invoice_total($post->ID);
+	}
+	
+	
+	
+	/*--------------------------------------------------------------------------------------------
+												Invoice Subtotal
+	--------------------------------------------------------------------------------------------*/
+	function wp3i_get_invoice_subtotal($invoiceID)
+	{
+		$total = 0.00;
+		$detailSubtotal = unserialize(get_post_meta($invoiceID, 'detail_subtotal', true));
+		if($detailSubtotal)
+		{
+			foreach($detailSubtotal as $subtotal)
+			{
+				$total += floatval($subtotal);
+			}
+		}
+		return number_format($total, 2, '.', '');
+	}
+	
+	
+	/*--------------------------------------------------------------------------------------------
+												Invoice Tax
+	--------------------------------------------------------------------------------------------*/
+	function wp3i_get_invoice_tax($invoiceID)
+	{
+		$total = floatval(wp3i_get_invoice_subtotal($invoiceID) * get_wp3i_tax());
+		return number_format($total, 2, '.', ''); 
+	}
+	
+	
+	/*--------------------------------------------------------------------------------------------
+												Invoice Total
+	--------------------------------------------------------------------------------------------*/
+	function wp3i_get_invoice_total($invoiceID)
+	{
+		$total = floatval(wp3i_get_invoice_subtotal($invoiceID) + wp3i_get_invoice_tax($invoiceID));
+		return number_format($total, 2, '.', ''); 
 	}
 	
 ?>

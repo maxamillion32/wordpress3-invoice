@@ -52,6 +52,12 @@
                     <?php endwhile; ?>
                 <?php endif; ?>
                 <tr class="heading">
+                	<td colspan="3"></td><td>Subtotal</td><td><?php wp3i_currency(); ?> <?php the_invoice_subtotal(); ?></td>
+                </tr>
+                <tr class="heading">
+                    <td colspan="3"></td><td>Tax</td><td><?php wp3i_currency(); ?> <?php the_invoice_tax(); ?></td>
+                    </tr>
+                <tr class="heading">
                 	<td colspan="3"></td><td>Total</td><td><?php wp3i_currency(); ?> <?php the_invoice_total(); ?></td>
                 </tr>
             </table>

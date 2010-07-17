@@ -17,6 +17,8 @@ Wp3i is a WordPress plugin to manage invoices for freelance web designers / deve
 * invoice templates use native wordpress code to make life easy
 * See live statistics of your income
 * Well designed interface
+* Customise Currency
+* Now supports Tax
 * Completely FREE! 
 
 !! You must go to Settings -> Permalinks and click save if you are using custom permalinks. This will force WordPress to rebuild the permalinks. 
@@ -30,7 +32,7 @@ Wp3i is a WordPress plugin to manage invoices for freelance web designers / deve
 3. Copy the template to your active theme folder and rename to "invoice"
 (the file '/wp-content/themes/xxxx/invoice/invoice.php' should exist)
 4. Go to Settings -> Permalinks and Save your settings (rebuilds permalinks)
-5. Click on Invoices -> Options to enter your currency
+5. Click on Invoices -> Options to enter your currency & Tax
 6. Click on the new 'Invoice' menu item to get started
 
 == Frequently Asked Questions ==
@@ -42,6 +44,11 @@ feel free to visit the plugin site and leave any comments.
 See demo videos here: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
 
 == Changelog ==
+
+= 1.0.3 =
+* Added support for tax
+* Updated template files to show subtotal, tax, total
+* Improved Admin pages
 
 = 1.0.2 =
 * Options page
