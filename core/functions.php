@@ -193,7 +193,7 @@
 	function get_invoice_status() 
 	{
 		global $post;
-		echo get_post_meta($post->ID, 'invoice_status', true)? get_post_meta($post->ID, 'invoice_status', true): 'Quote';
+		return get_post_meta($post->ID, 'invoice_status', true)? get_post_meta($post->ID, 'invoice_status', true): 'Quote';
 	}
 	
 	
