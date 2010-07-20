@@ -45,6 +45,9 @@ See demo videos here: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-
 
 == Changelog ==
 
+= 1.0.4 =
+* Fixed small invoice status bug
+
 = 1.0.3 =
 * Added support for tax
 * Updated template files to show subtotal, tax, total
