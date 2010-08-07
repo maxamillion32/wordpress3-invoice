@@ -43,6 +43,11 @@ h2 { font-weight:bold; font-size:18px; line-height:18px; position:relative; marg
 
 
 
+/* Invoice Description
+-------------------------------------------------*/
+.invoice-description { margin-bottom:40px;}
+.invoice-description p {margin-bottom:4px; font-size:12px; line-height:18px; color:#000;}
+
 /* Project Breakdown
 -------------------------------------------------*/
 .breakdown {padding-bottom:44px;}
@@ -56,6 +61,11 @@ h2 { font-weight:bold; font-size:18px; line-height:18px; position:relative; marg
 
 /* Payment Details
 -------------------------------------------------*/
-.payment-details {width:250px; padding:20px 0px 20px 15px; background-color:#f6f6f6; margin-bottom:60px; }
+.payment-details {width:250px; padding:20px 0px 20px 15px; background-color:#f6f6f6;}
 .payment-details table tr td.label {color:#999; }
 .payment-details table tr td {font-size:11px; line-height:11px; color:#333; padding:3px 5px;}
+
+
+/* Credits
+-------------------------------------------------*/
+p.credits {margin-top:60px; font-size:10px; line-height:14px; color:#999;}

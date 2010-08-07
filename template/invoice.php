@@ -3,17 +3,22 @@
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 
-    <title>Invoice #<?php invoice_number(); ?> | <?php bloginfo('name'); ?> | <?php the_title(); ?></title>
+    <title><?php invoice_type(); ?> #<?php invoice_number(); ?> | <?php bloginfo('name'); ?> | <?php the_title(); ?></title>
 
     <link rel="stylesheet" href="<?php invoice_template_url(); ?>/style.css" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php invoice_template_url(); ?>/style-print.css" type="text/css" media="print" />
+	<meta name="robots" content="noindex, nofollow">
 
     <?php wp_get_archives('type=monthly&format=link'); ?>
     <?php wp_head(); ?>
+    
+    
 </head>
 
 <body>
-	
+
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+
     <div class="container">
     	<div class="header">
         	<table cellpadding="0" cellspacing="0" align="left">
@@ -33,7 +38,11 @@
             <h4><span>To:</span> <?php invoice_client(); ?></h4>
             <h4><span>Project:</span> <?php the_title(); ?></h4>
             <h4><span>Date:</span> <?php the_time('d/m/Y'); ?></h4>
-            <h4><span>Invoice Number:</span> <?php invoice_number(); ?></h4>
+            <h4><span><?php invoice_type(); ?> Number:</span> <?php invoice_number(); ?></h4>
+        </div>
+        
+        <div class="invoice-description">
+        	<?php the_content(); ?>
         </div>
         
         <div class="breakdown">
@@ -51,44 +60,64 @@
                             </tr>
                     <?php endwhile; ?>
                 <?php endif; ?>
+                
+				<?php if(wp3i_has_tax()):  ?>
                 <tr class="heading">
                 	<td colspan="3"></td><td>Subtotal</td><td><?php wp3i_currency(); ?> <?php the_invoice_subtotal(); ?></td>
                 </tr>
                 <tr class="heading">
                     <td colspan="3"></td><td>Tax</td><td><?php wp3i_currency(); ?> <?php the_invoice_tax(); ?></td>
-                    </tr>
+                </tr>
+                <?php endif; ?>
+                
                 <tr class="heading">
                 	<td colspan="3"></td><td>Total</td><td><?php wp3i_currency(); ?> <?php the_invoice_total(); ?></td>
                 </tr>
             </table>
         </div>
         
-
-            
-        <div class="payment-details">
-            <table cellpadding="0" cellspacing="0">
-            	<tr>
-                	<td class="label">Bank</td><td>XXXXXXX</td>
-                </tr>
-                <tr>
-                    <td class="label">Acc Name</td><td>XXXXXXX XXXXXXX</td>
-                </tr>
-                <tr>
-                    <td class="label">Acc BSB</td><td>XXX-XXX</td>
-                </tr>
-                <tr>
-                    <td class="label">Acc Number</td><td>XX-XXX-XXXX</td>
-                </tr>
-            </table>
+		<div class="payment-details">
+        	<?php if(get_invoice_type() == 'Invoice' ): ?>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="label">Bank</td><td>XXXXXXX</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Acc Name</td><td>XXXXXXX XXXXXXX</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Acc BSB</td><td>XXX-XXX</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Acc Number</td><td>XX-XXX-XXXX</td>
+                    </tr>
+                </table>
+        	<?php else: ?>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="label">
+                            This is a project quote, not an invoice.
+                            No payment is required.<br /><br />
+                            Hope to hear from you soon.<br /><br />
+                        </td>
+                    </tr>
+                </table>
+        	<?php endif; ?>
         </div>
         
-        <p class="credits">
-        	IMPORTANT: The above invoice must be payed by Electronic Funds Transfer. Payment is due within 30 days from the date in this invoice. Late payment is subject to a fee of 5% per month.<br />
-        </p>
         
+        
+        <?php if(get_invoice_type() == 'Invoice' ): ?>
+            <p class="credits">
+        		IMPORTANT: The above invoice must be payed by Electronic Funds Transfer. Payment is due within 30 days from the date in this invoice. 
+                Late payment is subject to a fee of 5% per month.
+			</p>
+        <?php endif; ?>
         
         
     </div>
+    
+<?php endwhile; endif; ?>
 
 </body>
 </html>
