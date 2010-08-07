@@ -2,8 +2,8 @@
 /*
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
-Description: An online Invoice solution for web designers. Manage invoices through wordpress and customise with html + css invoice templates.
-Version: 1.0.4
+Description: An online Invoice solution for web designers. Manage and email invoices through wordpress and customise with html + css invoice templates.
+Version: 1.0.5
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -57,7 +57,7 @@ function wp3i_init()
 		'hierarchical' => false,
 		'rewrite' => array("slug" => "invoice"), // Permalinks format
 		'query_var' => "invoice",
-		'supports' => array('title'),
+		'supports' => array('title','editor'/*,'custom-fields'*/),
 	));
 	
 	
@@ -92,6 +92,7 @@ function wp3i_init()
 		$columns = array(
 			"cb" => "<input type=\"checkbox\" />",
 			"invoice_no" => "Invoice No.",
+			"invoice_type" => "Type",
 			"title" => "Title",
 			"amount" => "Amount",
 			"status" => "Status",
@@ -114,19 +115,28 @@ function wp3i_init()
 		if ("ID" == $column) echo $post->ID;
 		elseif ("description" == $column) echo $post->post_content;
 		elseif ("invoice_no" == $column) echo get_post_meta($post->ID, 'invoice_number', true);
+		elseif ("invoice_type" == $column) echo get_post_meta($post->ID, 'invoice_type', true);
 		elseif ("amount" == $column) echo get_wp3i_currency().number_format(wp3i_get_invoice_total($post->ID), 2, '.', '');
 		elseif ("client" == $column) echo get_the_term_list( $post->ID, 'client', '', ', ', '' );  
 		elseif ("status" == $column)
 		{
-			if(get_post_meta($post->ID, 'invoice_status', true) == 'Invoice Paid'){echo 'Paid';}
-			elseif(get_post_meta($post->ID, 'invoice_status', true) == 'Invoice Sent')
+			$invoice_paid = get_post_meta($post->ID, 'invoice_paid', true);
+			$invoice_sent = get_post_meta($post->ID, 'invoice_sent', true);
+			if($invoice_paid && $invoice_paid != 'Not yet')
 			{
-				$days = wp3i_date_diff(get_the_time('Y-m-d', $post->ID), date('Y-m-d'));
+				echo 'Paid';
+			}
+			elseif($invoice_sent && $invoice_sent != 'Not yet')
+			{
+				$invoice_sent = explode('/',$invoice_sent);
+				$invoice_sent = intval($invoice_sent[2]).'-'.intval($invoice_sent[1]).'-'.intval($invoice_sent[0]);
+	
+				$days = wp3i_date_diff($invoice_sent, date_i18n('Y-m-d'));
 				if($days == 0){echo 'Sent today';}
 				elseif($days == 1){echo 'Sent 1 day ago';}
 				else{ echo 'Sent '.$days.' days ago';} 
 			}
-			else{echo get_post_meta($post->ID, 'invoice_status', true);}
+			else{echo 'Not sent yet';}
 		}
 	}
 	
@@ -168,32 +178,32 @@ function wp3i_init()
 	{
 		global $wp, $post;
 		$post_type = $wp->query_vars["post_type"];
+		$email = $_GET['email'];
 
 		if($post_type == 'invoice')
 		{
-			//include(TEMPLATEPATH . "/single-".$wp->query_vars["post_type"].".php");
-			$invoiceStatus = get_post_meta($post->ID, 'invoice_status', true);
-			if($invoiceStatus == 'Quote')
+			if($email == 'send')
 			{
-				if(file_exists(TEMPLATEPATH . '/invoice/quote.php'))
+				include('admin/email.php');
+			}
+			elseif($email == 'template')
+			{
+				if(file_exists(STYLESHEETPATH . '/invoice/email.php'))
 				{
-					include(TEMPLATEPATH . '/invoice/quote.php');
+					include(STYLESHEETPATH . '/invoice/email.php');
 				}
 				else
 				{
-					include('template/quote.php');
+					include('template/email.php');
 				}
+			}
+			elseif(file_exists(STYLESHEETPATH . '/invoice/invoice.php'))
+			{
+				include(STYLESHEETPATH . '/invoice/invoice.php');
 			}
 			else
 			{
-				if(file_exists(TEMPLATEPATH . '/invoice/invoice.php'))
-				{
-					include(TEMPLATEPATH . '/invoice/invoice.php');
-				}
-				else
-				{
-					include('template/invoice.php');
-				}
+				include('template/invoice.php');
 			}
 			die();
 		}
@@ -219,3 +229,64 @@ function wp3i_menu()
 	add_submenu_page('edit.php?post_type=invoice', 'WP3 Invoice Options', 'Options', 'manage_options', 'wp3-invoice-options', 'wp3i_options');
 }
 add_action('admin_menu', 'wp3i_menu');
+
+
+/*--------------------------------------------------------------------------------------------
+										WP3I Activate
+--------------------------------------------------------------------------------------------*/
+function wp3i_activate() 
+{
+	//echo 'Updating Invoice Meta Data...';
+	
+	// loop though all invoices, set custom fields.
+	$invoices = get_posts(array(
+		'post_type' => 'invoice', 
+		'numberposts' => '-1', 
+	));
+	
+	foreach($invoices as $invoice)
+	{
+		$invoice_paid = get_post_meta($invoice->ID, 'invoice_paid', true);
+		$invoice_sent = get_post_meta($invoice->ID, 'invoice_sent', true);
+		$invoice_type = get_post_meta($invoice->ID, 'invoice_type', true);
+		
+		if(!$invoice_paid) // if 1.0.5 invoice_paid doesnt exist
+		{
+			if(get_post_meta($invoice->ID, 'invoice_status', true) == 'Invoice Paid')// if 1.0.4 invoice_status is paid
+			{
+				update_post_meta($invoice->ID, 'invoice_paid', get_the_time('j/m/Y',$invoice->ID));
+				update_post_meta($invoice->ID, 'invoice_sent', get_the_time('j/m/Y',$invoice->ID));
+			}
+			elseif(get_post_meta($invoice->ID, 'invoice_status', true) == 'Invoice Sent')// if 1.0.4 invoice_status is sent
+			{
+				update_post_meta($invoice->ID, 'invoice_paid', 'Not yet');
+				update_post_meta($invoice->ID, 'invoice_sent', get_the_time('j/m/Y',$invoice->ID));
+			}
+			else
+			{
+				update_post_meta($invoice->ID, 'invoice_paid', 'Not yet');
+				update_post_meta($invoice->ID, 'invoice_sent', 'Not yet');
+			}
+		}
+		if(!$invoice_type) // if 1.0.5 invoice_type doesnt exist
+		{
+			if(get_post_meta($invoice->ID, 'invoice_status', true) == 'Quote')// if 1.0.4 invoice_status is Quote
+			{
+				update_post_meta($invoice->ID, 'invoice_type', 'Quote');
+			}
+			else
+			{
+				update_post_meta($invoice->ID, 'invoice_type', 'Invoice');	
+			}
+		}
+		
+	}// end for each invoice
+	
+	// flush and refresh permalinks
+	global $wp_rewrite;
+    $wp_rewrite->flush_rules();
+	
+	
+}
+
+register_activation_hook( __FILE__, 'wp3i_activate' );
