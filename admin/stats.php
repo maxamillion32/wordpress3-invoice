@@ -151,15 +151,15 @@ function wp3i_setup_graph_data()
 	// add invoice data into array
 	foreach($invoicesReversed as $invoice)
 	{
-		$invoiceStatusCF = get_post_meta($invoice->ID, 'invoice_status', true);
-		if($invoiceStatusCF == 'Invoice Paid')
+		
+		if(invoice_has_paid($invoice->ID))
 		{
 			$invoiceMonth = get_the_time('n',$invoice->ID);
 			
 			$graphTitles[$invoiceMonth-1] .= get_post_meta($invoice->ID, 'invoice_number', true) . ' - ' . $invoice->post_title . '<br>';
 			$graphTotals[$invoiceMonth-1] += wp3i_get_invoice_total($invoice->ID);
 		}
-		elseif($invoiceStatusCF == 'Invoice Sent')
+		elseif(invoice_has_sent($invoice->ID))
 		{
 			$invoiceMonth = get_the_time('n',$invoice->ID);
 			$graphTitlesOutstanding[$invoiceMonth-1] .= get_post_meta($invoice->ID, 'invoice_number', true) . ' - ' . $invoice->post_title . '<br>';
@@ -328,7 +328,9 @@ function wp3i_get_stats_subtotal($invoiceStatus)
 	$total = 0.00;
 	foreach($invoices as $invoice)
 	{
-		$invoiceStatusCF = get_post_meta($invoice->ID, 'invoice_status', true);
+		$invoiceStatusCF = '';
+		if(invoice_has_paid($invoice->ID)){$invoiceStatusCF = 'paid';}
+		elseif(invoice_has_sent($invoice->ID)){$invoiceStatusCF = 'sent';}
 		if($invoiceStatusCF == $invoiceStatus)
 		{
 			$total += wp3i_get_invoice_subtotal($invoice->ID);
@@ -342,7 +344,7 @@ function wp3i_stats_invoices()
 {
 	global $invoices;
 	$counter = 0;
-	echo '<table><tr><th>#</th><th>Invoice Name</th><th>Date</th><th>Total</th><th></th></tr>';
+	echo '<table><tr><th>#</th><th>Invoice Name</th><th>Date</th><th>Total</th><th>Status</th></tr>';
 	foreach($invoices as $invoice)
 	{
 		$counter++; ?>
@@ -351,12 +353,12 @@ function wp3i_stats_invoices()
             <td><?php edit_post_link($invoice->post_title,'','',$invoice->ID); ?></td>
             <td class="invoice-date"><?php echo get_the_time('d M Y',$invoice->ID); ?></td>
             <td class="total"><?php wp3i_currency(); ?><?php echo number_format(wp3i_get_invoice_total($invoice->ID), 2, '.', ''); ?></td>
-            <td><?php $invoiceStatusCF = get_post_meta($invoice->ID, 'invoice_status', true); 
-			if($invoiceStatusCF == 'Invoice Paid')
+            <td><?php
+			if(invoice_has_paid($invoice->ID))
 			{
 				echo'<div class="tick"></div>';
 			}
-			else
+			elseif(invoice_has_sent($invoice->ID))
 			{
 				echo'<div class="cross"></div>';
 			} ?></td>
@@ -424,17 +426,21 @@ function wp3i_stats()
                                 <div id="income" class="postbox">
                                     <h3 class="hndle"><span>Income</span></h3>
                                     <div class="inside">
-                                        <h2><?php wp3i_currency(); ?><?php echo wp3i_get_stats_total('Invoice Paid'); ?></h2>
-                                        <h4>Subtotal: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_subtotal('Invoice Paid'); ?></h4>
-                                    	<h4>Tax: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_tax_total('Invoice Paid'); ?></h4>
+                                        <h2><?php wp3i_currency(); ?><?php echo wp3i_get_stats_total('paid'); ?></h2>
+                                        <?php if(wp3i_has_tax()): ?>
+                                        	<h4>Subtotal: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_subtotal('paid'); ?></h4>
+                                    		<h4>Tax: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_tax_total('paid'); ?></h4>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div id="outstanding" class="postbox">
                                     <h3 class="hndle"><span>Outstanding</span></h3>
                                     <div class="inside">
-                                        <h2><?php wp3i_currency(); ?><?php echo wp3i_get_stats_total('Invoice Sent'); ?></h2>
-                                        <h4>Subtotal: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_subtotal('Invoice Sent'); ?></h4>
-                                    	<h4>Tax: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_tax_total('Invoice Sent'); ?></h4>
+                                        <h2><?php wp3i_currency(); ?><?php echo wp3i_get_stats_total('sent'); ?></h2>
+                                        <?php if(wp3i_has_tax()): ?>
+                                        	<h4>Subtotal: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_subtotal('sent'); ?></h4>
+                                    		<h4>Tax: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_tax_total('sent'); ?></h4>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
