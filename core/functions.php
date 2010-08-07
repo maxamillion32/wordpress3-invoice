@@ -27,7 +27,13 @@
 		$detailCount=0;
 		
 		$detailTitle = unserialize(get_post_meta($post->ID, 'detail_title', true));
+		//$safe_description = get_post_meta($post->ID, 'detail_description', true);
+		//echo $safe_description.'<br>';
+		//$safe_description = unserialize($safe_description);
+		//echo $safe_description.'<br>';
+	
 		$detailDescription = unserialize(get_post_meta($post->ID, 'detail_description', true));
+		//echo $detailDescription;
 		$detailType = unserialize(get_post_meta($post->ID, 'detail_type', true));
 		$detailRate = unserialize(get_post_meta($post->ID, 'detail_rate', true));
 		$detailDuration = unserialize(get_post_meta($post->ID, 'detail_duration', true));
@@ -147,7 +153,7 @@
 	function invoice_template_url()
 	{
 		global $invoice_template_url;
-		if(file_exists(TEMPLATEPATH . '/invoice/invoice.php'))
+		if(file_exists(STYLESHEETPATH . '/invoice/invoice.php'))
 		{
 			echo bloginfo('template_url') . '/invoice';
 		}
@@ -164,10 +170,15 @@
 	/*--------------------------------------------------------------------------------------------
 										invoice_number		
 	--------------------------------------------------------------------------------------------*/
-	function invoice_number() 
+	function get_invoice_number() 
 	{
 		global $post;
-		echo get_post_meta($post->ID, 'invoice_number', true)? get_post_meta($post->ID, 'invoice_number', true): get_next_invoice_number();	
+		return get_post_meta($post->ID, 'invoice_number', true)? get_post_meta($post->ID, 'invoice_number', true): get_next_invoice_number();	
+	}
+	
+	function invoice_number() 
+	{
+		echo get_invoice_number();
 	}
 	
 	function get_next_invoice_number()
@@ -186,6 +197,101 @@
 	
 	
 	
+	/*--------------------------------------------------------------------------------------------
+										get_invoice_type
+	--------------------------------------------------------------------------------------------*/
+	function invoice_type()
+	{
+		echo get_invoice_type();	
+	}
+	
+	function get_invoice_type()
+	{
+		global $post;
+		return get_post_meta($post->ID, 'invoice_type', true)? get_post_meta($post->ID, 'invoice_type', true): 'Invoice';
+	}
+	
+	
+	
+	/*--------------------------------------------------------------------------------------------
+										get_invoice_sent
+	--------------------------------------------------------------------------------------------*/
+	function get_invoice_sent()
+	{
+		global $post;
+		return get_post_meta($post->ID, 'invoice_sent', true)? get_post_meta($post->ID, 'invoice_sent', true): 'Not yet';
+	}
+	
+	function get_invoice_sent_pretty()
+	{
+		$sent = get_invoice_sent();
+		$months = array('','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
+		if($sent == 'Not yet')
+		{
+			return $sent;	
+		}
+		else
+		{
+			$sent = explode('/',$sent);
+			return $months[intval($sent[1])] . ' ' . $sent[0] . ', ' . $sent[2];
+		}
+	}
+	
+	function invoice_sent()
+	{
+		echo get_invoice_sent();
+	}
+	
+	function invoice_has_sent($postID)
+	{
+		$invoice_sent = get_post_meta($postID, 'invoice_sent', true)? get_post_meta($postID, 'invoice_sent', true): 'Not yet';
+		if($invoice_sent != 'Not yet')
+		{
+			return true;	
+		}
+		else
+		{
+			return false;	
+		}
+	}
+	
+	
+	/*--------------------------------------------------------------------------------------------
+										get_invoice_paid
+	--------------------------------------------------------------------------------------------*/
+	function get_invoice_paid()
+	{
+		global $post;
+		return get_post_meta($post->ID, 'invoice_paid', true)? get_post_meta($post->ID, 'invoice_paid', true): 'Not yet';
+	}
+	
+	function get_invoice_paid_pretty()
+	{
+		$sent = get_invoice_paid();
+		$months = array('','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
+		if($sent == 'Not yet')
+		{
+			return $sent;	
+		}
+		else 
+		{
+			$sent = explode('/',$sent);
+			return $months[intval($sent[1])] . ' ' . $sent[0] . ', ' . $sent[2];
+		}
+	}
+	
+	function invoice_has_paid($postID)
+	{
+		$invoice_paid = get_post_meta($postID, 'invoice_paid', true)? get_post_meta($postID, 'invoice_paid', true): 'Not yet';
+		if($invoice_paid != 'Not yet')
+		{
+			return true;	
+		}
+		else
+		{
+			return false;	
+		}
+	}
 	
 	/*--------------------------------------------------------------------------------------------
 										get_invoice_status
@@ -200,21 +306,40 @@
 	/*--------------------------------------------------------------------------------------------
 										invoice_client		
 	--------------------------------------------------------------------------------------------*/
-	function invoice_client()
+	function get_invoice_client_name()
 	{
 		global $post;
-		$results = array();
 		
 		$terms = get_the_terms($post->ID , 'client');
 		if($terms)
 		{	
 			foreach( $terms as $term ) 
 			{
-				array_push($results	,$term->name);
+				return $term->name;
 			}
 		}
+	}
+	
+	function invoice_client()
+	{
+		echo get_invoice_client_name();
+	}
+	
+	/*--------------------------------------------------------------------------------------------
+										invoice_client		
+	--------------------------------------------------------------------------------------------*/
+	function get_invoice_client_email()
+	{
+		global $post;
 		
-		echo implode(',',$results);
+		$terms = get_the_terms($post->ID , 'client');
+		if($terms)
+		{	
+			foreach( $terms as $term ) 
+			{
+				return $term->description;
+			}
+		}
 	}
 	
 	
@@ -261,7 +386,35 @@
 		}
 	}
 	
+	function wp3i_has_tax()
+	{
+		if(get_wp3i_tax() == '0.00')
+		{
+			return false;	
+		}
+		else
+		{
+			return true;	
+		}
+	}
 	
+	
+	
+	/*--------------------------------------------------------------------------------------------
+											Email Recipients
+	--------------------------------------------------------------------------------------------*/
+	function wp3i_get_emailrecipients()
+	{
+		$wp3i_emailrecipients = get_option('wp3i_emailrecipients');	
+		if($wp3i_emailrecipients)
+		{
+			return $wp3i_emailrecipients;
+		}
+		else
+		{
+			return 'client';	
+		}
+	}
 	
 	
 	/*--------------------------------------------------------------------------------------------
@@ -323,5 +476,6 @@
 		$total = floatval(wp3i_get_invoice_subtotal($invoiceID) + wp3i_get_invoice_tax($invoiceID));
 		return number_format($total, 2, '.', ''); 
 	}
+	
 	
 ?>
