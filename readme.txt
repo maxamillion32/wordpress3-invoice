@@ -13,15 +13,14 @@ Invoice software designed specifically for freelance web designers / developers.
 Wp3i is a WordPress plugin to manage invoices for freelance web designers / developers.
  
 * Create and track your invoices and quotes
-* Create a custom php template for both invoices and quotes
-* invoice templates use native wordpress code to make life easy
+* Send stylish invoices to clients via HTML email.
+* Create a custom php templates for invoices, quotes and HTML emails
+* invoice templates use native WordPress code to make life easy
 * See live statistics of your income
 * Well designed interface
 * Customise Currency
 * Now supports Tax
 * Completely FREE! 
-
-!! You must go to Settings -> Permalinks and click save if you are using custom permalinks. This will force WordPress to rebuild the permalinks. 
 
 = Please Vote and Enjoy =
 
@@ -31,9 +30,8 @@ Wp3i is a WordPress plugin to manage invoices for freelance web designers / deve
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Copy the template to your active theme folder and rename to "invoice"
 (the file '/wp-content/themes/xxxx/invoice/invoice.php' should exist)
-4. Go to Settings -> Permalinks and Save your settings (rebuilds permalinks)
-5. Click on Invoices -> Options to enter your currency & Tax
-6. Click on the new 'Invoice' menu item to get started
+4. Click on Invoices -> Options to view options / API
+5. Click on the new 'Invoice' menu item to get started
 
 == Frequently Asked Questions ==
 
@@ -44,6 +42,18 @@ feel free to visit the plugin site and leave any comments.
 See demo videos here: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
 
 == Changelog ==
+
+= 1.0.5 =
+*  Send HTML email invoices to clients
+* Clients have email address field
+* Customise emails with email.php template
+* New option: Receive invoice email copy
+* Encoded permalinks. (Publish old invoices to auto create new permalink)
+* Quote.php is gone. Both quotes and invoice run on invoice.php
+* Tax not shown if set to 0.00
+* A new fresh invoice details interface
+* Invoice type, sent, paid are all separate
+* Invoices now use the content editor
 
 = 1.0.4 =
 * Fixed small invoice status bug
