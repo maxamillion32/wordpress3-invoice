@@ -109,18 +109,21 @@ $(document).ready(function()
 			li.find('a.wp3i-edit').click(function(){
 				origInputValue = li.wp3i_detail_get_input();
 				li.wp3i_detail_edit();	
+				return false;
 			});	
 			
 			li.find('a.wp3i-ok').click(function(){
 				var newInputValue = li.wp3i_detail_get_input();
 				li.find('span').html(newInputValue);	
 				li.wp3i_detail_hide();
+				return false;
 			});
 			
 			li.find('a.wp3i-cancel').click(function(){
 				li.find('span').html(origInputValue);	
 				//li.wp3i_detail_set_input(origInputValue);
 				li.wp3i_detail_hide();
+				return false;
 			});
 		});
 		
@@ -161,7 +164,8 @@ $(document).ready(function()
 			li.wp3i_detail_set_date(day, month, year);
 			
 			li.find('a.wp3i-edit').click(function(){
-				li.wp3i_detail_edit();	
+				li.wp3i_detail_edit();
+				return false;
 			});	
 			
 			li.find('a.wp3i-ok').click(function(){
@@ -170,6 +174,7 @@ $(document).ready(function()
 				li.find('input[type=hidden]').attr('value', newInputValue);	
 				li.find('span').html(newInputValuePretty);	
 				li.wp3i_detail_hide();
+				return false;
 			});
 			
 			li.find('a.wp3i-clear').click(function(){
@@ -177,6 +182,7 @@ $(document).ready(function()
 				li.find('span').html('Not yet');	
 				li.find('input[type=hidden]').attr('value', 'Not yet');	
 				li.wp3i_detail_hide();
+				return false;
 			});
 			
 			li.find('a.wp3i-cancel').click(function(){
@@ -196,6 +202,7 @@ $(document).ready(function()
 					li.find('span').html(wp3i_get_date_pretty(month)+' '+day+', '+year);		
 				}
 				li.wp3i_detail_hide();
+				return false;
 			});
 		});
 		/* 
