@@ -31,8 +31,12 @@
 		//echo $safe_description.'<br>';
 		//$safe_description = unserialize($safe_description);
 		//echo $safe_description.'<br>';
-	
-		$detailDescription = unserialize(get_post_meta($post->ID, 'detail_description', true));
+		//$detailDescription = html_entity_decode(get_post_meta($post->ID, 'detail_description', true));
+		//echo $detailDescription;
+		$detailDescription = get_post_meta($post->ID, 'detail_description', true);
+		$detailDescription = unserialize($detailDescription);
+		//echo 'string = '.$detailDescription;
+		//$detailDescription = stripslashes($detailDescription);
 		//echo $detailDescription;
 		$detailType = unserialize(get_post_meta($post->ID, 'detail_type', true));
 		$detailRate = unserialize(get_post_meta($post->ID, 'detail_rate', true));
@@ -96,7 +100,7 @@
 	function the_detail_description()
 	{
 		global $the_detail;
-		echo nl2br($the_detail[1]);
+		echo stripslashes($the_detail[1]);
 	}
 	
 	

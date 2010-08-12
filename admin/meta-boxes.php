@@ -319,13 +319,16 @@
 		//update_post_meta($post_id, 'invoice_client',$_POST['invoice-client']);
 		
 		update_post_meta($post_id, 'detail_title', serialize($_POST['detail-title']));
-		$save_description = array();
-		foreach($_POST['detail-description'] as $description)
-		{
-				array_push($save_description,preg_replace('/[^A-Za-z0-9 ]/','', $description));
-		}
-		
-		update_post_meta($post_id, 'detail_description', serialize($save_description));
+		//$save_description = array();
+		//foreach($_POST['detail-description'] as $description)
+		//{
+		//		array_push($save_description,htmlentities($description));
+		//}
+		//$temp_description = htmlentities($_POST['detail-description']); 
+		$temp_description = serialize($_POST['detail-description']);
+		//$temp_description = htmlspecialchars($temp_description,ENT_QUOTES);
+		$temp_description = addslashes($temp_description);
+		update_post_meta($post_id, 'detail_description', $temp_description);
 		update_post_meta($post_id, 'detail_type', serialize($_POST['detail-type']));
 		update_post_meta($post_id, 'detail_rate', serialize($_POST['detail-rate']));
 		update_post_meta($post_id, 'detail_duration', serialize($_POST['detail-duration']));

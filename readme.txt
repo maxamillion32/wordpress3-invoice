@@ -43,8 +43,11 @@ See demo videos here: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-
 
 == Changelog ==
 
+= 1.0.6 =
+* Fixed small invoice breakdown description bug
+
 = 1.0.5 =
-*  Send HTML email invoices to clients
+* Send HTML email invoices to clients
 * Clients have email address field
 * Customise emails with email.php template
 * New option: Receive invoice email copy
