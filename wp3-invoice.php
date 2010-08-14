@@ -296,38 +296,3 @@ function wp3i_activate()
 }
 
 register_activation_hook( __FILE__, 'wp3i_activate' );
-
-
-/*--------------------------------------------------------------------------------------------
-								 Re position Visual Editor
---------------------------------------------------------------------------------------------*/
-add_action('admin_init','admin_init_hook');
-function admin_init_hook()
-{
-	function blank(){}
- 
-	foreach (array('invoice') as $type)
-	{
-		add_meta_box('custom_editor', 'Content', 'blank', $type, 'normal', 'high');
-	}
-}
- 
-add_action('admin_head','admin_head_hook');
-function admin_head_hook()
-{
-	?><style type="text/css">
-		#postdiv.postarea, #postdivrich.postarea { margin:0; }
-		#post-status-info { line-height:1.4em; font-size:13px; }
-		#custom_editor .inside { margin:2px 6px 6px 6px; }
-		#ed_toolbar { display:none; }
-		#postdiv #ed_toolbar, #postdivrich #ed_toolbar { display:block; }
-	</style><?php
-}
- 
-add_action('admin_footer','admin_footer_hook');
-function admin_footer_hook()
-{
-	?><script type="text/javascript">
-		jQuery('#postdiv, #postdivrich').prependTo('#custom_editor .inside');
-	</script><?php
-}

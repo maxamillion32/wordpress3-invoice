@@ -301,7 +301,24 @@
 	add_action('admin_menu', 'add_project_breakdown');
 	
 	
-	
+	/*--------------------------------------------------------------------------------------------
+								 Re position Visual Editor
+	--------------------------------------------------------------------------------------------*/
+	add_action('admin_init','admin_init_hook');
+	function admin_init_hook()
+	{
+		add_meta_box('custom_editor', 'Content', 'blank', 'invoice', 'normal', 'high');
+	}
+	 
+	add_action('admin_footer','admin_footer_hook');
+	function admin_footer_hook()
+	{
+		?><script type="text/javascript">
+			jQuery('#postdiv, #postdivrich').prependTo('#custom_editor .inside');
+		</script><?php
+	}
+
+
 	/*--------------------------------------------------------------------------------------------
 										Save
 	--------------------------------------------------------------------------------------------*/
