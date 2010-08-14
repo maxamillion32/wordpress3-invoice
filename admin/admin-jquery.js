@@ -21,9 +21,8 @@ $(document).ready(function()
 			var length = 30;
 			var characters = '0123456789abcdefghijklmnopqrstuvwxyz';
 			var string = "";    
-			
 			for (var p = 0; p < length; p++) {
-				string += characters[wp3i_rand(0, characters.length)];
+				string += characters[wp3i_rand(0, (characters.length-1))];
 			}
 			
 			return string;

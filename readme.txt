@@ -43,6 +43,9 @@ See demo videos here: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-
 
 == Changelog ==
 
+= 1.0.7 =
+*Fixed Custom Permalink issues!
+
 = 1.0.6 =
 * Fixed small invoice breakdown description bug
 

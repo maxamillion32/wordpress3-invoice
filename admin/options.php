@@ -151,10 +151,11 @@ function wp3i_options()
                 </div>
             </div>
             <div class="postbox" id="new">
-                <h3 class="hndle"><span>New in 1.0.6</span></h3>
+                <h3 class="hndle"><span>New in 1.0.7</span></h3>
                 <div class="inside">
-                    <p>Firstly I would like to say a big thank you to everyone for their support behind wp3i. Version 1.0.6 features some great improvements which I'm sure your going to enjoy.</p>
+                    <p>Firstly I would like to say a big thank you to everyone for their support behind wp3i. Version 1.0.7 features some great improvements which I'm sure your going to enjoy.</p>
                     <ul>
+                    	<li>Fixed Custom Permalink issues!</li>
                     	<li>Fixed Invoice breakdown description bugs!</li>
                         <li>Send HTML email invoices to clients</li>
                         <li>Clients have email address field</li>

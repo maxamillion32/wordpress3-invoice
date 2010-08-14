@@ -3,7 +3,7 @@
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
 Description: An online Invoice solution for web designers. Manage and email invoices through wordpress and customise with html + css invoice templates.
-Version: 1.0.6
+Version: 1.0.7
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -32,6 +32,9 @@ add_action('admin_head', 'wp3i_head');
 --------------------------------------------------------------------------------------------*/
 function wp3i_init()
 {
+	// flush and refresh permalinks
+	global $wp_rewrite;
+    $wp_rewrite->flush_rules();
 	
 	/* Regist Invoice Post Type
 	----------------------------*/
@@ -150,14 +153,14 @@ function wp3i_init()
 	
 		global $wp_rewrite;
 	
-		$rewrite_rules = $wp_rewrite->generate_rewrite_rules('test/');
-		$rewrite_rules['test/?$'] = 'index.php?paged=1';
+		$rewrite_rules = $wp_rewrite->generate_rewrite_rules('invoice/');
+		$rewrite_rules['invoice/?$'] = 'index.php?paged=1';
 	
 		foreach($rewrite_rules as $regex => $redirect)
 		{
 			if(strpos($redirect, 'attachment=') === false)
 				{
-					$redirect .= '&post_type=test';
+					$redirect .= '&post_type=invoice';
 				}
 			if(0 < preg_match_all('@\$([0-9])@', $redirect, $matches))
 				{
@@ -210,6 +213,9 @@ function wp3i_init()
 	}
 	add_action('template_redirect', 'wp3i_template_redirect');
 	
+	// flush and refresh permalinks
+	global $wp_rewrite;
+    $wp_rewrite->flush_rules();
 }
 add_action('init', 'wp3i_init');
 
