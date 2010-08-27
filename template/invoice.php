@@ -41,10 +41,6 @@
             <h4><span><?php invoice_type(); ?> Number:</span> <?php invoice_number(); ?></h4>
         </div>
         
-        <div class="invoice-description">
-        	<?php the_content(); ?>
-        </div>
-        
         <div class="breakdown">
         	<table cellpadding="0" cellspacing="0">
             	<tr class="heading">

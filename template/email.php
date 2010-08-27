@@ -70,12 +70,6 @@
 		.breakdown tr.title td {background-color:#f5f5f5!important; color:#616161; font-weight:bold; }
 		.breakdown tr.description td {font-size:10px; line-height:12px;}
 		
-		
-		/* Invoice Description
-		-------------------------------------------------*/
-		.invoice-description { margin-bottom:40px;}
-		.invoice-description p {margin-bottom:4px; font-size:12px; line-height:18px; color:#000;}
-		
 
 		/* Payment Details
 		-------------------------------------------------*/
@@ -146,14 +140,6 @@
                 <h4><span>Date:</span> <?php the_time('d/m/Y'); ?></h4>
                 <h4><span><?php invoice_type(); ?> Number:</span> <?php invoice_number(); ?></h4>
             </td>
-            </tr>
-            </table>
-            
-            <table cellpadding="0" cellspacing="0" class="invoice-description">
-           	<tr>
-            <td>
-        		<?php the_content(); ?>
-        	</td>
             </tr>
             </table>
         

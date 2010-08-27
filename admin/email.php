@@ -1,5 +1,4 @@
 <?php
-
 global $post;
 	
 /* Get Current User's Email
@@ -33,17 +32,32 @@ if(wp3i_get_emailrecipients() == 'both')
 	
 /* Email
 -------------------------------------*/
-$subject = get_invoice_type().' # '.get_invoice_number().': '.get_the_title().' from '.get_bloginfo('name');
-$message = wp_remote_fopen(get_permalink().'?email=template');
-	
+$subject = get_invoice_type().' # '.get_invoice_number().' - '.get_the_title();
+//$message = wp_remote_fopen(get_permalink().'?email=template');
 
+
+/* Quick validation check
+-------------------------------------*/
+if(!$to)
+{
+	echo '<p class="error">Error: No recipient email address found</p>';
+	die;
+}
+if(!$message)
+{
+	echo '<p class="error">Error: No message body found</p>';	
+	die;
+}
+
+
+/* Mail it!
+-------------------------------------*/
 if ( mail($to,$subject,$message,$headers) ) 
 {
 	$edit_link = get_bloginfo('url').'/wp-admin/post.php?post='.$post->ID.'&action=edit&sent=success';
 	if($edit_link)
 	{
 		wp_redirect($edit_link);
-		//echo $message;
 	}
 	else
 	{

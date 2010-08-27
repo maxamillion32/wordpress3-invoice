@@ -42,12 +42,6 @@ h2 { font-weight:bold; font-size:18px; line-height:18px; position:relative; marg
 .info h4 span {color:#00b7f2;}
 
 
-
-/* Invoice Description
--------------------------------------------------*/
-.invoice-description { margin-bottom:40px;}
-.invoice-description p {margin-bottom:4px; font-size:12px; line-height:18px; color:#000;}
-
 /* Project Breakdown
 -------------------------------------------------*/
 .breakdown {padding-bottom:44px;}

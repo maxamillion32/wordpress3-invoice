@@ -1,10 +1,10 @@
 === WordPress 3 Invoices ===
 Contributors: elliot condon
-Donate link: http://www.elliotcondon.com/
+Donate link: http://www.wordpress3invoice.com
 Tags: wordpress, wordpress3, 3, invoice, invoices, customization, template, statistics, wp3i
 Requires at least: 3.0
-Tested up to: 3.0
-Stable tag: 3.0
+Tested up to: 3.1
+Stable tag: 3.1
 
 Invoice software designed specifically for freelance web designers / developers. This plugin uses the new custom post type to reduce code, run smoothly and look cleaner. Create an invoice or quote, then view it on a custom template which you can edit with ease.
 
@@ -39,9 +39,12 @@ feel free to visit the plugin site and leave any comments.
 
 == Screenshots ==
 
-See demo videos here: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
+See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
+
+= 1.0.8 =
+*Fixed sending email issues. (removed fopen functionality)!
 
 = 1.0.7 =
 *Fixed Custom Permalink issues!
@@ -81,4 +84,3 @@ See demo videos here: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-
 
 = 1.0 =
 * The first release of WP3I.
-

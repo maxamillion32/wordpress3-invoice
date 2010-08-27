@@ -3,13 +3,13 @@
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
 Description: An online Invoice solution for web designers. Manage and email invoices through wordpress and customise with html + css invoice templates.
-Version: 1.0.7
+Version: 1.0.8
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
 */
 
-
+$invoice_plugin_url = plugins_url('',__FILE__);
 $invoice_template_url = plugins_url('template',__FILE__);
 
 
@@ -60,7 +60,7 @@ function wp3i_init()
 		'hierarchical' => false,
 		'rewrite' => array("slug" => "invoice"), // Permalinks format
 		'query_var' => "invoice",
-		'supports' => array('title','editor'/*,'custom-fields'*/),
+		'supports' => array('title'/*,'editor','custom-fields'*/),
 	));
 	
 	
@@ -179,34 +179,44 @@ function wp3i_init()
 	----------------------------*/
 	function wp3i_template_redirect()
 	{
+		// define invoice url variables
 		global $wp, $post;
 		$post_type = $wp->query_vars["post_type"];
 		$email = $_GET['email'];
+
+		// find email.php template file
+		$emailTemplateURL = 'template/email.php';
+		if(file_exists(STYLESHEETPATH . '/invoice/email.php'))
+		{
+			$emailTemplateURL = STYLESHEETPATH . '/invoice/email.php';
+		}
+		
+		// find invoice.php template file
+		$invoiceTemplateURL = 'template/invoice.php';
+		if(file_exists(STYLESHEETPATH . '/invoice/invoice.php'))
+		{
+			include(STYLESHEETPATH . '/invoice/invoice.php');
+		}
 
 		if($post_type == 'invoice')
 		{
 			if($email == 'send')
 			{
+				// get html email and store as variable for sending
+				ob_start();
+				include('template/email.php');
+				$message = ob_get_contents();
+				ob_end_clean();
 				include('admin/email.php');
 			}
 			elseif($email == 'template')
 			{
-				if(file_exists(STYLESHEETPATH . '/invoice/email.php'))
-				{
-					include(STYLESHEETPATH . '/invoice/email.php');
-				}
-				else
-				{
-					include('template/email.php');
-				}
-			}
-			elseif(file_exists(STYLESHEETPATH . '/invoice/invoice.php'))
-			{
-				include(STYLESHEETPATH . '/invoice/invoice.php');
+				include($emailTemplateURL);
+				
 			}
 			else
 			{
-				include('template/invoice.php');
+				include($invoiceTemplateURL);
 			}
 			die();
 		}

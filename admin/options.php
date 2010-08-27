@@ -83,10 +83,6 @@ function wp3i_options()
                             <td><p>Displays the date when the invoice was created. (Not when it was sent or paid) <a href="http://codex.wordpress.org/Formatting_Date_and_Time">Read more about formating date and time here</a></p></td>
                         </tr>
                         <tr>
-                            <td><h4>the_content()</h4></td>
-                            <td><p>Displays the current invoice content</p></td>
-                        </tr>
-                        <tr>
                             <td><h4>if(invoice_has_details()):</h4></td>
                             <td><p>Loads the details into an array to use in the detail loop</p></td>
                         </tr>
@@ -139,34 +135,46 @@ function wp3i_options()
             </div>
         </div>
         <div class="right-column">
-            <div class="postbox">
-                <h3 class="hndle"><span>Has this plugin made your life easier? Donate $1 to let me know.</span></h3>
+            <div class="postbox" id="new">
+                <h3 class="hndle"><span>Say Thankyou.</span></h3>
                 <div class="inside">
+                	<table cellpadding="10" cellspacing="0">
+                    <tr>
+                    <td>
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
                         <input type="hidden" name="cmd" value="_s-xclick">
                         <input type="hidden" name="hosted_button_id" value="U8VV93Z7WXYJA">
-                        <input type="image" src="https://www.paypal.com/en_AU/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+                        <input type="image" src="<?php echo plugins_url('',__FILE__); ?>/images/options-donate.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
                         <img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1">
                     </form>
+                    </td>
+                    <td>
+                    	<a href="http://wordpress.org/extend/plugins/wordpress3-invoice/">
+                    		<img src="<?php echo plugins_url('',__FILE__); ?>/images/options-rate-it.gif" alt="Rate wp3i" />
+                        </a>
+                    </td>
+                    </tr>
+                    </table>
+                    <p>Hi guys. If you like the wp3i plugin, let me know. <br />
+                    Donate $1 or just leave a comment on the website. <br />
+                    Happy invoiceing.</p>
+                    <ul>
+                    	<li><a href="http://www.wordpress3invoice.com/tour/">Tutorials</a></li>
+                    	<li><a href="http://www.wordpress3invoice.com/support/">Support / FAQ.</a></li>
+                    	<li><a href="http://www.wordpress3invoice.com/developers/">Developer Community</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="postbox" id="new">
-                <h3 class="hndle"><span>New in 1.0.7</span></h3>
+                <h3 class="hndle"><span>New in 1.0.8</span></h3>
                 <div class="inside">
-                    <p>Firstly I would like to say a big thank you to everyone for their support behind wp3i. Version 1.0.7 features some great improvements which I'm sure your going to enjoy.</p>
+                    <p>Version 1.0.8 should fix email problems.<br />
+                    Also, I'm proud to anounce the opening of the <a href="http://www.wordpress3invoice.com">WordPress 3 Invoice website</a>!</p>
                     <ul>
-                    	<li>Fixed Custom Permalink issues!</li>
-                    	<li>Fixed Invoice breakdown description bugs!</li>
-                        <li>Send HTML email invoices to clients</li>
-                        <li>Clients have email address field</li>
-                        <li>Customize emails with email.php template</li>
-                        <li>New option: Receive invoice email copy</li>
-                        <li>Encoded permalinks. (Publish old invoices to auto create new permalink)</li>
-                        <li>Quote.php is gone. Both quotes and invoice run on invoice.php</li>
-                        <li>Tax not shown if set to 0.00</li>
-                        <li>A new fresh invoice details interface</li>
-                        <li>Invoice type, sent, paid are all separate</li>
-                        <li>Invoices now use the content editor</li>
+                    	<li>Removed Content editor from invoices.</li>
+                    	<li>Invoice templates don't use the_content() anymore.</li>
+                    	<li>Fixed Email Issues by removing fopen functionality!</li>
+                        <li>New website for support, help and ideas.</li>
                     </ul>
                 </div>
             </div>

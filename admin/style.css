@@ -1,16 +1,7 @@
 /*--------------------------------------------------------------------------------------------
 								Invoice Edit Page v2
 --------------------------------------------------------------------------------------------*/
-
-/*#submitdiv .misc-pub-section.curtime.misc-pub-section-last {display:none;}*/
-
-#custom_editor #postdiv.postarea, #custom_editor #postdivrich.postarea { margin:0; }
-#custom_editor #post-status-info { line-height:1.4em; font-size:13px; }
-#custom_editor #custom_editor .inside { margin:2px 6px 6px 6px; }
-#custom_editor #ed_toolbar { display:none; }
-#custom_editor #postdiv #ed_toolbar, #custom_editor #postdivrich #ed_toolbar { display:block; }
-		
-		
+	
 #invoice_details {}
 #invoice_details ul {overflow:hidden; width:400px; border:#EEEEEE solid 1px; border-bottom:none;}
 #invoice_details ul li {font-size:12px; line-height:24px; padding:5px; margin:0px; border-bottom:#EEEEEE solid 1px; height:26px;}
