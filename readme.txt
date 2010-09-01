@@ -43,11 +43,15 @@ See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
 
+= 1.0.9 =
+* Fixed template url bug
+* Added get_ functions to API
+
 = 1.0.8 =
-*Fixed sending email issues. (removed fopen functionality)!
+* Fixed sending email issues. (removed fopen functionality)!
 
 = 1.0.7 =
-*Fixed Custom Permalink issues!
+* Fixed Custom Permalink issues!
 
 = 1.0.6 =
 * Fixed small invoice breakdown description bug

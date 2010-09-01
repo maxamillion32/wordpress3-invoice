@@ -90,9 +90,11 @@
 #wp3i-options td {padding-top:10px; font-size:11px; line-height:16px;}
 #wp3i-options label {font-size:14px; line-height:14px; font-weight:bold; padding:6px;}
 #wp3i-options h4 {font-size:14px; line-height:14px; font-weight:bold; padding:6px; padding-right:10px; margin:0px;}
+#wp3i-options h6 {font-size:9px; font-weight:normal; margin:0px 0px 0px 6px; position:relative; margin-top:-4px; color:#1D5F95;}
 #wp3i-options p {font-size:10px; line-height:10px; color:#999;}
-#wp3i-options .api td {padding-top:6px;}
-#wp3i-options .api p {font-size:12px; line-height:14px; color:#666;}
+#wp3i-options .api td {padding:6px;}
+#wp3i-options .api tr.odd td {background-color:#f5f9fa;}
+#wp3i-options .api p {font-size:11px; line-height:16px; color:#333;}
 
 #wp3i-options p.submit {padding:0px; margin:20px 6px 14px;}
 

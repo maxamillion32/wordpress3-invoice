@@ -49,36 +49,32 @@ function wp3i_options()
                 <h3 class="hndle"><span>WordPress 3 Invoice Template API</span></h3>
                 <div class="inside">
                     <table cellpadding="0" cellspacing="0" class="api">
-                        <tr>
-                            <td><h4>invoice_type()</h4></td>
+                        <tr class="odd">
+                            <td><h4>invoice_type()</h4><h6>+ get_invoice_type()</h6></td>
                             <td><p>Displays the current invoice type (Invoice or Quote)</p></td>
                         </tr>
                         <tr>
-                            <td><h4>get_invoice_type()</h4></td>
-                            <td><p>Returns the current invoice type (Invoice or Quote)</p></td>
-                        </tr>
-                        <tr>
-                            <td><h4>invoice_number()</h4></td>
+                            <td><h4>invoice_number()</h4><h6>+ get_invoice_number()</h6></td>
                             <td><p>Displays the current invoice number</p></td>
                         </tr>
-                        <tr>
-                            <td><h4>bloginfo('name')</h4></td>
+                        <tr class="odd">
+                            <td><h4>bloginfo('name')</h4><h6>+ get_bloginfo('name')</h6></td>
                             <td><p>Displays the name of your blog</p></td>
                         </tr>
                         <tr>
-                            <td><h4>the_title()</h4></td>
+                            <td><h4>the_title()</h4><h6>+ get_the_title()</h6></td>
                             <td><p>Displays the current invoice title</p></td>
                         </tr>
-                        <tr>
-                            <td><h4>invoice_template_url</h4></td>
+                        <tr class="odd">
+                            <td><h4>invoice_template_url()</h4><h6>+ get_invoice_template_url()</h6></td>
                             <td><p>Displays the url of your invoice template folder.<br />
                                     This function will first look in your WordPress theme folder for a folder called 'invoice' and a file named 'invoice.php'. If no folder or file is found, the default template files (found in the plugin template folder) will be used</p></td>
                         </tr>
                         <tr>
-                            <td><h4>invoice_client()</h4></td>
+                            <td><h4>invoice_client()</h4><h6>+ get_invoice_client_name()</h6></td>
                             <td><p>Displays the client name for the current invoice</p></td>
                         </tr>
-                        <tr>
+                        <tr class="odd">
                             <td><h4>the_time('d/m/Y')</h4></td>
                             <td><p>Displays the date when the invoice was created. (Not when it was sent or paid) <a href="http://codex.wordpress.org/Formatting_Date_and_Time">Read more about formating date and time here</a></p></td>
                         </tr>
@@ -86,48 +82,48 @@ function wp3i_options()
                             <td><h4>if(invoice_has_details()):</h4></td>
                             <td><p>Loads the details into an array to use in the detail loop</p></td>
                         </tr>
-                        <tr>
+                        <tr class="odd">
                             <td><h4>while(invoice_detail()):</h4></td>
                             <td><p>Loops through the details for the current invoice</p></td>
                         </tr>
                         <tr>
-                            <td><h4>the_detail_title()</h4></td>
+                            <td><h4>the_detail_title()</h4><h6>+ get_the_detail_title()</h6></td>
                             <td><p>Displays the detail title</p></td>
                         </tr>
-                        <tr>
-                            <td><h4>the_detail_type()</h4></td>
+                        <tr class="odd">
+                            <td><h4>the_detail_type()</h4><h6>+ get_the_detail_type()</h6></td>
                             <td><p>Displays the detail type</p></td>
                         </tr>
                         <tr>
-                            <td><h4>the_detail_rate()</h4></td>
+                            <td><h4>the_detail_rate()</h4><h6>+ get_the_detail_rate()</h6></td>
                             <td><p>Displays the detail rate</p></td>
                         </tr>
-                        <tr>
-                            <td><h4>the_detail_duration()</h4></td>
+                        <tr class="odd">
+                            <td><h4>the_detail_duration()</h4><h6>+ get_the_detail_duration()</h6></td>
                             <td><p>Displays the detail duration</p></td>
                         </tr>
                         <tr>
-                            <td><h4>the_detail_subtotal()</h4></td>
+                            <td><h4>the_detail_subtotal()</h4><h6>+ get_the_detail_subtotal()</h6></td>
                             <td><p>Displays the detail subtotal</p></td>
                         </tr>
-                        <tr>
-                            <td><h4>wp3i_currency()</h4></td>
+                        <tr class="odd">
+                            <td><h4>wp3i_currency()</h4><h6>+ get_wp3i_currency()</h6></td>
                             <td><p>Displays the chosen currency</p></td>
                         </tr>
                         <tr>
                             <td><h4>wp3i_has_tax()</h4></td>
                             <td><p>Returns true if tax is set above 0.00</p></td>
                         </tr>
-                        <tr>
-                            <td><h4>the_invoice_subtotal()</h4></td>
+                        <tr class="odd">
+                            <td><h4>the_invoice_subtotal()</h4><h6>+ get_the_invoice_subtotal()</h6></td>
                             <td><p>Displays the invoice subtotal amount</p></td>
                         </tr>
                         <tr>
-                            <td><h4>the_invoice_tax()</h4></td>
+                            <td><h4>the_invoice_tax()</h4><h6>+ get_the_invoice_tax()</h6></td>
                             <td><p>Displays the amount off tax (subtotal * tax)</p></td>
                         </tr>
-                        <tr>
-                            <td><h4>the_invoice_total()</h4></td>
+                        <tr class="odd">
+                            <td><h4>the_invoice_total()</h4><h6>+ get_the_invoice_total()</h6></td>
                             <td><p>Displays the current invoice total (subtotal + tax)</p></td>
                         </tr>
                     </table>
@@ -166,15 +162,11 @@ function wp3i_options()
                 </div>
             </div>
             <div class="postbox" id="new">
-                <h3 class="hndle"><span>New in 1.0.8</span></h3>
+                <h3 class="hndle"><span>New in 1.0.9</span></h3>
                 <div class="inside">
-                    <p>Version 1.0.8 should fix email problems.<br />
-                    Also, I'm proud to anounce the opening of the <a href="http://www.wordpress3invoice.com">WordPress 3 Invoice website</a>!</p>
                     <ul>
-                    	<li>Removed Content editor from invoices.</li>
-                    	<li>Invoice templates don't use the_content() anymore.</li>
-                    	<li>Fixed Email Issues by removing fopen functionality!</li>
-                        <li>New website for support, help and ideas.</li>
+                    	<li>Added all the get_ functions to the API list</li>
+                        <li>Fixed small url bug</li>
                     </ul>
                 </div>
             </div>

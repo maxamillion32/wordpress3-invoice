@@ -87,20 +87,29 @@
 	/*--------------------------------------------------------------------------------------------
 										 the_detail_title
 	--------------------------------------------------------------------------------------------*/
-	function the_detail_title()
+	function get_the_detail_title()
 	{
 		global $the_detail;
-		echo $the_detail[0];
+		return $the_detail[0];
+	}
+	
+	function the_detail_title()
+	{
+		echo get_the_detail_title();
 	}
 	
 	
 	/*--------------------------------------------------------------------------------------------
 										the_detail_description
 	--------------------------------------------------------------------------------------------*/
-	function the_detail_description()
+	function get_the_detail_description()
 	{
 		global $the_detail;
-		echo stripslashes($the_detail[1]);
+		return stripslashes($the_detail[1]);
+	}
+	function the_detail_description()
+	{
+		echo get_the_detail_description();
 	}
 	
 	
@@ -115,38 +124,49 @@
 	
 	function the_detail_type()
 	{
-		global $the_detail;
-		echo $the_detail[2];
+		echo get_the_detail_type();
 	}
 	
 	
 	/*--------------------------------------------------------------------------------------------
 										the_detail_rate
 	--------------------------------------------------------------------------------------------*/
-	function the_detail_rate()
+	function get_the_detail_rate()
 	{
 		global $the_detail;
-		echo $the_detail[3];
+		return $the_detail[3];
+	}
+	function the_detail_rate()
+	{
+		echo get_the_detail_rate();
 	}
 	
 	
 	/*--------------------------------------------------------------------------------------------
 										the_detail_duration
 	--------------------------------------------------------------------------------------------*/
-	function the_detail_duration()
+	function get_the_detail_duration()
 	{
 		global $the_detail;
-		echo $the_detail[4];
+		return $the_detail[4];
+	}
+	function the_detail_duration()
+	{
+		echo get_the_detail_duration();
 	}
 	
 	
 	/*--------------------------------------------------------------------------------------------
 										the_detail_subtotal
 	--------------------------------------------------------------------------------------------*/
-	function the_detail_subtotal()
+	function get_the_detail_subtotal()
 	{
 		global $the_detail;
-		echo number_format($the_detail[5], 2, '.', ''); 
+		return number_format($the_detail[5], 2, '.', ''); 
+	}
+	function the_detail_subtotal()
+	{
+		echo get_the_detail_subtotal();
 	}
 	
 
@@ -154,17 +174,22 @@
 	/*--------------------------------------------------------------------------------------------
 										invoice_template_url
 	--------------------------------------------------------------------------------------------*/
-	function invoice_template_url()
+	function get_invoice_template_url()
 	{
 		global $invoice_template_url;
 		if(file_exists(STYLESHEETPATH . '/invoice/invoice.php'))
 		{
-			echo bloginfo('template_url') . '/invoice';
+			return bloginfo('template_url') . '/invoice';
 		}
 		else
 		{
-			echo $invoice_template_url;
+			return $invoice_template_url;
 		}
+	}
+	
+	function invoice_template_url()
+	{
+		echo get_invoice_template_url();
 	}
 
 
@@ -424,18 +449,33 @@
 	/*--------------------------------------------------------------------------------------------
 										the_invoice_total
 	--------------------------------------------------------------------------------------------*/
+	function get_the_invoice_subtotal()
+	{
+		global $post;
+		return wp3i_get_invoice_subtotal($post->ID);
+	}
 	function the_invoice_subtotal()
 	{
 		global $post;
 		echo wp3i_get_invoice_subtotal($post->ID);
 	}
 	
+	function get_the_invoice_tax()
+	{
+		global $post;
+		return wp3i_get_invoice_tax($post->ID);
+	}
 	function the_invoice_tax()
 	{
 		global $post;
 		echo wp3i_get_invoice_tax($post->ID);
 	}
 	
+	function get_the_invoice_total()
+	{
+		global $post;
+		return wp3i_get_invoice_total($post->ID);
+	}
 	function the_invoice_total()
 	{
 		global $post;
