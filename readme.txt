@@ -43,6 +43,12 @@ See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
 
+= 1.1.0 =
+* Extended client taxonomy to accept more information
+* New client functions
+* Updated invoice and email template files
+* New option: turn on / off permalink encoding
+
 = 1.0.9 =
 * Fixed template url bug
 * Added get_ functions to API

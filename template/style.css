@@ -13,20 +13,20 @@ table, tr, td {vertical-align:top; font-family:Arial, Helvetica, sans-serif; fon
 a img { border: none; cursor:pointer; }
 a {text-decoration:none;}
 img {cursor:auto;}
-p {font-family:Arial, Helvetica, sans-serif; font-size:10px; line-height:14px; color:#999;}
+p {font-family:Arial, Helvetica, sans-serif; font-size:11px; line-height:14px; color:#999; margin-top:2px;}
 
 
 /* Global
 -------------------------------------------------*/
-.container {width:540px; margin:30px auto; padding:30px; background-color:#FFF; border:#CCC solid 1px;}
+.container {width:540px; margin:30px auto; padding:30px; background-color:#FFF; border:#DDDFDF solid 1px; position:relative;}
 h1 { font-weight:bold; font-size:72px; line-height:72px;}
 h2 { font-weight:bold; font-size:18px; line-height:18px; position:relative; margin-top:-18px;}
 
 
 /* Header
 -------------------------------------------------*/
-.header {padding-bottom:60px; overflow:hidden;}
-.header img {padding-right:10px;}
+.header {}
+.header img {padding-right:20px; position:relative;}
 
 .header h3 {font-weight:400; font-size:24px; line-height:24px;}
 .header h3 strong {font-weight:700;}
@@ -37,27 +37,31 @@ h2 { font-weight:bold; font-size:18px; line-height:18px; position:relative; marg
 
 /* Info
 -------------------------------------------------*/
-.info {padding-bottom:60px; overflow:hidden;}
-.info h4{font-weight:bold; font-size:12px; line-height:12px; margin-bottom:4px;}
-.info h4 span {color:#00b7f2;}
+.info {padding-top:60px; overflow:hidden; clear:both;}
+
+fieldset {border:1px solid #F4F4F4; padding:10px; float:left; width:238px; margin-right:20px;}
+fieldset.last {margin-right:0px;}
+fieldset legend {display:block; padding:0px 5px; color:#0091db; font-size:12px;}
+fieldset p {font-size:11px; margin-bottom:5px;}
+fieldset p.hidden {display:none;}
+fieldset p strong {min-width:120px;}
 
 
 /* Project Breakdown
 -------------------------------------------------*/
-.breakdown {padding-bottom:44px;}
+.breakdown {padding-top:60px;}
 .breakdown table {width:100%;}
 .breakdown table tr {}
 .breakdown table tr td { padding:5px 5px; color:#999; font-size:12px; line-height:12px;}
-.breakdown table tr.heading td {color:#00b7f2; text-transform:uppercase; font-size:14px; line-height:14px; padding:7px 5px; font-weight:bold;}
+.breakdown table tr.heading td {color:#0091db; text-transform:uppercase; font-size:14px; line-height:14px; padding:7px 5px; font-weight:bold; }
 .breakdown table tr.title td {background-color:#f5f5f5!important; color:#616161; font-weight:bold; }
 .breakdown table tr.description td {font-size:10px; line-height:12px;}
-
+.breakdown table tr.heading td.total {background-color:#0091db; color:#FFF;}
 
 /* Payment Details
 -------------------------------------------------*/
-.payment-details {width:250px; padding:20px 0px 20px 15px; background-color:#f6f6f6;}
-.payment-details table tr td.label {color:#999; }
-.payment-details table tr td {font-size:11px; line-height:11px; color:#333; padding:3px 5px;}
+.payment-details {padding-top:60px;}
+.payment-details fieldset {float:none; width:auto;}
 
 
 /* Credits

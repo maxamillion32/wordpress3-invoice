@@ -107,6 +107,7 @@
         
         <input type="hidden" name="wp3i_hidden_currency" id="wp3i_hidden_currency"  value="<?php wp3i_currency(); ?>" />
         <input type="hidden" name="wp3i_hidden_tax" id="wp3i_hidden_tax"  value="<?php wp3i_tax(); ?>" />
+        <input type="hidden" name="wp3i_hidden_permalink" id="wp3i_hidden_permalink"  value="<?php echo wp3i_get_permalink(); ?>" />
 		<?php
 		
 		
@@ -129,45 +130,37 @@
 	{
 		global $post;
 		?>
-        
-			
-        <?php if(get_invoice_client_name()): ?>
-        	<?php if(get_invoice_client_email()): ?>
-            	<!--<form method="post" action="email.php">
-                    <input type="hidden" name="to" value="<?php echo get_invoice_client_email(); ?>" />
-                    <input type="hidden" name="url" value="<?php the_permalink(); ?>" />
-                    <input type="hidden" name="return" value="<?php echo get_edit_post_link(); ?>" />
-        			<p><input type="submit" class="button" name="email" value="Send Invoice"> to <?php echo get_invoice_client_email(); ?></p>-->
-                    <?php 
-					//$send_invoice_link = plugins_url('email.php',__FILE__);
-					//$send_invoice_link .= '?to='.get_invoice_client_email();
-					//$send_invoice_link .= '&url='.get_permalink();
-					//$send_invoice_link .= '&return='.get_edit_post_link();
-					 ?>
-                     <?php if($_GET['sent'] == 'success'): ?>
-                     	<div class="updated">
-                     		<p>Invoice sent successfully!</p>
-                        </div>
-                     <?php elseif($_GET['sent'] == 'fail'): ?>
-                     	<div class="error">
-                     		<p>Invoice failed to send.</p>
-                        </div>
-                     <?php endif; ?>
-                     <p><a href="<?php the_permalink(); ?>?email=send" class="button">Send Invoice</a> to <?php echo get_invoice_client_email(); ?></p>
-                <!--</form>-->
-       		<?php else: ?>
-            	<p>The client <?php echo get_invoice_client_name(); ?> has no registered email address.</p>
-            <?php endif; ?>
-		<?php else: ?>
-        	<p>Please select a Client and Save your Invoice before emailing.</p>
+		<?php if($_GET['sent'] == 'success'): ?>
+        	<div class="updated">
+            	<p>Invoice sent successfully!</p>
+            </div>
+        <?php elseif($_GET['sent'] == 'fail'): ?>
+        	<div class="error">
+            	<p>Invoice failed to send.</p>
+            </div>
         <?php endif; ?>
+        
+        <p>
+        	<a href="<?php the_permalink(); ?>" class="button">View Online Invoice</a> &bull; 
+            <a href="<?php the_permalink(); ?>?email=template" class="button">View Email Invoice</a> &bull; 
+            <?php if(get_invoice_client_name()): ?>
+				<?php if(get_invoice_client_email()): ?>
+                	<a href="<?php the_permalink(); ?>?email=send" class="button">Send Email Invoice to <?php invoice_client(); ?> ( <?php invoice_client_email(); ?> )</a> 
+                <?php else: ?>
+                	<a class="button disabled">Send Email Invoice to <?php invoice_client(); ?> ( no registered email address )</a> 
+                <?php endif; ?>
+            <?php else: ?>
+            	<a class="button disabled"> Send Email Invoice ( No Client Selected )</a>
+            <?php endif; ?>
+        </p>
+
         
 		<?php
 	}
 	
 	function add_invoice_send() 
 	{
-		add_meta_box('invoice_send', 'Send Invoice to Client', 'invoice_send', 'invoice', 'normal', 'low');
+		add_meta_box('invoice_send', 'View, Print, Email', 'invoice_send', 'invoice', 'normal', 'low');
 	} 
 	add_action('admin_menu', 'add_invoice_send');
 	
@@ -218,7 +211,7 @@
                     <td>
 						<ul>
                         <li class="title"><input type="text" name="detail-title[]" id="detail-title" value="<?php the_detail_title(); ?>"></li>
-                        <li class="description"><textarea name="detail-description[]" id="detail-description"><?php the_detail_description(); ?></textarea>
+                        <li class="description"><textarea name="detail-description[]" id="detail-description"><?php echo get_the_detail_description(); ?></textarea>
                         </li>
                         </ul>
                     </td>

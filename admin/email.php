@@ -15,10 +15,11 @@ update_post_meta($post->ID, 'invoice_sent', date_i18n('j/m/Y'));
 	
 /* Headers
 -------------------------------------*/
-$headers  = 'MIME-Version: 1.0' . "\r\n";
-$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-$headers .= "From: ".$from."\r\n";
-$headers .= "Reply-To: ".$from."\r\n";
+$headers = "From: ".$from."\n";
+$headers .= "Reply-To: ".$from."\n";
+$headers .= 'MIME-Version: 1.0' . "\n";
+$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\n";
+
 	
 	
 /* Recipients

@@ -109,7 +109,7 @@
 	}
 	function the_detail_description()
 	{
-		echo get_the_detail_description();
+		echo nl2br(get_the_detail_description());
 	}
 	
 	
@@ -332,44 +332,7 @@
 	}
 	
 	
-	/*--------------------------------------------------------------------------------------------
-										invoice_client		
-	--------------------------------------------------------------------------------------------*/
-	function get_invoice_client_name()
-	{
-		global $post;
-		
-		$terms = get_the_terms($post->ID , 'client');
-		if($terms)
-		{	
-			foreach( $terms as $term ) 
-			{
-				return $term->name;
-			}
-		}
-	}
 	
-	function invoice_client()
-	{
-		echo get_invoice_client_name();
-	}
-	
-	/*--------------------------------------------------------------------------------------------
-										invoice_client		
-	--------------------------------------------------------------------------------------------*/
-	function get_invoice_client_email()
-	{
-		global $post;
-		
-		$terms = get_the_terms($post->ID , 'client');
-		if($terms)
-		{	
-			foreach( $terms as $term ) 
-			{
-				return $term->description;
-			}
-		}
-	}
 	
 	
 	/*--------------------------------------------------------------------------------------------
@@ -442,6 +405,23 @@
 		else
 		{
 			return 'client';	
+		}
+	}
+	
+	
+	/*--------------------------------------------------------------------------------------------
+											Invoice Permalinks
+	--------------------------------------------------------------------------------------------*/
+	function wp3i_get_permalink()
+	{
+		$wp3i_permalink= get_option('wp3i_permalink');	
+		if($wp3i_permalink)
+		{
+			return $wp3i_permalink;
+		}
+		else
+		{
+			return 'encoded';	
 		}
 	}
 	

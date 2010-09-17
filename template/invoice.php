@@ -23,22 +23,38 @@
     	<div class="header">
         	<table cellpadding="0" cellspacing="0" align="left">
             	<tr>
-                	<td><img src="<?php invoice_template_url(); ?>/images/wp3i-logo.jpg"/></td>
+                	<td><img src="<?php invoice_template_url(); ?>/images/wp3i-logo.png" style="margin-top:-35px;"/></td>
                 	<td>
                     <h3>WordPress3 <strong>Invoices</strong></h3>
-                    <p>(XX) XXXX XXXX</p>
-                    <p><a href="mailto:test@test.com">test@test.com</a></p>
-                    <p><a href="http://www.test.com">www.test.com</a></p>
+                    <p>Created by Elliot Condon</p>
+                    <p><a href="mailto:you@youremailhere.com">you@youremailhere.com</a></p>
+                    <p><a href="www.yourwebsitehere.com">www.yourwebsitehere.com</a></p>
                     </td>
                 </tr>
             </table>
         </div>
         
         <div class="info">
-            <h4><span>To:</span> <?php invoice_client(); ?></h4>
-            <h4><span>Project:</span> <?php the_title(); ?></h4>
-            <h4><span>Date:</span> <?php the_time('d/m/Y'); ?></h4>
-            <h4><span><?php invoice_type(); ?> Number:</span> <?php invoice_number(); ?></h4>
+            <fieldset>
+            	<legend>Sent to</legend>
+                <p><strong><?php invoice_client(); ?></strong></p>
+                <p class="hidden"><strong>Description: </strong><?php invoice_client_description(); ?></p>
+                <p><?php invoice_client_business(); ?></p>
+                <p><?php invoice_client_business_address(); ?></p>
+                <p class="hidden"><strong>Email: </strong><?php invoice_client_email(); ?></p>
+                <p class="hidden"><strong>Phone: </strong><?php invoice_client_phone(); ?></p>
+                <p class="hidden"><strong>VAT Number: </strong><?php invoice_client_number(); ?></p>
+                
+            </fieldset>
+            
+            <fieldset class="last">
+            	<legend><?php invoice_type(); ?> Details</legend>
+                <p><strong>Project: </strong><?php the_title(); ?></p>
+                <p><strong><?php invoice_type(); ?> Number: </strong><?php invoice_number(); ?></p>
+                <p><strong>Date Issued: </strong><?php the_time('d/m/Y'); ?></p>
+            </fieldset>
+            
+            
         </div>
         
         <div class="breakdown">
@@ -67,41 +83,25 @@
                 <?php endif; ?>
                 
                 <tr class="heading">
-                	<td colspan="3"></td><td>Total</td><td><?php wp3i_currency(); ?> <?php the_invoice_total(); ?></td>
+                	<td colspan="3"></td><td class="total">Total</td><td class="total"><?php wp3i_currency(); ?> <?php the_invoice_total(); ?></td>
                 </tr>
             </table>
         </div>
         
-		<div class="payment-details">
-        	<?php if(get_invoice_type() == 'Invoice' ): ?>
-                <table cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td class="label">Bank</td><td>XXXXXXX</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Acc Name</td><td>XXXXXXX XXXXXXX</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Acc BSB</td><td>XXX-XXX</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Acc Number</td><td>XX-XXX-XXXX</td>
-                    </tr>
-                </table>
-        	<?php else: ?>
-                <table cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td class="label">
-                            This is a project quote, not an invoice.
-                            No payment is required.<br /><br />
-                            Hope to hear from you soon.<br /><br />
-                        </td>
-                    </tr>
-                </table>
-        	<?php endif; ?>
-        </div>
-        
-        
+        <div class="payment-details">
+        	<fieldset class="last">
+            	<legend>Payment Details</legend>
+                <?php if(get_invoice_type() == 'Invoice' ): ?>
+                	<p><strong>Bank: </strong>XXXXXXX</p>
+                    <p><strong>Acc Name: </strong>XXXXXXX XXXXXXX</p>
+                    <p><strong>Acc BSB: </strong>XXX-XXX</p>
+                    <p><strong>Acc Number: </strong>XX-XXX-XXXX</p>
+        		<?php else: ?>
+                	<p><strong>This is a project quote, not an invoice.</strong></p>
+                    <p>No payment is required.<br /> Hope to hear from you soon.</p>
+                <?php endif; ?>
+            </fieldset>
+        </p>
         
         <?php if(get_invoice_type() == 'Invoice' ): ?>
             <p class="credits">

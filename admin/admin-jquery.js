@@ -43,9 +43,17 @@ $(document).ready(function()
 		Generate Invoice Slug
 		-----------------------------------------*/
 		//alert($('#slugdiv input#post_name').attr('value').length);
-		if($('#slugdiv input#post_name').attr('value').length < 30)
+		var wp3i_permalink = $('input#wp3i_hidden_permalink').attr('value');
+		if(wp3i_permalink == 'encoded')
 		{
-			$('#slugdiv input#post_name').attr('value',wp3i_generate_permalink());
+			if($('#slugdiv input#post_name').attr('value').length < 30)
+			{
+				$('#slugdiv input#post_name').attr('value',wp3i_generate_permalink());
+			}
+		}
+		else
+		{
+			$('#slugdiv input#post_name').attr('value','');	
 		}
 		/* 
 	
@@ -358,11 +366,12 @@ $(document).ready(function()
 	if(taxonomy == 'client')
 	{
 		$('.icon32#icon-edit').css({'background-position' : '-600px -5px'});
-		$('label[for=description]').html('Email Address');
-		$('textarea#description').attr('rows',1);
-		$('label[for=tag-description]').html('Email Address');
-		$('textarea#tag-description').attr('rows',1);
-		$('th.column-description').html('Email Address');
+		$('.form-field:has( input[name=slug])').hide();
+		//$('label[for=description]').html('Email Address');
+		//$('textarea#description').attr('rows',1);
+		//$('label[for=tag-description]').html('Email Address');
+		//$('textarea#tag-description').attr('rows',1);
+		//$('th.column-description').html('Email Address');
 	}
 	else if(post_type == 'invoice')
 	{
@@ -381,10 +390,5 @@ $(document).ready(function()
 		return vars;
 	}
 
-	
-	
-
-			
+		
 });
-
-

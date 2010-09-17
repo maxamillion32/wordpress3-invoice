@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: WordPress 3 Invoice
-Plugin URI: http://www.elliotcondon.com/wordpress/wordpress-3-invoice-plugin/
+Plugin URI: http://www.wordpress3invoice.com/
 Description: An online Invoice solution for web designers. Manage and email invoices through wordpress and customise with html + css invoice templates.
-Version: 1.0.9
+Version: 1.1.0
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -25,6 +25,7 @@ function wp3i_head()
     <?php
 }
 add_action('admin_head', 'wp3i_head');
+
 
 
 /*--------------------------------------------------------------------------------------------
@@ -66,26 +67,7 @@ function wp3i_init()
 	
 	/* Clients Taxonomy
 	----------------------------*/
-	$labels = array(
-		'name' => _x( 'Clients', 'taxonomy general name' ),
-		'singular_name' => _x( 'Client', 'taxonomy singular name' ),
-		'search_items' =>  __( 'Search Clients' ),
-		'all_items' => __( 'All Clients' ),
-		'parent_item' => __( 'Parent Client' ),
-		'parent_item_colon' => __( 'Parent Client:' ),
-		'edit_item' => __( 'Edit Client' ), 
-		'update_item' => __( 'Update Client' ),
-		'add_new_item' => __( 'Add New Client' ),
-		'new_item_name' => __( 'New Client Name' ),
-	); 	
-	register_taxonomy('client', 'invoice',
-		array(
-             'hierarchical' => true,
-			 'labels' => $labels,
-			 'query_var' => true,
-			 'rewrite' => true
-		)
-	);
+	
 
 
 	/* Invoice Columns
@@ -233,6 +215,7 @@ add_action('init', 'wp3i_init');
 
 /* Includes
 ----------------------------*/
+require_once('core/client.php');
 require_once('core/functions.php');
 require_once('admin/meta-boxes.php');
 require_once('admin/options.php');
@@ -253,6 +236,9 @@ add_action('admin_menu', 'wp3i_menu');
 function wp3i_activate() 
 {
 	//echo 'Updating Invoice Meta Data...';
+	
+	// activate client taxonomy
+	taxonomy_metadata_setup();
 	
 	// loop though all invoices, set custom fields.
 	$invoices = get_posts(array(
@@ -304,5 +290,4 @@ function wp3i_activate()
 	
 	
 }
-
 register_activation_hook( __FILE__, 'wp3i_activate' );
