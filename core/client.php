@@ -34,7 +34,7 @@ function client_init()
 	add_action( 'client_add_form_fields', 'add_client', 10, 2);
 	add_action( 'client_edit_form_fields', 'edit_client', 10, 2);
 	
-	function add_client($tag, $taxonomy)
+	function add_client($tag)
 	{
 		?>
 		<div class="form-field">
@@ -62,7 +62,7 @@ function client_init()
 		<?php
 	}
 	
-	function edit_client($tag, $taxonomy)
+	function edit_client($tag)
 	{
 		$client_email = get_term_meta($tag->term_id, 'client_email', true);
 		$client_business = get_term_meta($tag->term_id, 'client_business', true);
