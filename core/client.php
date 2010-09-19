@@ -232,9 +232,9 @@ function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
 		global $post;
 		
 		$terms = get_the_terms($post->ID , 'client');
-		$terms = array_values($terms);
 		if($terms)
 		{	
+			$terms = array_values($terms);
 			return $terms[0]->name;
 		}
 	}
@@ -252,9 +252,9 @@ function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
 		global $post;
 		
 		$terms = get_the_terms($post->ID , 'client');
-		$terms = array_values($terms);
 		if($terms)
 		{	
+			$terms = array_values($terms);
 			return $terms[0]->description;
 			
 		}
@@ -273,9 +273,9 @@ function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
 		global $post;
 		
 		$terms = get_the_terms($post->ID , 'client');
-		$terms = array_values($terms);
 		if($terms)
 		{	
+			$terms = array_values($terms);
 			return get_term_meta($terms[0]->term_id, 'client_email', true);
 		}
 	}
@@ -293,9 +293,9 @@ function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
 		global $post;
 		
 		$terms = get_the_terms($post->ID , 'client');
-		$terms = array_values($terms);
 		if($terms)
 		{	
+			$terms = array_values($terms);
 			return get_term_meta($terms[0]->term_id, 'client_business', true);
 		}
 	}
@@ -313,9 +313,9 @@ function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
 		global $post;
 		
 		$terms = get_the_terms($post->ID , 'client');
-		$terms = array_values($terms);
 		if($terms)
 		{	
+			$terms = array_values($terms);
 			return get_term_meta($terms[0]->term_id, 'client_address', true);
 		}
 	}
@@ -333,9 +333,9 @@ function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
 		global $post;
 		
 		$terms = get_the_terms($post->ID , 'client');
-		$terms = array_values($terms);
 		if($terms)
 		{	
+			$terms = array_values($terms);	
 			return get_term_meta($terms[0]->term_id, 'client_phone', true);
 		}
 	}
@@ -353,9 +353,9 @@ function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
 		global $post;
 		
 		$terms = get_the_terms($post->ID , 'client');
-		$terms = array_values($terms);
 		if($terms)
 		{	
+			$terms = array_values($terms);
 			return get_term_meta($terms[0]->term_id, 'client_number', true);
 		}
 	}
