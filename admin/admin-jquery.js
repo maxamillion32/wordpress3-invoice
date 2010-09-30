@@ -123,6 +123,7 @@ $(document).ready(function()
 				var newInputValue = li.wp3i_detail_get_input();
 				li.find('span').html(newInputValue);	
 				li.wp3i_detail_hide();
+				update_subtotal_numbers()
 				return false;
 			});
 			
@@ -130,6 +131,7 @@ $(document).ready(function()
 				li.find('span').html(origInputValue);	
 				//li.wp3i_detail_set_input(origInputValue);
 				li.wp3i_detail_hide();
+				update_subtotal_numbers()
 				return false;
 			});
 		});
@@ -218,7 +220,7 @@ $(document).ready(function()
 		Store Tax, Currency
 		-----------------------------------------*/
 		var wp3i_currenty = $('input#wp3i_hidden_currency').attr('value');
-		var wp3i_tax = $('input#wp3i_hidden_tax').attr('value'); wp3i_tax = parseFloat(wp3i_tax);
+		
 		/* 
 		
 		
@@ -245,12 +247,15 @@ $(document).ready(function()
 			detail.find('input#detail-subtotal').attr('value', subtotal);
 			detail.find('p#detail-subtotal').html(wp3i_currenty+' '+subtotal);
 			
+			update_subtotal_numbers();
+		}
+		
+		function update_subtotal_numbers()
+		{
 			$('.detail-footer .invoice-subtotal').html(get_invoice_subtotal().toFixed(2));
 			$('.detail-footer .invoice-tax').html(get_invoice_tax().toFixed(2));
 			$('.detail-footer .invoice-total').html(get_invoice_total().toFixed(2));
 		}
-		
-		
 		
 		function get_invoice_subtotal()
 		{
@@ -263,6 +268,7 @@ $(document).ready(function()
 		
 		function get_invoice_tax()
 		{
+			var wp3i_tax = $('#invoice_details input#invoice-tax').attr('value'); wp3i_tax = parseFloat(wp3i_tax);
 			var temp_total = parseFloat(wp3i_tax * get_invoice_subtotal());
 			return temp_total;
 		}

@@ -43,6 +43,13 @@ See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
 
+= 1.1.1 =
+* Added Individual tax amounts
+* New Option: Enable / disable the content editor
+* Minor changes to stats and invoice edit pages
+* Added Edit Client buttons to invoice admin pages
+* Added Client Filter to Invoices admin page
+
 = 1.1.0 =
 * Extended client taxonomy to accept more information
 * New client functions

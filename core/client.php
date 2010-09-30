@@ -366,4 +366,34 @@ function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
 	}
 	
 	
+	/*--------------------------------------------------------------------------------------------
+										invoice_client Edit Link
+	--------------------------------------------------------------------------------------------*/
+	function get_invoice_client_edit_link()
+	{
+		global $post;
+		$terms = get_the_terms($post->ID , 'client');
+		if($terms)
+		{	
+			$terms = array_values($terms);
+			return get_bloginfo('url').'/wp-admin/edit-tags.php?action=edit&taxonomy=client&post_type=invoice&tag_ID='.$terms[0]->term_id;
+		}
+	}
+	
+	function invoice_client_edit_link()
+	{
+		echo get_invoice_client_edit_link();
+	}
+	
+	function get_invoice_client_edit($postID = NULL)
+	{
+		global $post;
+		if($postID == NULL){$postID = $post->ID;}
+		$terms = get_the_terms($postID , 'client');
+		if($terms)
+		{	
+			$terms = array_values($terms);
+			return '<a title="Edit Client" href="'.get_bloginfo('url').'/wp-admin/edit-tags.php?action=edit&taxonomy=client&post_type=invoice&tag_ID='.$terms[0]->term_id.'">'.$terms[0]->name.'</a>';
+		}
+	}
 ?>

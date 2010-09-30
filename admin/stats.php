@@ -343,29 +343,42 @@ function wp3i_get_stats_subtotal($invoiceStatus)
 function wp3i_stats_invoices()
 {
 	global $invoices;
-	$counter = 0;
-	echo '<table><tr><th>#</th><th>Invoice Name</th><th>Date</th><th>Total</th><th>Status</th></tr>';
-	foreach($invoices as $invoice)
-	{
-		$counter++; ?>
+	if($invoices): $counter = 0;?>
+    <table>
+    	<tr>
+        	<th>Invoice No.</th><th>Type</th><th>Invoice Name</th><th>Total</th><th>Date</th><th>Client</th><th>Status</th>
+        </tr>
+		<?php foreach($invoices as $invoice): $counter++; ?>
 		<tr <?php if($counter % 2 == 0){echo 'class="alternate"';} ?>>
             <td class="invoice-number"><?php echo get_post_meta($invoice->ID, 'invoice_number', true); ?></td>
-            <td><?php edit_post_link($invoice->post_title,'','',$invoice->ID); ?></td>
+            <td class="invoice-type"><?php echo get_post_meta($invoice->ID, 'invoice_type', true); ?></td>
+            <td class="invoice-title"><?php edit_post_link($invoice->post_title,'','',$invoice->ID); ?></td>
+            <td class="invoice-total"><?php wp3i_currency(); ?><?php echo number_format(wp3i_get_invoice_total($invoice->ID), 2, '.', ''); ?></td>
             <td class="invoice-date"><?php echo get_the_time('d M Y',$invoice->ID); ?></td>
-            <td class="total"><?php wp3i_currency(); ?><?php echo number_format(wp3i_get_invoice_total($invoice->ID), 2, '.', ''); ?></td>
+            <td class="invoice-cient"><?php echo get_invoice_client_edit($invoice->ID); ?></td>
             <td><?php
-			if(invoice_has_paid($invoice->ID))
+			$invoice_paid = get_post_meta($invoice->ID, 'invoice_paid', true);
+			$invoice_sent = get_post_meta($invoice->ID, 'invoice_sent', true);
+			if($invoice_paid && $invoice_paid != 'Not yet')
 			{
-				echo'<div class="tick"></div>';
+				echo 'Paid';
 			}
-			elseif(invoice_has_sent($invoice->ID))
+			elseif($invoice_sent && $invoice_sent != 'Not yet')
 			{
-				echo'<div class="cross"></div>';
-			} ?></td>
+				$invoice_sent = explode('/',$invoice_sent);
+				$invoice_sent = intval($invoice_sent[2]).'-'.intval($invoice_sent[1]).'-'.intval($invoice_sent[0]);
+	
+				$days = wp3i_date_diff($invoice_sent, date_i18n('Y-m-d'));
+				if($days == 0){echo 'Sent today';}
+				elseif($days == 1){echo 'Sent 1 day ago';}
+				else{ echo 'Sent '.$days.' days ago';} 
+			}
+			else{echo 'Not sent yet';}
+			?></td>
         </tr>
-		<?php 
-	}
-	echo '</table>';
+		<?php endforeach; ?>
+	</table>
+    <?php endif; 
 }
 
 

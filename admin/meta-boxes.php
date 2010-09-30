@@ -41,6 +41,18 @@
                     <a href="#" class="wp3i-cancel">Cancel</a>
                 </div>
             </li>
+            <li class="normal-detail">
+            	<label>Tax: </label>
+                <div class="front">
+                	<span><?php wp3i_tax(); ?></span>
+                	<a href="#" class="wp3i-edit">Edit</a>
+                </div>
+                <div class="back">
+                	<input type="text" name="invoice-tax" id="invoice-tax" value="<?php wp3i_tax(); ?>" size="2">
+                    <a href="#" class="button wp3i-ok update-subtotal">OK</a>
+                    <a href="#" class="wp3i-cancel update-subtotal">Cancel</a>
+                </div>
+            </li>
             <li class="date-detail">
             	<label>Sent: </label>
                 <div class="front">
@@ -63,8 +75,8 @@
                         <option value="11">Nov</option>
                         <option value="12">Dec</option>
             		</select>
-                    <input type="text" maxlength="2" size="2" value="" name="dd" id="dd">, 
-                    <input type="text" maxlength="4" size="4" value="" name="yyyy" id="yyyy">
+                    <input type="text" maxlength="2" size="1" value="" name="dd" id="dd">, 
+                    <input type="text" maxlength="4" size="3" value="" name="yyyy" id="yyyy">
                 	<input type="hidden" name="invoice-sent" id="invoice-sent" value="<?php echo get_invoice_sent(); ?>">
 
                     <a href="#" class="button wp3i-ok">OK</a>
@@ -94,8 +106,8 @@
                         <option value="11">Nov</option>
                         <option value="12">Dec</option>
             		</select>
-                    <input type="text" maxlength="2" size="2" value="31" name="dd" id="dd">, 
-                    <input type="text" maxlength="4" size="4" value="2010" name="yyyy" id="yyyy">
+                    <input type="text" maxlength="2" size="1" value="31" name="dd" id="dd">, 
+                    <input type="text" maxlength="4" size="3" value="2010" name="yyyy" id="yyyy">
                 	<input type="hidden" name="invoice-paid" id="invoice-paid" value="<?php echo get_invoice_paid(); ?>">
 
                     <a href="#" class="button wp3i-ok">OK</a>
@@ -147,7 +159,8 @@
 				<?php if(get_invoice_client_email()): ?>
                 	<a href="<?php the_permalink(); ?>?email=send" class="button">Send Email Invoice to <?php invoice_client(); ?> ( <?php invoice_client_email(); ?> )</a> 
                 <?php else: ?>
-                	<a class="button disabled">Send Email Invoice to <?php invoice_client(); ?> ( no registered email address )</a> 
+                	<a class="button disabled">Send Email Invoice to <?php invoice_client(); ?> ( no registered email address )</a>
+                    <a href="<?php invoice_client_edit_link(); ?>">Edit Client</a> 
                 <?php endif; ?>
             <?php else: ?>
             	<a class="button disabled"> Send Email Invoice ( No Client Selected )</a>
@@ -277,9 +290,9 @@
 		<div class="detail detail-footer">
         <p>
         <strong>Subtotal:</strong> <?php wp3i_currency(); ?><span class="invoice-subtotal"><?php the_invoice_subtotal(); ?></span>&nbsp;&nbsp;&nbsp;
-        <?php if(wp3i_has_tax()): ?>
+        <?php //if(wp3i_has_tax()): ?>
         	<strong>Tax:</strong> <?php wp3i_currency(); ?><span class="invoice-tax"><?php the_invoice_tax(); ?></span>&nbsp;&nbsp;&nbsp;
-        <?php endif; ?>
+        <?php //endif; ?>
         <strong>Total:</strong> <?php wp3i_currency(); ?><span class="invoice-total"><?php the_invoice_total(); ?></span>&nbsp;&nbsp;&nbsp;
         <a class="add-detail button-primary" href="#" title="Add Detail">Add Detail</a>
         </p>
@@ -307,6 +320,7 @@
 		
 		update_post_meta($post_id, 'invoice_number',$_POST['invoice-number']);
 		update_post_meta($post_id, 'invoice_type',$_POST['invoice-type']);
+		update_post_meta($post_id, 'invoice_tax',$_POST['invoice-tax']);
 		update_post_meta($post_id, 'invoice_sent',$_POST['invoice-sent']);
 		update_post_meta($post_id, 'invoice_paid',$_POST['invoice-paid']);
 		//update_post_meta($post_id, 'invoice_client',$_POST['invoice-client']);

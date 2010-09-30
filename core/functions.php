@@ -367,10 +367,14 @@
 	
 	function get_wp3i_tax()
 	{
-		$wp3i_currency =  get_option('wp3i_tax');	
-		if($wp3i_currency)
+		global $post;
+		if(get_post_meta($post->ID, 'invoice_tax', true))
 		{
-			return $wp3i_currency;
+			return get_post_meta($post->ID, 'invoice_tax', true);
+		}
+		elseif(get_option('wp3i_tax'))
+		{
+			return get_option('wp3i_tax');
 		}
 		else
 		{
@@ -414,7 +418,7 @@
 	--------------------------------------------------------------------------------------------*/
 	function wp3i_get_permalink()
 	{
-		$wp3i_permalink= get_option('wp3i_permalink');	
+		$wp3i_permalink = get_option('wp3i_permalink');	
 		if($wp3i_permalink)
 		{
 			return $wp3i_permalink;
@@ -422,6 +426,23 @@
 		else
 		{
 			return 'encoded';	
+		}
+	}
+	
+	
+	/*--------------------------------------------------------------------------------------------
+										Invoice Content Editor
+	--------------------------------------------------------------------------------------------*/
+	function wp3i_get_content_editor()
+	{
+		$wp3i_content_editor = get_option('wp3i_content_editor');	
+		if($wp3i_content_editor)
+		{
+			return $wp3i_content_editor;
+		}
+		else
+		{
+			return 'disabled';	
 		}
 	}
 	
