@@ -23,6 +23,9 @@ $graphTotals = array();
 $graphTitlesOutstanding = array();
 $graphTotalsOutstanding = array();
 
+$graphTitlesQuotes = array();
+$graphTotalsQuotes = array();
+
 
 /*--------------------------------------------------------------------------------------------
 									wp3i_setup_variables
@@ -135,7 +138,7 @@ function wp3i_get_last_financial_year()
 --------------------------------------------------------------------------------------------*/
 function wp3i_setup_graph_data()
 {
-	global $invoices, $graphTitles, $graphTitlesOutstanding, $graphDates, $graphTotals, $graphTotalsOutstanding;
+	global $invoices, $graphTitles, $graphTitlesOutstanding, $graphTitlesQuotes, $graphDates, $graphTotals, $graphTotalsOutstanding, $graphTotalsQuotes;
 	global $financialYear;
 	
 	$invoicesReversed = array_reverse($invoices);
@@ -147,6 +150,8 @@ function wp3i_setup_graph_data()
 	$graphTotals = array(0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
 	$graphTitlesOutstanding = array('', '', '', '', '', '', '', '', '', '', '', '');
 	$graphTotalsOutstanding = array(0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
+	$graphTitlesQuotes = array('', '', '', '', '', '', '', '', '', '', '', '');
+	$graphTotalsQuotes = array(0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
 	
 	// add invoice data into array
 	foreach($invoicesReversed as $invoice)
@@ -154,16 +159,24 @@ function wp3i_setup_graph_data()
 		
 		if(invoice_has_paid($invoice->ID))
 		{
-			$invoiceMonth = get_the_time('n',$invoice->ID);
+      		$invoiceMonth = explode('/',get_post_meta($invoice->ID,'invoice_paid',true));
+			$invoiceMonth = intval($invoiceMonth[1]);
 			
 			$graphTitles[$invoiceMonth-1] .= get_post_meta($invoice->ID, 'invoice_number', true) . ' - ' . $invoice->post_title . '<br>';
 			$graphTotals[$invoiceMonth-1] += wp3i_get_invoice_total($invoice->ID);
 		}
 		elseif(invoice_has_sent($invoice->ID))
 		{
-			$invoiceMonth = get_the_time('n',$invoice->ID);
+			$invoiceMonth = explode('/',get_post_meta($invoice->ID,'invoice_sent',true));
+			$invoiceMonth = intval($invoiceMonth[1]);
 			$graphTitlesOutstanding[$invoiceMonth-1] .= get_post_meta($invoice->ID, 'invoice_number', true) . ' - ' . $invoice->post_title . '<br>';
 			$graphTotalsOutstanding[$invoiceMonth-1] += wp3i_get_invoice_total($invoice->ID);
+		}
+		else
+		{
+			$invoiceMonth = get_the_time('n',$invoice->ID);
+			$graphTitlesQuotes[$invoiceMonth-1] .= get_post_meta($invoice->ID, 'invoice_number', true) . ' - ' . $invoice->post_title . '<br>';
+			$graphTotalsQuotes[$invoiceMonth-1] += wp3i_get_invoice_total($invoice->ID);
 		}
 	}
 	
@@ -176,6 +189,9 @@ function wp3i_setup_graph_data()
 		
 		$graphTitlesOutstanding = array_merge(array_slice($graphTitlesOutstanding,6,6), array_slice($graphTitlesOutstanding,0,6));
 		$graphTotalsOutstanding = array_merge(array_slice($graphTotalsOutstanding,6,6), array_slice($graphTotalsOutstanding,0,6));
+		
+		$graphTitlesQuotes = array_merge(array_slice($graphTitlesQuotes,6,6), array_slice($graphTitlesQuotes,0,6));
+		$graphTotalsQuotes = array_merge(array_slice($graphTotalsQuotes,6,6), array_slice($graphTotalsQuotes,0,6));
 	}
 }
 
@@ -189,7 +205,7 @@ function wp3i_setup_graph_data()
 --------------------------------------------------------------------------------------------*/
 function wp3i_stats_graph()
 {
-	global $firstInvoiceYear, $graphTitles, $graphTitlesOutstanding, $graphDates, $graphTotals, $graphTotalsOutstanding;
+	global $firstInvoiceYear, $graphTitles, $graphTitlesOutstanding, $graphTitlesQuotes, $graphDates, $graphTotals, $graphTotalsOutstanding, $graphTotalsQuotes;
 	global $filterMonthStart, $filterYearStart, $filterMonthEnd, $filterYearEnd;
 	
 	global $financialYear;
@@ -212,8 +228,8 @@ function wp3i_stats_graph()
 		chart = new Highcharts.Chart({
 			chart: {
 				renderTo: 'chart',
-				defaultSeriesType: 'line',
-				margin: [50, 0, 60, 60]
+				defaultSeriesType: 'area',
+				margin: [50, 20, 40, 80]
 			},
 			title: {
 				text: '<?php echo $graphTitle;?>',
@@ -229,39 +245,37 @@ function wp3i_stats_graph()
 						formatter: function() {
 							return this.value;
 						}
-					},
+					}
 
 				},
 				yAxis: {
 					title: {
-						text: 'Income'
+						text: null
 					},
-					plotLines: [{
-						value: 0,
-						width: 1,
-						color: '#808080'
-					}]
+					labels: {
+						formatter: function() {
+							return '$ '+this.value;
+						}
+					}
 				},
 				tooltip: {
 					formatter: function() {
 			                return '<b>'+ this.point.name +'</b><br/>'+
-							'Total '+this.series.name+' '+this.x + ': <?php wp3i_currency(); ?>'+this.y;
+							this.series.name+' '+this.x + ': <?php wp3i_currency(); ?>'+this.y;
 					}
 				},
 				legend: {
-					layout: 'vertical',
-					style: {
-						left: 'auto',
-						bottom: 'auto',
-						right: '0px',
-						top: '0px'
-					}
+					enabled: false,
+					
 				},
 				colors: [
-					'#5fb300', 
-					'#e9bf00'
+					'#4cc900', 
+					'#dfdfdf',
+					'#b1e591'
 				],
-				series: [{
+				
+				series: [
+				{
 					name: 'Income',
 					data: [
 					<?php
@@ -276,7 +290,21 @@ function wp3i_stats_graph()
 					?>
 					]
 				},{
-					name: 'Outstanding',
+					name: 'Quotes',
+					data: [
+					<?php
+					for($i = 0; $i < count($graphDates); $i++)
+					{
+						echo '{';
+						echo "name: '".$graphTitlesQuotes[$i]."',";
+						//echo "x: '".$graphDates[$i]."', ";
+						echo "y: ".$graphTotalsQuotes[$i]."";
+						echo '}, ';
+					}
+					?>
+					]
+				},{
+					name: 'Awaiting Payment',
 					data: [
 					<?php
 					for($i = 0; $i < count($graphDates); $i++)
@@ -432,30 +460,38 @@ function wp3i_stats()
                     <h3 class="hndle"><span>WP3 Invoice Stats</span></h3>
                     <div class="inside">
                         
-                        <div style="overflow:hidden;">
+                        <div style="overflow:hidden; border:#EEEEEE solid 1px; position:relative;">
 							<?php wp3i_stats_graph(); ?>
                             
                             <div class="summary">
-                                <div id="income" class="postbox">
-                                    <h3 class="hndle"><span>Income</span></h3>
-                                    <div class="inside">
+                            	<ul>
+                                	<li class="income">
+                                    	<h3><span></span>Income</h3>
                                         <h2><?php wp3i_currency(); ?><?php echo wp3i_get_stats_total('paid'); ?></h2>
                                         <?php if(wp3i_has_tax()): ?>
                                         	<h4>Subtotal: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_subtotal('paid'); ?></h4>
                                     		<h4>Tax: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_tax_total('paid'); ?></h4>
                                         <?php endif; ?>
-                                    </div>
-                                </div>
-                                <div id="outstanding" class="postbox">
-                                    <h3 class="hndle"><span>Outstanding</span></h3>
-                                    <div class="inside">
+                                    </li>
+                                    <li class="awaiting-payment">
+                                    	<h3><span></span>Awaiting Payment</h3>
                                         <h2><?php wp3i_currency(); ?><?php echo wp3i_get_stats_total('sent'); ?></h2>
                                         <?php if(wp3i_has_tax()): ?>
                                         	<h4>Subtotal: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_subtotal('sent'); ?></h4>
                                     		<h4>Tax: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_tax_total('sent'); ?></h4>
                                         <?php endif; ?>
-                                    </div>
-                                </div>
+                                    </li>
+                                    <li class="quotes">
+                                    	<h3><span></span>Quotes</h3>
+                                        <h2><?php wp3i_currency(); ?><?php echo wp3i_get_stats_total('quote'); ?></h2>
+                                        <?php if(wp3i_has_tax()): ?>
+                                        	<h4>Subtotal: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_subtotal('quote'); ?></h4>
+                                    		<h4>Tax: <?php wp3i_currency(); ?><?php echo wp3i_get_stats_tax_total('quote'); ?></h4>
+                                        <?php endif; ?>
+                                    </li>
+                                </ul>
+                            
+                                
                             </div>
                         </div>
                         

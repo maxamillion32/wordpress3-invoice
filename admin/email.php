@@ -1,11 +1,9 @@
 <?php
 global $post;
 	
-/* Get Current User's Email
+/* Get From Email
 -------------------------------------*/
-$current_user = wp_get_current_user();
-$from = '';
-if($current_user){$from = $current_user->user_email;}
+$from = get_wp3i_email();
 
 	
 /* Set sent custom field

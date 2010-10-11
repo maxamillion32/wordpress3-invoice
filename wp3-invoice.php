@@ -3,7 +3,7 @@
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.wordpress3invoice.com/
 Description: An online Invoice solution for web designers. Manage and email invoices through wordpress and customise with html + css invoice templates.
-Version: 1.1.1
+Version: 1.1.2
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -63,8 +63,8 @@ function wp3i_init()
 			{
 				// get html email and store as variable for sending
 				ob_start();
-				include('template/email.php');
-				$message = ob_get_contents();
+					include($emailTemplateURL);
+					$message = ob_get_contents();
 				ob_end_clean();
 				include('admin/email.php');
 			}

@@ -43,6 +43,12 @@ See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
 
+= 1.1.2 =
+* Sexier Stats Page
+* Sexier Invoice edit Page
+* New Option: Email address (Emails appear sent from x)
+* Fixed Email template bug (well, one of many...)
+
 = 1.1.1 =
 * Added Individual tax amounts
 * New Option: Enable / disable the content editor

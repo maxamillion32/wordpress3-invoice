@@ -16,20 +16,20 @@ function wp3i_options()
                 <div class="inside">
                     <form method="post" action="options.php" >
                         <?php wp_nonce_field('update-options'); ?>
-                        <table cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td style="width:193px;"><label>Currency</label>
-                                    <p>Enter your currency Symbol</p></td>
+                        <table cellpadding="0" cellspacing="0" class="api" width="100%">
+                            <tr class="odd">
+                                <td style="width:220px;"><label>Currency</label>
+                                    <h6>Enter your currency Symbol</h6></td>
                                 <td><input name="wp3i_currency" value="<?php wp3i_currency(); ?>" type="text" size="1" maxlength="3"></td>
                             </tr>
                             <tr>
                                 <td><label>Tax</label>
-                                    <p>Enter Tax Amount (5% = .05)</p></td>
+                                    <h6>Enter Tax Amount (5% = .05)</h6></td>
                                 <td><input name="wp3i_tax" value="<?php wp3i_tax(); ?>" type="text" size="2" maxlength="5"></td>
                             </tr>
-                            <tr>
+                            <tr class="odd">
                                 <td><label>Email</label>
-                                    <p>Select invoice recipients</p></td>
+                                    <h6>Select invoice recipients</h6></td>
                                 <td><input name="wp3i_emailrecipients" type="radio" value="client" <?php if(wp3i_get_emailrecipients() == 'client'){echo'checked="checked"';} ?>>
                                     Send Invoice to Client Only <br />
                                     <input name="wp3i_emailrecipients" type="radio" value="both" <?php if(wp3i_get_emailrecipients() == 'both'){echo'checked="checked"';} ?>>
@@ -37,23 +37,28 @@ function wp3i_options()
                             </tr>
                             <tr>
                                 <td><label>Permalinks</label>
-                                    <p>Encoded is more secure</p></td>
+                                    <h6>Encoded is more secure</h6></td>
                                 <td><input name="wp3i_permalink" type="radio" value="encoded" <?php if(wp3i_get_permalink() == 'encoded'){echo'checked="checked"';} ?>>
                                     Encoded <br />
                                     <input name="wp3i_permalink" type="radio" value="standard" <?php if(wp3i_get_permalink() == 'standard'){echo'checked="checked"';} ?>>
                                     Standard</td>
                             </tr>
-                            <tr>
+                            <tr class="odd">
                                 <td><label>Content Editor</label>
-                                    <p>Add content to your invoice.</p></td>
+                                    <h6>Add content to your invoice.</h6></td>
                                 <td><input name="wp3i_content_editor" type="radio" value="enabled" <?php if(wp3i_get_content_editor() == 'enabled'){echo'checked="checked"';} ?>>
                                     Enabled <br />
                                     <input name="wp3i_content_editor" type="radio" value="disabled" <?php if(wp3i_get_content_editor() == 'disabled'){echo'checked="checked"';} ?>>
                                     Disabled</td>
                             </tr>
+                            <tr>
+                                <td style="width:193px;"><label>Email</label>
+                                    <h6>Enter your email address</h6></td>
+                                <td><input name="wp3i_email" value="<?php wp3i_email(); ?>" type="text" size="30"></td>
+                            </tr>
                         </table>
                         <input type="hidden" name="action" value="update" />
-                        <input type="hidden" name="page_options" value="wp3i_currency, wp3i_tax, wp3i_emailrecipients, wp3i_permalink, wp3i_content_editor" />
+                        <input type="hidden" name="page_options" value="wp3i_currency, wp3i_tax, wp3i_emailrecipients, wp3i_permalink, wp3i_content_editor, wp3i_email" />
                         <p class="submit">
                             <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
                         </p>
@@ -233,15 +238,15 @@ function wp3i_options()
                 </div>
             </div>
             <div class="postbox" id="new">
-                <h3 class="hndle"><span>New in 1.1.1</span></h3>
+                <h3 class="hndle"><span>New in 1.1.2</span></h3>
                 <div class="inside">
                     <ul>
-                    	<li>Added Individual tax amounts</li>
-                        <li>New Option: Enable / disable the content editor</li>
-                        <li>Minor changes to stats and invoice edit pages</li>
-                        <li>Added Edit Client buttons to invoice admin pages</li>
-                        <li>Added Client Filter to Invoices admin page</li>
+                    	<li>Sexier Stats Page</li>
+                        <li>Sexier Invoice edit Page</li>
+                        <li>New Option: Email address (Emails appear sent from x)</li>
+                        <li>Fixed Email template bug (well, one of many...)</li>
                     </ul>
+                    <p>Thank you to Jeremy Edmiston for his work on the stats page.</p>
                 </div>
             </div>
         </div>

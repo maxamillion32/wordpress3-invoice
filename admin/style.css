@@ -5,6 +5,7 @@
 #invoice_details {}
 #invoice_details ul {overflow:hidden; width:400px; border:#EEEEEE solid 1px; border-bottom:none;}
 #invoice_details ul li {font-size:12px; line-height:24px; padding:5px; margin:0px; border-bottom:#EEEEEE solid 1px; height:26px;}
+#invoice_details ul li:hover {background:#EAF2FA;}
 #invoice_details ul li label {}
 #invoice_details ul li span {font-weight:bold;}
 #invoice_details ul li a{}
@@ -12,12 +13,16 @@
 #invoice_details ul li .back{display:none;}
 #invoice_details .send-invoice {position:absolute; top:0px; right:0px;}
 
+#invoice_send ul {overflow:hidden; width:400px; border:#EEEEEE solid 1px; border-bottom:none;}
+#invoice_send ul li {font-size:10px; line-height:24px; padding:5px; margin:0px; border-bottom:#EEEEEE solid 1px; height:26px; }
+#invoice_send ul li:hover {background:#EAF2FA;}
+
 
 #project_breakdown { background-color:transparent; border:none;} 
-#project_breakdown .inside{overflow:hidden; margin:0px;} 
+#project_breakdown .inside{overflow:hidden; margin:0px; border-top:#d3d3d3 solid 1px;} 
 #project_breakdown .details {overflow:hidden;}
 
-#project_breakdown .detail.detail-header {background:url("../images/menu-bits.gif?ver=20100531") repeat-x scroll left -379px #F1F1F1; font-size:14px; font-weight:bold; color:#666666;}
+#project_breakdown .detail.detail-header {background:#e8e8e8; font-size:14px; font-weight:bold; border-top:#f7f7f7 solid 1px; text-shadow:#f7f7f7 0px 1px 0px;}
 
 #project_breakdown .detail {background:#FFF; border:#DFDFDF solid 1px; border-top:none; padding:10px 10px 0px; overflow:hidden; position:relative;}
 #project_breakdown .details .detail:hover {background:#FBFBFB;}
@@ -30,7 +35,7 @@
 
 #project_breakdown .detail ul li.title {width:40%; }
 #project_breakdown .detail ul li.title input {font-weight:bold;}
-#project_breakdown .detail ul li.description {width:55%;}
+#project_breakdown .detail ul li.description {width:55%; color:#333 !important;}
 
 #project_breakdown .detail ul li.description textarea {font-size:10px; line-height:12px;}
 #project_breakdown .detail ul li.type{width:65px;}
@@ -58,15 +63,20 @@
 #wp3i-stats ul.subsubsub {float:none;}
 #wp3i-stats .inside {overflow:hidden; padding:20px;}
 
-#wp3i-stats .wp3i-stats-graph {width:860px; height:300px; float:left; margin-right:40px;}
+#wp3i-stats .wp3i-stats-graph {width:860px; height:300px; }
 
-#wp3i-stats .summary {width:140px; float:left;}
-#wp3i-stats .summary .postbox {display:block; width:auto; min-width:5px;}
-#wp3i-stats .summary .postbox .inside {padding:5px 0px;}
-#wp3i-stats .summary .postbox h2 {padding:0px; margin:0px; text-align:center; font-size:18px; line-height:18px; margin:10px 0px;}
-#wp3i-stats .summary .postbox h4 {padding:0px; margin:0px; text-align:center; font-size:10px; line-height:10px; color:#999; font-weight:normal; margin:5px 0px;}
+#wp3i-stats .summary {width:170px; position:absolute; top:0px; right:0px; margin:-1px -1px 0px 0px;}
+#wp3i-stats .summary ul {overflow:hidden; border:#EEEEEE solid 1px; border-bottom:none;}
+#wp3i-stats .summary ul li {font-size:10px; line-height:24px; padding:15px 12px; margin:0px; border-bottom:#EEEEEE solid 1px;  }
 
-#wp3i-stats .wp3i-stats-invoices {width:100%;}
+#wp3i-stats .summary h3 {background:none; font-weight:normal; font-size:12px; line-height:12px; padding:0px; margin:0px; cursor:auto;}
+#wp3i-stats .summary h3 span {background:#7fd700; border:#5ecb00 solid 2px; display:block; width:14px; height:11px; -moz-border-radius: 3px; -webkit-border-radius: 3px;-khtml-border-radius: 3px; border-radius: 3px; float:left; margin-right:10px; }
+#wp3i-stats .summary .awaiting-payment h3 span {background-color:#c1e6a0; border:#b4e587 solid 2px;}
+#wp3i-stats .summary .quotes h3 span {background-color:#e7e7e7; border:#dfdfdf solid 2px;}
+#wp3i-stats .summary h2 {padding:0px; margin:0px; text-align:center; font-size:22px; line-height:22px; margin:4px 0px; font-style:normal;}
+#wp3i-stats .summary h4 {padding:0px; margin:0px; text-align:center; font-size:10px; line-height:10px; color:#999; font-weight:normal; margin:5px 0px;}
+
+#wp3i-stats .wp3i-stats-invoices {width:100%; margin-top:30px;}
 
 #wp3i-stats table {width:100%; }
 #wp3i-stats td, #wp3i-stats th {font-size:11px;}

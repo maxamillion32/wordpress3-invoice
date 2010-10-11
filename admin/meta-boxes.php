@@ -151,21 +151,25 @@
             	<p>Invoice failed to send.</p>
             </div>
         <?php endif; ?>
-        
-        <p>
-        	<a href="<?php the_permalink(); ?>" class="button">View Online Invoice</a> &bull; 
-            <a href="<?php the_permalink(); ?>?email=template" class="button">View Email Invoice</a> &bull; 
-            <?php if(get_invoice_client_name()): ?>
-				<?php if(get_invoice_client_email()): ?>
-                	<a href="<?php the_permalink(); ?>?email=send" class="button">Send Email Invoice to <?php invoice_client(); ?> ( <?php invoice_client_email(); ?> )</a> 
+        <ul>
+        	<li>
+            	<a href="<?php the_permalink(); ?>" class="button">View Invoice</a> copy link, print as pdf, style invoice template
+            </li>
+            <li>
+            	<a href="<?php the_permalink(); ?>?email=template" class="button">View Email</a> check before sending, style email template
+            </li>
+            <li>
+            	<?php if(get_invoice_client_name()): ?>
+					<?php if(get_invoice_client_email()): ?>
+                        <a href="<?php the_permalink(); ?>?email=send" class="button">Send Email</a> to <?php invoice_client_email(); ?> <a href="<?php invoice_client_edit_link(); ?>">Edit Client</a>  
+                    <?php else: ?>
+                        <a class="button disabled">Send Email</a> no email address <a href="<?php invoice_client_edit_link(); ?>">Edit Client</a> 
+                    <?php endif; ?>
                 <?php else: ?>
-                	<a class="button disabled">Send Email Invoice to <?php invoice_client(); ?> ( no registered email address )</a>
-                    <a href="<?php invoice_client_edit_link(); ?>">Edit Client</a> 
+                    <a class="button disabled"> Send Email</a> no Client Selected
                 <?php endif; ?>
-            <?php else: ?>
-            	<a class="button disabled"> Send Email Invoice ( No Client Selected )</a>
-            <?php endif; ?>
-        </p>
+            </li>
+        </ul>
 
         
 		<?php
@@ -311,7 +315,7 @@
 	/*--------------------------------------------------------------------------------------------
 										Save
 	--------------------------------------------------------------------------------------------*/
-	function save_attached_images($post_id) {
+	function save_invoice($post_id) {
 		// verify this with nonce because save_post can be triggered at other times
 		if (!wp_verify_nonce($_POST['ei_noncename'], 'ei-n')) return $post_id;
 	
@@ -326,21 +330,16 @@
 		//update_post_meta($post_id, 'invoice_client',$_POST['invoice-client']);
 		
 		update_post_meta($post_id, 'detail_title', serialize($_POST['detail-title']));
-		//$save_description = array();
-		//foreach($_POST['detail-description'] as $description)
-		//{
-		//		array_push($save_description,htmlentities($description));
-		//}
-		//$temp_description = htmlentities($_POST['detail-description']); 
+	
 		$temp_description = serialize($_POST['detail-description']);
-		//$temp_description = htmlspecialchars($temp_description,ENT_QUOTES);
 		$temp_description = addslashes($temp_description);
+		
 		update_post_meta($post_id, 'detail_description', $temp_description);
 		update_post_meta($post_id, 'detail_type', serialize($_POST['detail-type']));
 		update_post_meta($post_id, 'detail_rate', serialize($_POST['detail-rate']));
 		update_post_meta($post_id, 'detail_duration', serialize($_POST['detail-duration']));
 		update_post_meta($post_id, 'detail_subtotal', serialize($_POST['detail-subtotal']));
 	}
-	add_action('save_post', 'save_attached_images');
+	add_action('save_post', 'save_invoice');
 
 ?>

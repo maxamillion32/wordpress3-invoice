@@ -448,6 +448,33 @@
 	
 	
 	/*--------------------------------------------------------------------------------------------
+										Invoice Email
+	--------------------------------------------------------------------------------------------*/
+	function get_wp3i_email()
+	{
+		$wp3i_email = get_option('wp3i_email');	
+		$current_user = wp_get_current_user();
+		if($wp3i_email)
+		{
+			return $wp3i_email;
+		}
+		elseif($current_user)
+		{
+			return $current_user->user_email;
+		}
+		else
+		{
+			return '';	
+		}
+	}
+	
+	function wp3i_email()
+	{
+		echo get_wp3i_email();
+	}
+	
+	
+	/*--------------------------------------------------------------------------------------------
 										the_invoice_total
 	--------------------------------------------------------------------------------------------*/
 	function get_the_invoice_subtotal()
