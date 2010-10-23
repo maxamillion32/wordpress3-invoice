@@ -2,166 +2,167 @@
 /*
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.wordpress3invoice.com/
-Description: An online Invoice solution for web designers. Manage and email invoices through wordpress and customise with html + css invoice templates.
-Version: 1.1.2
+Description: An online Invoice solution for web designers. Manage, print and email invoices through WordPress and customise with php + html + css invoice templates.
+Version: 2.0.0
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
+Copyright Elliot Condon
 */
 
-$invoice_plugin_url = plugins_url('',__FILE__);
-$invoice_template_url = plugins_url('template',__FILE__);
+include('core/functions.php');
+include('core/invoice.php');
+include('core/client.php');
+include('admin/stats.php');
+include('admin/options.php');
+include('admin/help.php');
 
+$Wp3i = new Wp3i();
 
-/*--------------------------------------------------------------------------------------------
-											Head
---------------------------------------------------------------------------------------------*/
-function wp3i_head()
-{
-	?>
-	<link rel="stylesheet" href="<?php echo plugins_url('admin/style.css',__FILE__); ?>" type="text/css" media="all" />	
-    <script type="text/javascript" src="<?php echo plugins_url('admin/admin-jquery.js',__FILE__); ?>" ></script>
-    <script type="text/javascript" src="<?php echo plugins_url('admin/highcharts.js',__FILE__); ?>"></script>
-    <?php
-}
-add_action('admin_head', 'wp3i_head');
-
-
-
-/*--------------------------------------------------------------------------------------------
-										WP3I Init
---------------------------------------------------------------------------------------------*/
-function wp3i_init()
-{
+class Wp3i
+{ 
+	var $name;
+	var $dir;
+	var $path;
+	var $siteurl;
+	var $wpadminurl;
+	var $version;
 	
-	/* Template Redirect
-	----------------------------*/
-	function wp3i_template_redirect()
+	var $invoice;
+	var $client;
+	var $stats;
+	var $options;
+	var $help;
+	
+	function Wp3i()
 	{
-		// define invoice url variables
-		global $wp, $post;
-		$post_type = $wp->query_vars["post_type"];
-		$email = $_GET['email'];
-
-		// find email.php template file
-		$emailTemplateURL = 'template/email.php';
-		if(file_exists(STYLESHEETPATH . '/invoice/email.php'))
-		{
-			$emailTemplateURL = STYLESHEETPATH . '/invoice/email.php';
-		}
 		
-		// find invoice.php template file
-		$invoiceTemplateURL = 'template/invoice.php';
-		if(file_exists(STYLESHEETPATH . '/invoice/invoice.php'))
-		{
-			$invoiceTemplateURL = STYLESHEETPATH . '/invoice/invoice.php';
-		}
-
-		if($post_type == 'invoice')
-		{
-			if($email == 'send')
-			{
-				// get html email and store as variable for sending
-				ob_start();
-					include($emailTemplateURL);
-					$message = ob_get_contents();
-				ob_end_clean();
-				include('admin/email.php');
-			}
-			elseif($email == 'template')
-			{
-				include($emailTemplateURL);
-				
-			}
-			else
-			{
-				include($invoiceTemplateURL);
-			}
-			die();
-		}
+		// set class variables
+		$this->name = 'WordPress 3 Invoice';
+		$this->path = dirname(__FILE__).'/';
+		$this->dir = plugins_url('/',__FILE__);
+		$this->siteurl = get_bloginfo('url');
+		$this->wpadminurl = admin_url();
+		$this->version = '2.0.0';
+		
+		
+		$this->invoice = new Invoice($this);
+		$this->client = new Client($this);
+		$this->stats = new Stats($this);
+		$this->options = new Options($this);
+		$this->help = new Help($this);
+		
+		add_action('admin_head', array($this,'admin_head'));
+		register_activation_hook( __FILE__, array($this,'activate') );
+		add_action('admin_menu', array($this,'create_menu'));
+		return true;
 	}
-	add_action('template_redirect', 'wp3i_template_redirect');
-}
-add_action('init', 'wp3i_init');
 
-
-
-/* Includes
-----------------------------*/
-require_once('core/invoice.php');
-require_once('core/client.php');
-require_once('core/functions.php');
-require_once('admin/meta-boxes.php');
-require_once('admin/options.php');
-require_once('admin/stats.php');
-	
-	
-function wp3i_menu()
-{
-	add_submenu_page('edit.php?post_type=invoice', 'WP3 Invoice Stats', 'Stats', 'manage_options', 'wp3-invoice-stats', 'wp3i_stats');
-	add_submenu_page('edit.php?post_type=invoice', 'WP3 Invoice Options', 'Options', 'manage_options', 'wp3-invoice-options', 'wp3i_options');
-}
-add_action('admin_menu', 'wp3i_menu');
-
-
-/*--------------------------------------------------------------------------------------------
-										WP3I Activate
---------------------------------------------------------------------------------------------*/
-function wp3i_activate() 
-{
-	//echo 'Updating Invoice Meta Data...';
-	
-	// activate client taxonomy
-	taxonomy_metadata_setup();
-	
-	// loop though all invoices, set custom fields.
-	$invoices = get_posts(array(
-		'post_type' => 'invoice', 
-		'numberposts' => '-1', 
-	));
-	
-	foreach($invoices as $invoice)
+	/**
+	 * Adds Style + Javascript to admin head
+	 *
+	 * @author Elliot Condon
+	 * @since 2.0.0
+	 * @Todo - only add to wp3i admin pages
+	 * 
+	 **/
+	function admin_head()
 	{
-		$invoice_paid = get_post_meta($invoice->ID, 'invoice_paid', true);
-		$invoice_sent = get_post_meta($invoice->ID, 'invoice_sent', true);
-		$invoice_type = get_post_meta($invoice->ID, 'invoice_type', true);
+		?>
+		<link rel="stylesheet" href="<?php echo $this->dir.'admin/style.css'; ?>" type="text/css" media="all" />	
+		<script type="text/javascript" src="<?php echo $this->dir.'admin/admin-jquery.js'; ?>" ></script>
+		<script type="text/javascript" src="<?php echo $this->dir.'admin/highcharts.js'; ?>"></script>
+		<?php
+	}
+	
+	/**
+	 * Performs plugin installation actions upon activation in Wordpress plugin menu
+	 *
+	 * @author Elliot Condon
+	 * @since 2.0.0
+	 * 
+	 * @return bool Successfully activated
+	 **/
+	function activate() {
+	
+		$this->client->taxonomy_metadata_setup();
 		
-		if(!$invoice_paid) // if 1.0.5 invoice_paid doesnt exist
+		// loop though all invoices, set custom fields.
+		$invoices = get_posts(array(
+			'post_type' => 'invoice', 
+			'numberposts' => '-1', 
+		));
+		
+		foreach($invoices as $invoice)
 		{
-			if(get_post_meta($invoice->ID, 'invoice_status', true) == 'Invoice Paid')// if 1.0.4 invoice_status is paid
+			$invoice_paid = get_post_meta($invoice->ID, 'invoice_paid', true);
+			$invoice_sent = get_post_meta($invoice->ID, 'invoice_sent', true);
+			$invoice_type = get_post_meta($invoice->ID, 'invoice_type', true);
+			
+			if(!$invoice_paid) // if 1.0.5 invoice_paid doesnt exist
 			{
-				update_post_meta($invoice->ID, 'invoice_paid', get_the_time('j/m/Y',$invoice->ID));
-				update_post_meta($invoice->ID, 'invoice_sent', get_the_time('j/m/Y',$invoice->ID));
+				if(get_post_meta($invoice->ID, 'invoice_status', true) == 'Invoice Paid')// if 1.0.4 invoice_status is paid
+				{
+					update_post_meta($invoice->ID, 'invoice_paid', get_the_time('j/m/Y',$invoice->ID));
+					update_post_meta($invoice->ID, 'invoice_sent', get_the_time('j/m/Y',$invoice->ID));
+				}
+				elseif(get_post_meta($invoice->ID, 'invoice_status', true) == 'Invoice Sent')// if 1.0.4 invoice_status is sent
+				{
+					update_post_meta($invoice->ID, 'invoice_paid', 'Not yet');
+					update_post_meta($invoice->ID, 'invoice_sent', get_the_time('j/m/Y',$invoice->ID));
+				}
+				else
+				{
+					update_post_meta($invoice->ID, 'invoice_paid', 'Not yet');
+					update_post_meta($invoice->ID, 'invoice_sent', 'Not yet');
+				}
 			}
-			elseif(get_post_meta($invoice->ID, 'invoice_status', true) == 'Invoice Sent')// if 1.0.4 invoice_status is sent
+			if(!$invoice_type) // if 1.0.5 invoice_type doesnt exist
 			{
-				update_post_meta($invoice->ID, 'invoice_paid', 'Not yet');
-				update_post_meta($invoice->ID, 'invoice_sent', get_the_time('j/m/Y',$invoice->ID));
+				if(get_post_meta($invoice->ID, 'invoice_status', true) == 'Quote')// if 1.0.4 invoice_status is Quote
+				{
+					update_post_meta($invoice->ID, 'invoice_type', 'Quote');
+				}
+				else
+				{
+					update_post_meta($invoice->ID, 'invoice_type', 'Invoice');	
+				}
 			}
-			else
-			{
-				update_post_meta($invoice->ID, 'invoice_paid', 'Not yet');
-				update_post_meta($invoice->ID, 'invoice_sent', 'Not yet');
-			}
-		}
-		if(!$invoice_type) // if 1.0.5 invoice_type doesnt exist
-		{
-			if(get_post_meta($invoice->ID, 'invoice_status', true) == 'Quote')// if 1.0.4 invoice_status is Quote
-			{
-				update_post_meta($invoice->ID, 'invoice_type', 'Quote');
-			}
-			else
-			{
-				update_post_meta($invoice->ID, 'invoice_type', 'Invoice');	
-			}
+			
+		}// end for each invoice
+		
+		// flush and refresh permalinks
+		global $wp_rewrite;
+		$wp_rewrite->flush_rules();
+		
+		return true;
+	}
+	
+	/**
+	 * Creates Admin Menu
+	 *
+	 * @author Elliot Condon
+	 * @since 2.0.0
+	 *
+	 **/
+	function create_menu() {
+	
+		add_menu_page('wp3i', 'WP3 Invoice', 'manage_options', 'edit.php?post_type=invoice','',$this->dir.'admin/images/menu-icon.png');
+		add_submenu_page('edit.php?post_type=invoice', 'Stats', 'Stats', 'manage_options','stats',array($this->stats,'admin_page'));
+		add_submenu_page('edit.php?post_type=invoice', 'Options', 'Options', 'manage_options','options',array($this->options,'admin_page'));
+		add_submenu_page('edit.php?post_type=invoice', 'Help', 'Help', 'manage_options','help',array($this->help,'admin_page'));
+		
+		global $menu;
+		global $submenu;
+	
+		$restricted = array('Invoices');
+		end ($menu);
+		while (prev($menu)){
+			$value = explode(' ',$menu[key($menu)][0]);
+			if(in_array($value[0] != NULL?$value[0]:"" , $restricted)){unset($menu[key($menu)]);}
 		}
 		
-	}// end for each invoice
-	
-	// flush and refresh permalinks
-	global $wp_rewrite;
-    $wp_rewrite->flush_rules();
-	
-	
+		unset($submenu['edit.php?post_type=invoice'][10]);
+	}
+
 }
-register_activation_hook( __FILE__, 'wp3i_activate' );

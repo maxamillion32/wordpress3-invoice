@@ -1,12 +1,12 @@
 === WordPress 3 Invoices ===
 Contributors: elliot condon
 Donate link: http://www.wordpress3invoice.com
-Tags: wordpress, wordpress3, 3, invoice, invoices, customization, template, statistics, wp3i
+Tags: wordpress, wordpress3, 3, invoice, invoices, customization, template, statistics, wp3i, quote, developer, designer, freelance, tool
 Requires at least: 3.0
 Tested up to: 3.1
 Stable tag: 3.1
 
-Invoice software designed specifically for freelance web designers / developers. This plugin uses the new custom post type to reduce code, run smoothly and look cleaner. Create an invoice or quote, then view it on a custom template which you can edit with ease.
+Invoice software designed specifically for freelance web designers / developers. With WordPress 3 Invoice you can create and manage quotes, invoices, statistics, emails, clients and more. This plugin also comes with options and help videos to make your life easier. Happy Invoicing.
 
 == Description ==
 
@@ -18,8 +18,7 @@ Wp3i is a WordPress plugin to manage invoices for freelance web designers / deve
 * invoice templates use native WordPress code to make life easy
 * See live statistics of your income
 * Well designed interface
-* Customise Currency
-* Now supports Tax
+* Customise Currency, tax and more
 * Completely FREE! 
 
 = Please Vote and Enjoy =
@@ -30,18 +29,29 @@ Wp3i is a WordPress plugin to manage invoices for freelance web designers / deve
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Copy the template to your active theme folder and rename to "invoice"
 (the file '/wp-content/themes/xxxx/invoice/invoice.php' should exist)
-4. Click on Invoices -> Options to view options / API
-5. Click on the new 'Invoice' menu item to get started
+4. Click on WP3 Invoice -> Help to view tutorials / API
+5. Click on the new 'WP3 Invoice' menu item to get started
 
 == Frequently Asked Questions ==
 
-feel free to visit the plugin site and leave any comments.
+http://www.wordpress3invoice.com/support/
 
 == Screenshots ==
 
 See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
+
+= 2.0.0 =
+* Re writen as an object oriented plugin
+* Many bug fixes
+* Many small improvements
+* New task bar when viewing invoices
+* Invoices now have password security
+* New Help page + videos
+* New sexy admin pages
+* Fixed stats page bugs
+* More small improvements
 
 = 1.1.2 =
 * Sexier Stats Page

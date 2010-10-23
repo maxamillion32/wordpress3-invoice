@@ -1,43 +1,31 @@
 <?php
+/**
+ * Send Invoice as HTML Email
+ *
+ * @author Elliot Condon
+ * @since 2.0.0
+ *
+ **/
+ 
 global $post;
-	
-/* Get From Email
--------------------------------------*/
-$from = get_wp3i_email();
 
-	
-/* Set sent custom field
--------------------------------------*/
-update_post_meta($post->ID, 'invoice_sent', date_i18n('j/m/Y'));
-	
-	
-/* Headers
--------------------------------------*/
-$headers = "From: ".$from."\n";
+$from = get_wp3i_email();															// 1. Get From email
+update_post_meta($post->ID, 'invoice_sent', date_i18n('j/m/Y'));					// 2. Set sent custom field
+
+$headers = "From: ".$from."\n";														// 3. Set Email Headers
 $headers .= "Reply-To: ".$from."\n";
 $headers .= 'MIME-Version: 1.0' . "\n";
 $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\n";
 
-	
-	
-/* Recipients
--------------------------------------*/
-$to = get_invoice_client_email();
+$to = get_invoice_client_email();													// 4. Send email to ...
 if(wp3i_get_emailrecipients() == 'both')
 {
 	$to .= ','.$from;
 }
 
-	
-/* Email
--------------------------------------*/
-$subject = get_invoice_type().' # '.get_invoice_number().' - '.get_the_title();
-//$message = wp_remote_fopen(get_permalink().'?email=template');
+$subject = get_invoice_type().' # '.get_invoice_number().' - '.get_the_title();		// 5. Email Subject
 
-
-/* Quick validation check
--------------------------------------*/
-if(!$to)
+if(!$to)																			// 6. Quick validation check
 {
 	echo '<p class="error">Error: No recipient email address found</p>';
 	die;

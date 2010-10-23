@@ -1,19 +1,24 @@
 var $ = jQuery.noConflict();
 $(document).ready(function()
 {
-	/*-------------------------------------------------------------------------------
-		Invoice edit page
-	-------------------------------------------------------------------------------*/
+	/**
+	 * Invoice edit page (if #invoice_details exists)
+	 *
+	 * @author Elliot Condon
+	 * @since 2.0.0
+	 *
+	 **/
 	if($('#invoice_details').size() > 0 )
 	{
-		/* wp3i_rand
+		/* 
+		
+		wp3i_rand
 		-----------------------------------------*/
 		function wp3i_rand(l,u) // lower bound and upper bound
 		{
 			 return Math.floor((Math.random() * (u-l+1))+l);
 		}
 		/* 
-	
 	
 		wp3i_generate_permalink
 		-----------------------------------------*/
@@ -29,7 +34,6 @@ $(document).ready(function()
 		}
 		/* 
 	
-	
 		wp3i_get_date_pretty
 		-----------------------------------------*/
 		function wp3i_get_date_pretty(date)
@@ -39,10 +43,8 @@ $(document).ready(function()
 		}
 		/* 
 	
-	
 		Generate Invoice Slug
 		-----------------------------------------*/
-		//alert($('#slugdiv input#post_name').attr('value').length);
 		var wp3i_permalink = $('input#wp3i_hidden_permalink').attr('value');
 		if(wp3i_permalink == 'encoded')
 		{
@@ -57,6 +59,14 @@ $(document).ready(function()
 		}
 		/* 
 	
+		Enter Client Password
+		-----------------------------------------*/
+		var wp3i_client_password = $('input#wp3i_hidden_password').attr('value');
+		if($('#visibility input#post_password').attr('value').length < 1)
+		{
+			$('#visibility input#post_password').attr('value',wp3i_client_password);
+		}
+		/* 
 	
 		Invoice Detail Functions
 		-----------------------------------------*/
@@ -363,29 +373,28 @@ $(document).ready(function()
 	
 	
 	
-	
-	/* Edit Page Icons
-	--------------------*/
+	/**
+	 * Edit Page Icons / Style
+	 *
+	 * @author Elliot Condon
+	 * @since 2.0.0
+	 *
+	 **/
 	var post_type = getUrlVars()["post_type"];
 	var taxonomy = getUrlVars()["taxonomy"];
 	
 	if(taxonomy == 'client')
 	{
-		$('.icon32#icon-edit').css({'background-position' : '-600px -5px'});
+		$('.icon32#icon-edit').addClass('wp3i-icon');
 		$('.form-field:has( input[name=slug])').hide();
-		//$('label[for=description]').html('Email Address');
-		//$('textarea#description').attr('rows',1);
-		//$('label[for=tag-description]').html('Email Address');
-		//$('textarea#tag-description').attr('rows',1);
-		//$('th.column-description').html('Email Address');
+	}
+	else if($('#wpbody-content h2').html() == 'Edit Invoice' || $('#wpbody-content h2').html() == 'Add New Invoice')
+	{
+		$('div.wrap').addClass('wp3i-edit');
 	}
 	else if(post_type == 'invoice')
 	{
-		$('.icon32#icon-edit').css({'background-position' : '-312px -5px'});
-	}
-	else if($('#wpbody-content h2').html() == 'Edit Invoice')
-	{
-		$('.icon32#icon-edit').css({'background-position' : '-312px -5px'});
+		$('.icon32#icon-edit').addClass('wp3i-icon');
 	}
 	
 	function getUrlVars() {

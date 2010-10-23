@@ -101,7 +101,7 @@
             <br>
             Please find your <?php invoice_type() ?> for <?php the_title(); ?><br>
             <br>
-            Best regards, Elliot
+            Best regards, WordPress 3 Invoice
         </p>
     </td>
     </tr>
@@ -127,7 +127,7 @@
            	<tr>
             	<td><img src="<?php invoice_template_url(); ?>/images/wp3i-logo.png" style="margin-top:-35px;"/></td>
                 <td>
-                    <h3>WordPress3 <strong>Invoices</strong></h3>
+                    <h3>WordPress3 <strong>Invoice</strong></h3>
                     <p>Created by Elliot Condon</p>
                     <p><a href="mailto:you@youremailhere.com">you@youremailhere.com</a></p>
                     <p><a href="www.yourwebsitehere.com">www.yourwebsitehere.com</a></p>
@@ -224,6 +224,6 @@
 	</table>
     
 <?php endwhile; endif; ?>
-
+<?php wp_footer(); ?>
 </body>
 </html>

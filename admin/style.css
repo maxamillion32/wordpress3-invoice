@@ -1,7 +1,19 @@
-/*--------------------------------------------------------------------------------------------
-								Invoice Edit Page v2
+/*
+
+
+Invoice Edit Page
 --------------------------------------------------------------------------------------------*/
-	
+.wp3i-edit #icon-edit.icon32 {background:url(images/wp3i-logo.png); width:65px; height:125px; padding:0px; margin:0px; float:none; position:absolute;}
+.wp3i-edit h2{overflow:hidden; color:#F9F9F9; padding:0px; text-shadow:none;}
+.wp3i-edit #titlediv {padding-left:80px; position:relative; margin-bottom:50px;}
+.wp3i-edit #message, .wp3i-edit .updated, .wp3i-edit .error {margin:5px 0 15px 80px !important;}
+.wp3i-edit .metabox-holder { padding-top:3px !important; }
+
+
+#icon-edit.icon32.wp3i-icon {background:url(images/wp3i-logo.png) 0 100% no-repeat; width:65px; height:125px; padding:0px; margin:0px 10px 20px 0px;}
+#icon-edit.icon32.wp3i-icon + h2 {margin:0; padding:32px 0 0;}
+
+
 #invoice_details {}
 #invoice_details ul {overflow:hidden; width:400px; border:#EEEEEE solid 1px; border-bottom:none;}
 #invoice_details ul li {font-size:12px; line-height:24px; padding:5px; margin:0px; border-bottom:#EEEEEE solid 1px; height:26px;}
@@ -17,26 +29,20 @@
 #invoice_send ul li {font-size:10px; line-height:24px; padding:5px; margin:0px; border-bottom:#EEEEEE solid 1px; height:26px; }
 #invoice_send ul li:hover {background:#EAF2FA;}
 
-
 #project_breakdown { background-color:transparent; border:none;} 
 #project_breakdown .inside{overflow:hidden; margin:0px; border-top:#d3d3d3 solid 1px;} 
 #project_breakdown .details {overflow:hidden;}
-
 #project_breakdown .detail.detail-header {background:#e8e8e8; font-size:14px; font-weight:bold; border-top:#f7f7f7 solid 1px; text-shadow:#f7f7f7 0px 1px 0px;}
-
 #project_breakdown .detail {background:#FFF; border:#DFDFDF solid 1px; border-top:none; padding:10px 10px 0px; overflow:hidden; position:relative;}
-#project_breakdown .details .detail:hover {background:#FBFBFB;}
+#project_breakdown .details .detail:hover {background:#EAF2FA;}
 #project_breakdown .detail .grab {background:url(images/grab-corner.png); width:13px; height:13px; cursor:move; position:absolute; bottom:4px; right:4px;}
 #project_breakdown .detail ul {margin:0px; padding:0px; list-style:none; display:block; overflow:hidden; width:100%; position:relative;}
 #project_breakdown .detail ul li {float:left; padding:0px 10px 10px 0px; margin:0px;}
-
 #project_breakdown .detail input, #project_breakdown .detail textarea {height:35px; width:100%; color:#333; border:#DFDFDF solid 1px; }
 #project_breakdown .detail input.active, #project_breakdown .detail textarea.active {color:#000; }
-
 #project_breakdown .detail ul li.title {width:40%; }
 #project_breakdown .detail ul li.title input {font-weight:bold;}
 #project_breakdown .detail ul li.description {width:55%; color:#333 !important;}
-
 #project_breakdown .detail ul li.description textarea {font-size:10px; line-height:12px;}
 #project_breakdown .detail ul li.type{width:65px;}
 #project_breakdown .detail ul li.type select{margin-top:7px;}
@@ -58,23 +64,31 @@
 /*--------------------------------------------------------------------------------------------
 								Invoice Stats Page v2
 --------------------------------------------------------------------------------------------*/
-.icon32#icon-wp3i {background:url(images/wp3i-logo-32.gif) 50% 50% no-repeat;}
 #wp3i-stats {max-width:1100px;}
-#wp3i-stats ul.subsubsub {float:none;}
-#wp3i-stats .inside {overflow:hidden; padding:20px;}
+#wp3i-stats .inside {overflow:hidden;}
 
-#wp3i-stats .wp3i-stats-graph {width:860px; height:300px; }
+.wp3i-heading {overflow:hidden; margin-bottom:20px;}
+.wp3i-heading .icon32 {background:url(images/wp3i-logo.png) 0 0 no-repeat; width:65px; height:125px; padding:0px; margin:0px 10px 0px 0px;}
+.wp3i-heading h2 {margin:18px 0px 0px;}
+.wp3i-heading ul {margin:2px 0px 0px;}
+.wp3i-heading p {color:#666; font-size:11px; margin:6px 0px 0px;}
 
-#wp3i-stats .summary {width:170px; position:absolute; top:0px; right:0px; margin:-1px -1px 0px 0px;}
-#wp3i-stats .summary ul {overflow:hidden; border:#EEEEEE solid 1px; border-bottom:none;}
-#wp3i-stats .summary ul li {font-size:10px; line-height:24px; padding:15px 12px; margin:0px; border-bottom:#EEEEEE solid 1px;  }
 
-#wp3i-stats .summary h3 {background:none; font-weight:normal; font-size:12px; line-height:12px; padding:0px; margin:0px; cursor:auto;}
-#wp3i-stats .summary h3 span {background:#7fd700; border:#5ecb00 solid 2px; display:block; width:14px; height:11px; -moz-border-radius: 3px; -webkit-border-radius: 3px;-khtml-border-radius: 3px; border-radius: 3px; float:left; margin-right:10px; }
-#wp3i-stats .summary .awaiting-payment h3 span {background-color:#c1e6a0; border:#b4e587 solid 2px;}
-#wp3i-stats .summary .quotes h3 span {background-color:#e7e7e7; border:#dfdfdf solid 2px;}
-#wp3i-stats .summary h2 {padding:0px; margin:0px; text-align:center; font-size:22px; line-height:22px; margin:4px 0px; font-style:normal;}
-#wp3i-stats .summary h4 {padding:0px; margin:0px; text-align:center; font-size:10px; line-height:10px; color:#999; font-weight:normal; margin:5px 0px;}
+
+
+#wp3i-stats #wp3i-stats-graph .inside {padding:20px 0px; margin:0px; position:relative;}
+#wp3i-stats #wp3i-stats-graph .inside .wp3i-stats-graph {width:900px; height:300px; }
+
+#wp3i-stats #wp3i-stats-graph .summary {width:170px; position:absolute; top:0px; right:0px; margin:-1px -1px 0px 0px;}
+#wp3i-stats #wp3i-stats-graph .summary ul {overflow:hidden; border:#EEEEEE solid 1px; border-bottom:none;}
+#wp3i-stats #wp3i-stats-graph .summary ul li {font-size:10px; line-height:24px; padding:15px 12px; margin:0px; border-bottom:#EEEEEE solid 1px;  }
+
+#wp3i-stats #wp3i-stats-graph .summary h3 {background:none; font-weight:normal; font-size:12px; line-height:12px; padding:0px; margin:0px; cursor:auto;}
+#wp3i-stats #wp3i-stats-graph .summary h3 span {background:#7fd700; border:#5ecb00 solid 2px; display:block; width:14px; height:11px; -moz-border-radius: 3px; -webkit-border-radius: 3px;-khtml-border-radius: 3px; border-radius: 3px; float:left; margin-right:10px; }
+#wp3i-stats #wp3i-stats-graph .summary .awaiting-payment h3 span {background-color:#c1e6a0; border:#b4e587 solid 2px;}
+#wp3i-stats #wp3i-stats-graph .summary .quotes h3 span {background-color:#e7e7e7; border:#dfdfdf solid 2px;}
+#wp3i-stats #wp3i-stats-graph .summary h2 {padding:0px; margin:0px; text-align:center; font-size:22px; line-height:22px; margin:4px 0px; font-style:normal;}
+#wp3i-stats #wp3i-stats-graph .summary h4 {padding:0px; margin:0px; text-align:center; font-size:10px; line-height:10px; color:#999; font-weight:normal; margin:5px 0px;}
 
 #wp3i-stats .wp3i-stats-invoices {width:100%; margin-top:30px;}
 
@@ -97,16 +111,6 @@
 /*--------------------------------------------------------------------------------------------
 								Invoice Options Page
 --------------------------------------------------------------------------------------------*/
-#wp3i-options {}
-#wp3i-options td {padding-top:10px; font-size:11px; line-height:16px;}
-#wp3i-options label {font-size:14px; line-height:14px; font-weight:bold; padding:6px;}
-#wp3i-options h4 {font-size:14px; line-height:14px; font-weight:bold; padding:6px; padding-right:10px; margin:0px;}
-#wp3i-options h6 {font-size:9px; font-weight:normal; margin:0px 0px 0px 6px; position:relative; margin-top:-4px; color:#1D5F95;}
-#wp3i-options p {font-size:10px; line-height:10px; color:#999;}
-#wp3i-options .api td {padding:6px;}
-#wp3i-options .api tr.odd td {background-color:#f5f9fa;}
-#wp3i-options .api p {font-size:11px; line-height:16px; color:#333;}
-
 #wp3i-options p.submit {padding:0px; margin:20px 6px 14px;}
 
 #new {}
@@ -114,11 +118,33 @@
 #new .inside ul{list-style:square outside none; margin-left:22px;}
 #new .inside ul li{color:#333; font-family:"Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif; font-size:12px; line-height:22px;}
 
-.left-column {width:64%; float:left; padding-top:10px;}
-.right-column {width:35%; float:right; padding-top:10px;}
+#poststuff {overflow:hidden;}
+.left-column { margin-right:430px;}
+.right-column {width:410px; float:right;}
+
+.form-table th span {font-size:10px; font-weight:normal; color:#666; clear:both; display:block; }
 
 /*--------------------------------------------------------------------------------------------
 								Invoice Columns
 --------------------------------------------------------------------------------------------*/
 .widefat th#invoice_no {width:100px;}
 .widefat th#invoice_type {width:100px;}
+
+/*--------------------------------------------------------------------------------------------
+								Invoice Help Page
+--------------------------------------------------------------------------------------------*/
+.wrap.wp3i{}
+.wrap.wp3i.help .left-column { width:736px; float:left; margin-right:20px;}
+.wrap.wp3i.help .left-column iframe{ height:430px; width:720px; overflow:hidden; }
+.wrap.wp3i.help .left-column ul{ list-style:square outside none; margin-left:22px;}
+.wrap.wp3i.help .left-column ul li{ color:#333333; font-family:"Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif; font-size:12px; line-height:22px;}
+
+.wrap.wp3i td {padding-top:10px; font-size:11px; line-height:16px;}
+.wrap.wp3i label {font-size:14px; line-height:14px; font-weight:bold; padding:6px;}
+.wrap.wp3i h4 {font-size:14px; line-height:14px; font-weight:bold; padding:6px; padding-right:10px; margin:0px;}
+.wrap.wp3i h6 {font-size:9px; font-weight:normal; margin:0px 0px 0px 6px; position:relative; margin-top:-4px; color:#1D5F95;}
+.wrap.wp3i .api td {padding:6px;}
+.wrap.wp3i .api tr.odd td {background-color:#f5f9fa;}
+.wrap.wp3i .api p {font-size:11px; line-height:16px; color:#333;}
+
+.wrap.wp3i.help .right-column { float:left;}

@@ -27,17 +27,8 @@
 		$detailCount=0;
 		
 		$detailTitle = unserialize(get_post_meta($post->ID, 'detail_title', true));
-		//$safe_description = get_post_meta($post->ID, 'detail_description', true);
-		//echo $safe_description.'<br>';
-		//$safe_description = unserialize($safe_description);
-		//echo $safe_description.'<br>';
-		//$detailDescription = html_entity_decode(get_post_meta($post->ID, 'detail_description', true));
-		//echo $detailDescription;
 		$detailDescription = get_post_meta($post->ID, 'detail_description', true);
 		$detailDescription = unserialize($detailDescription);
-		//echo 'string = '.$detailDescription;
-		//$detailDescription = stripslashes($detailDescription);
-		//echo $detailDescription;
 		$detailType = unserialize(get_post_meta($post->ID, 'detail_type', true));
 		$detailRate = unserialize(get_post_meta($post->ID, 'detail_rate', true));
 		$detailDuration = unserialize(get_post_meta($post->ID, 'detail_duration', true));
@@ -176,14 +167,15 @@
 	--------------------------------------------------------------------------------------------*/
 	function get_invoice_template_url()
 	{
-		global $invoice_template_url;
-		if(file_exists(STYLESHEETPATH . '/invoice/invoice.php'))
+		if(file_exists(get_stylesheet_directory().'/invoice/invoice.php'))
 		{
-			return bloginfo('template_url') . '/invoice';
+			return get_bloginfo('stylesheet_directory').'/invoice';
+			
 		}
 		else
 		{
-			return $invoice_template_url;
+			global $Wp3i;
+			return $Wp3i->dir.'template';
 		}
 	}
 	
@@ -234,10 +226,10 @@
 		echo get_invoice_type();	
 	}
 	
-	function get_invoice_type()
+	function get_invoice_type($postID = NULL)
 	{
-		global $post;
-		return get_post_meta($post->ID, 'invoice_type', true)? get_post_meta($post->ID, 'invoice_type', true): 'Invoice';
+		if(!$postID){global $post; $postID = $post->ID;}
+		return get_post_meta($postID, 'invoice_type', true)? get_post_meta($postID, 'invoice_type', true): 'Invoice';
 	}
 	
 	
@@ -328,7 +320,38 @@
 	function get_invoice_status() 
 	{
 		global $post;
-		return get_post_meta($post->ID, 'invoice_status', true)? get_post_meta($post->ID, 'invoice_status', true): 'Quote';
+		$invoice_paid = get_post_meta($post->ID, 'invoice_paid', true);
+		$invoice_sent = get_post_meta($post->ID, 'invoice_sent', true);
+		if($invoice_paid && $invoice_paid != 'Not yet')
+		{
+			return 'Paid';
+		}
+		elseif($invoice_sent && $invoice_sent != 'Not yet')
+		{
+			$invoice_sent = explode('/',$invoice_sent);
+			$invoice_sent = intval($invoice_sent[2]).'-'.intval($invoice_sent[1]).'-'.intval($invoice_sent[0]);
+	
+			$days = wp3i_date_diff($invoice_sent, date_i18n('Y-m-d'));
+			if($days == 0){return 'Sent today';}
+			elseif($days == 1){return 'Sent 1 day ago';}
+			else{ return 'Sent '.$days.' days ago';} 
+		}
+		else
+		{
+			return 'Not sent yet';
+		}
+	}
+	function invoice_status() 
+	{
+		echo get_invoice_status();	
+	}
+	
+	function wp3i_date_diff($start, $end) 
+	{
+		$start_ts = strtotime($start);
+		$end_ts = strtotime($end);
+		$diff = $end_ts - $start_ts;
+		return round($diff / 86400);
 	}
 	
 	
@@ -362,15 +385,15 @@
 	--------------------------------------------------------------------------------------------*/
 	function wp3i_tax()
 	{
-		echo get_wp3i_tax();
+		global $post;
+		echo get_wp3i_tax($post->ID);
 	}
 	
-	function get_wp3i_tax()
+	function get_wp3i_tax($invoiceID)
 	{
-		global $post;
-		if(get_post_meta($post->ID, 'invoice_tax', true))
+		if(get_post_meta($invoiceID, 'invoice_tax', true))
 		{
-			return get_post_meta($post->ID, 'invoice_tax', true);
+			return get_post_meta($invoiceID, 'invoice_tax', true);
 		}
 		elseif(get_option('wp3i_tax'))
 		{
@@ -535,7 +558,7 @@
 	--------------------------------------------------------------------------------------------*/
 	function wp3i_get_invoice_tax($invoiceID)
 	{
-		$total = floatval(wp3i_get_invoice_subtotal($invoiceID) * get_wp3i_tax());
+		$total = floatval(wp3i_get_invoice_subtotal($invoiceID) * get_wp3i_tax($invoiceID));
 		return number_format($total, 2, '.', ''); 
 	}
 	

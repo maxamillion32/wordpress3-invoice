@@ -18,7 +18,7 @@ p {font-family:Arial, Helvetica, sans-serif; font-size:11px; line-height:14px; c
 
 /* Global
 -------------------------------------------------*/
-.container {width:540px; margin:30px auto; padding:30px; background-color:#FFF; border:#DDDFDF solid 1px; position:relative;}
+.container {width:540px; margin:30px auto 60px; padding:30px; background-color:#FFF; border:#DDDFDF solid 1px; position:relative;}
 h1 { font-weight:bold; font-size:72px; line-height:72px;}
 h2 { font-weight:bold; font-size:18px; line-height:18px; position:relative; margin-top:-18px;}
 
