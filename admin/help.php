@@ -45,7 +45,7 @@ class Help
                 <div class="inside">
                 	<iframe height="430" width="720" frameborder="0" src="http://www.wordpress3invoice.com/help-videos/creating-an-invoice.html">
                     </iframe>
-                    <p>Creating an Invoice is simple, enter ana me, input data, enter your breakdown costs, select a client and click Publish!</p>
+                    <p>Creating an Invoice is simple, enter a name, input data, enter your breakdown costs, select a client and click Publish!</p>
                 </div>
             </div>
             
