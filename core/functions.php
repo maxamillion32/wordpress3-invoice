@@ -389,7 +389,7 @@
 		echo get_wp3i_tax($post->ID);
 	}
 	
-	function get_wp3i_tax($invoiceID)
+	function get_wp3i_tax($invoiceID = NULL)
 	{
 		if(get_post_meta($invoiceID, 'invoice_tax', true))
 		{
