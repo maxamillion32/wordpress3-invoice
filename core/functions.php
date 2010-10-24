@@ -407,7 +407,8 @@
 	
 	function wp3i_has_tax()
 	{
-		if(get_wp3i_tax() == '0.00')
+		global $post;
+		if(get_wp3i_tax($post->ID) == '0.00')
 		{
 			return false;	
 		}
