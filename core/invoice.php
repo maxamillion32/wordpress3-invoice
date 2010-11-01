@@ -644,7 +644,7 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
                     <input type="submit" value="Submit" name="Submit"/>
                     </form>
                 </div>
-            <?
+            <?php
             die;
     	}
 	 }
