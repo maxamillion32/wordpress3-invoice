@@ -733,5 +733,18 @@
 		return number_format($total, 2, '.', ''); 
 	}
 	
+	/**
+	 * wp3i_payment_gateway_button
+	 *
+	 * @author Elliot Condon
+	 * @since 2.0.1
+	 *
+	 * Creates the chosen payment gateway button
+	 **/
+	function wp3i_payment_gateway_button()
+	{
+		global $Wp3i;
+		$Wp3i->invoice->wp3i_payment_gateway_button();
+	}
 	
 ?>
