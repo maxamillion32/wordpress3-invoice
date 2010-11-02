@@ -264,6 +264,7 @@ class Stats
                         <script type="text/javascript">
                         var chart;
                         var $ = jQuery.noConflict();
+						var currency_format = '<?php wp3i_currency_format(); ?>';
                             
                         $(document).ready(function() {
                             chart = new Highcharts.Chart({
@@ -300,7 +301,7 @@ class Stats
                                     tooltip: {
                                         formatter: function() {
                                                 return this.point.name +'<br/>'+
-                                                '<b>'+ this.series.name+' '+this.x + ': <?php wp3i_currency(); ?>'+this.y+'</b>';
+                                                '<b>'+ this.series.name+' '+this.x + ' ' + currency_format.replace('#',this.y)+'</b>';
                                         }
                                     },
                                     legend: {
@@ -372,15 +373,15 @@ class Stats
                             <ul>
                                 <li class="income">
                                     <h3><span></span>Income</h3>
-                                    <h2><?php wp3i_currency(); ?><?php echo $this->get_stats_total('paid'); ?></h2>
+                                    <h2><?php echo wp3i_format_amount($this->get_stats_total('paid')); ?></h2>
                                 </li>
                                 <li class="awaiting-payment">
                                     <h3><span></span>Awaiting Payment</h3>
-                                    <h2><?php wp3i_currency(); ?><?php echo $this->get_stats_total('sent'); ?></h2>
+                                    <h2><?php echo wp3i_format_amount($this->get_stats_total('sent')); ?></h2>
                                 </li>
                                 <li class="quotes">
                                     <h3><span></span>Quotes</h3>
-                                    <h2><?php wp3i_currency(); ?><?php echo $this->get_stats_total('quote'); ?></h2>
+                                    <h2><?php echo wp3i_format_amount($this->get_stats_total('quote')); ?></h2>
                                 </li>
                             </ul>
                         </div>
@@ -402,7 +403,7 @@ class Stats
                             <td class="invoice-number"><?php echo get_post_meta($invoice->ID, 'invoice_number', true); ?></td>
                             <td class="invoice-type"><?php echo get_post_meta($invoice->ID, 'invoice_type', true); ?></td>
                             <td class="invoice-title"><?php edit_post_link($invoice->post_title,'','',$invoice->ID); ?></td>
-                            <td class="invoice-total"><?php wp3i_currency(); ?><?php echo number_format(wp3i_get_invoice_total($invoice->ID), 2, '.', ''); ?></td>
+                            <td class="invoice-total"><?php echo wp3i_format_amount(wp3i_get_invoice_total($invoice->ID)) ?></td>
                             <td class="invoice-date"><?php echo get_the_time('d M Y',$invoice->ID); ?></td>
                             <td class="invoice-cient"><?php echo get_invoice_client_edit($invoice->ID); ?></td>
                             <td><?php

@@ -33,7 +33,7 @@ class Help
         <div class="wp3i-heading">
             <div class="icon32" id="icon-wp3i"><br></div>
             <h2>WordPress 3 Invoice Help</h2>
-            <p>Topics: <a href="#creating-an-invoice">Creating an Invoice</a> &nbsp;<a href="#invoice-passwords">Invoice Passwords</a> &nbsp;<a href="#managing-clients">Managing Clients</a> &nbsp;<a href="#custom-templates">Custom Templates</a> &nbsp;<a href="#template-api">Template API</a></p>
+            <p>Topics: <a href="#creating-an-invoice">Creating an Invoice</a> &nbsp;<a href="#invoice-passwords">Invoice Passwords</a> &nbsp;<a href="#managing-clients">Managing Clients</a> &nbsp;<a href="#custom-templates">Custom Templates</a> &nbsp;<a href="#template-api">Template API</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Help: <a href="http://www.wordpress3invoice.com/support/">Support</a> &nbsp;<a href="http://www.wordpress3invoice.com/developers/">Developers</a></p>
         </div>
 		<div id="poststuff">
 			
@@ -165,7 +165,7 @@ class Help
 								<td><p>Invoice Detail</p></td>
 							</tr>
 							<tr class="odd">
-								<td><h4>wp3i_currency()</h4><h6>+ get_wp3i_currency()</h6></td>
+								<td><h4>wp3i_currency()</h4><h6>+ wp3i_get_currency()</h6></td>
 								<td><p>Displays the chosen currency</p></td>
 								<td><p>Option</p></td>
 							</tr>
@@ -230,50 +230,79 @@ class Help
 				</div>
                 
                 <div class="right-column">
-                <div class="postbox" id="new">
-                    <h3 class="hndle"><span>A helpful plugin.</span></h3>
-					<div class="inside">
-						<table cellpadding="10" cellspacing="0">
+					
+                    <div class="buttons">
+                    	<table cellpadding="0" cellspacing="0">
 						<tr>
 						<td>
-						<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-							<input type="hidden" name="cmd" value="_s-xclick">
-							<input type="hidden" name="hosted_button_id" value="U8VV93Z7WXYJA">
-							<input type="image" src="<?php echo $this->dir; ?>images/options-donate.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
-							<img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1">
-						</form>
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                                <input type="hidden" name="cmd" value="_s-xclick">
+                                <input type="hidden" name="hosted_button_id" value="U8VV93Z7WXYJA">
+                                <input type="image" border="0" name="submit" alt="PayPal - The safer, easier way to pay online." class="wp3i-button donate">
+                                <img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1">
+                            </form>
 						</td>
 						<td>
-							<a href="http://wordpress.org/extend/plugins/wordpress3-invoice/">
-								<img src="<?php echo $this->dir; ?>images/options-rate-it.gif" alt="Rate wp3i" />
-							</a>
+							<a href="http://wordpress.org/extend/plugins/wordpress3-invoice/" class="wp3i-button rate"></a>
 						</td>
 						</tr>
 						</table>
-						<p>Thanks for using WordPress 3 Invoices. Happy invoicing.</p>
-                        <p>Need help? Have an idea for the next release? Check out:</p>
-						<ul>
-							<li><a href="http://www.wordpress3invoice.com/support/">Support / FAQ.</a></li>
-							<li><a href="http://www.wordpress3invoice.com/developers/">Developer Community</a></li>
-						</ul>
+                    </div>
+						
+                <div class="postbox twitter">
+					<div class="inside">
+						<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+						<script>
+                        new TWTR.Widget({
+                          version: 2,
+                          type: 'profile',
+                          rpp: 5,
+                          interval: 6000,
+                          width: 'auto',
+                          height: 300,
+                          theme: {
+                            shell: {
+                              background: '#dfdfdf',
+                              color: '#666666'
+                            },
+                            tweets: {
+                              background: '#ffffff',
+                              color: '#333333',
+                              links: '#21749b'
+                            }
+                          },
+                          features: {
+                            scrollbar: true,
+                            loop: false,
+                            live: false,
+                            hashtags: true,
+                            timestamp: true,
+                            avatars: false,
+                            behavior: 'all'
+                          }
+                        }).render().setUser('wp3i').start();
+                        </script>
 					</div>
 				</div>
+                
 				<div class="postbox" id="new">
-					<h3 class="hndle"><span>New in 2.0.0</span></h3>
+					<h3 class="hndle"><span>New in 2.0.1</span></h3>
 					<div class="inside">
 						<ul>
-							<li>Re writen as an object oriented plugin</li>
-							<li>Many bug fixes</li>
-							<li>Many small improvements</li>
-							<li>New task bar when viewing invoices</li>
-                            <li>Invoices now have password security</li>
-                            <li>New Help page + videos</li>
-                            <li>New sexy admin pages</li>
-                            <li>Fixed stats page bugs</li>
-                            <li>More small improvements</li>
+							<li>Invoice archive is now a blank page</li>
+							<li>Added currency formating throughout wp3i</li>
+							<li>New Currency drop down list on options page</li>
+							<li>New Twitter feed on Help page (stay updated!)</li>
+                            <li>General Housekeeping</li>
+                            <li>Added Gateway folder (<a href="http://www.wordpress3invoice.com/shop/">PayPal gateway</a> $1.00)</li>
+                            <li>Added backup and restore functionality for gateway files on auto update</li>
+                            <li>All template functions that display a price, also display currency in appropriate format</li>
+                            <li>Remove all wp3i_currency() calls from  your custom invoice and email templates.</li>
 						</ul>
 					</div>
 				</div>
+                
+                
                 
 			</div> <!--ends right column-->
             

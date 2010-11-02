@@ -1,5 +1,11 @@
-var $ = jQuery.noConflict();
-$(document).ready(function()
+/**
+ * WordPress 3 Invoice Javascript
+ *
+ * @author Elliot Condon
+ * @since 2.0.0
+ *
+ **/
+jQuery(document).ready(function($)
 {
 	/**
 	 * Invoice edit page (if #invoice_details exists)
@@ -255,7 +261,7 @@ $(document).ready(function()
 			}
 	
 			detail.find('input#detail-subtotal').attr('value', subtotal);
-			detail.find('p#detail-subtotal').html(wp3i_currenty+' '+subtotal);
+			detail.find('#detail-subtotal').html(subtotal);
 			
 			update_subtotal_numbers();
 		}
@@ -314,40 +320,9 @@ $(document).ready(function()
 		---------------------*/
 		$('a.add-detail').click(function()
 		{
-			var i = $('.detail').size() + 1;
-			
-			var append = '<div class="detail">\
-						<table cellpadding="0" cellspacing="0" width="100%">\
-							<tr>\
-								<td>\
-									<ul>\
-										<li class="title"><input type="text" name="detail-title[]" id="detail-title"></li>\
-										<li class="description"><textarea name="detail-description[]" id="detail-description"></textarea></li>\
-									</ul>\
-								</td>\
-								<td width="340">\
-									<ul>\
-										<li class="type">\
-										<select name="detail-type[]" id="detail-type">\
-											<option value="Timed">Timed</option>\
-											<option value="Fixed">Fixed</option>\
-										</select>\
-										</li>\
-										<li class="rate">'+wp3i_currenty+'<input onblur="if (this.value == \'\') {this.value = \'0.00\';}" onfocus="if(this.value == \'0.00\') {this.value = \'\';}"  type="text" name="detail-rate[]" id="detail-rate" value="0.00"><span class="hr"></span></li>\
-										<li class="duration"><input onblur="if (this.value == \'\') {this.value = \'0.0\';}" onfocus="if(this.value == \'0.0\') {this.value = \'\';}" type="text" name="detail-duration[]" id="detail-duration" value="0.0"></li>\
-										<li class="subtotal">\
-											<input type="hidden" name="detail-subtotal[]" id="detail-subtotal" value="0.00" />\
-											<p id="detail-subtotal"></p>\
-										</li>\
-									</ul>\
-								</td>\
-							</tr>\
-						</table>\
-						<a class="delete" href="#" title="Remove Detail"></a>\
-						<div class="grab"></div>\
-					</div>';
-					
-			$('.details').append(append);
+			$('.details .detail:last').clone().appendTo('.details');
+			$('.details .detail:last input[type=text]').val('');
+			$('.details .detail:last textarea').html('');
 			initSubtotalUpdate();
 			return false;
 		});

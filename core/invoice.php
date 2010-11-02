@@ -116,7 +116,7 @@ class Invoice
 		elseif ("description" == $column) echo $post->post_content;
 		elseif ("invoice_no" == $column) echo get_post_meta($post->ID, 'invoice_number', true);
 		elseif ("invoice_type" == $column) echo get_post_meta($post->ID, 'invoice_type', true);
-		elseif ("amount" == $column) echo get_wp3i_currency().number_format(wp3i_get_invoice_total($post->ID), 2, '.', '');
+		elseif ("amount" == $column) echo wp3i_format_amount(wp3i_get_invoice_total($post->ID));
 		elseif ("client" == $column) echo get_invoice_client_edit($post->ID);
 		elseif ("status" == $column)
 		{
@@ -254,7 +254,7 @@ class Invoice
                 	<a href="#" class="wp3i-edit">Edit</a>
                 </div>
                 <div class="back">
-                	<input type="text" name="invoice-number" id="invoice-number" value="<?php invoice_number(); ?>" size="2">
+                	<input type="text" name="invoice-number" id="invoice-number" value="<?php invoice_number(); ?>" size="2" />
                     <a href="#" class="button wp3i-ok">OK</a>
                     <a href="#" class="wp3i-cancel">Cancel</a>
                 </div>
@@ -281,7 +281,7 @@ class Invoice
                 	<a href="#" class="wp3i-edit">Edit</a>
                 </div>
                 <div class="back">
-                	<input type="text" name="invoice-tax" id="invoice-tax" value="<?php wp3i_tax(); ?>" size="2">
+                	<input type="text" name="invoice-tax" id="invoice-tax" value="<?php wp3i_tax(); ?>" size="2" />
                     <a href="#" class="button wp3i-ok update-subtotal">OK</a>
                     <a href="#" class="wp3i-cancel update-subtotal">Cancel</a>
                 </div>
@@ -308,9 +308,9 @@ class Invoice
                         <option value="11">Nov</option>
                         <option value="12">Dec</option>
             		</select>
-                    <input type="text" maxlength="2" size="1" value="" name="dd" id="dd">, 
-                    <input type="text" maxlength="4" size="3" value="" name="yyyy" id="yyyy">
-                	<input type="hidden" name="invoice-sent" id="invoice-sent" value="<?php echo get_invoice_sent(); ?>">
+                    <input type="text" maxlength="2" size="1" value="" name="dd" id="dd" />, 
+                    <input type="text" maxlength="4" size="3" value="" name="yyyy" id="yyyy" />
+                	<input type="hidden" name="invoice-sent" id="invoice-sent" value="<?php echo get_invoice_sent(); ?>" />
 
                     <a href="#" class="button wp3i-ok">OK</a>
                     <a href="#" class="wp3i-clear">Reset</a>
@@ -339,9 +339,9 @@ class Invoice
                         <option value="11">Nov</option>
                         <option value="12">Dec</option>
             		</select>
-                    <input type="text" maxlength="2" size="1" value="31" name="dd" id="dd">, 
-                    <input type="text" maxlength="4" size="3" value="2010" name="yyyy" id="yyyy">
-                	<input type="hidden" name="invoice-paid" id="invoice-paid" value="<?php echo get_invoice_paid(); ?>">
+                    <input type="text" maxlength="2" size="1" value="31" name="dd" id="dd" />, 
+                    <input type="text" maxlength="4" size="3" value="2010" name="yyyy" id="yyyy" />
+                	<input type="hidden" name="invoice-paid" id="invoice-paid" value="<?php echo get_invoice_paid(); ?>" />
 
                     <a href="#" class="button wp3i-ok">OK</a>
                     <a href="#" class="wp3i-clear">Reset</a>
@@ -350,7 +350,7 @@ class Invoice
             </li>
 		</ul>
         
-        <input type="hidden" name="wp3i_hidden_currency" id="wp3i_hidden_currency"  value="<?php wp3i_currency(); ?>" />
+        <input type="hidden" name="wp3i_hidden_currency" id="wp3i_hidden_currency"  value="<?php wp3i_currency_format(); ?>" />
         <input type="hidden" name="wp3i_hidden_tax" id="wp3i_hidden_tax"  value="<?php wp3i_tax(); ?>" />
         <input type="hidden" name="wp3i_hidden_permalink" id="wp3i_hidden_permalink"  value="<?php echo wp3i_get_permalink(); ?>" />
         <input type="hidden" name="wp3i_hidden_password" id="wp3i_hidden_password"  value="<?php echo get_invoice_client_password(); ?>" />
@@ -431,7 +431,7 @@ class Invoice
                             <li class="description">Description</li>
                         </ul>
                     </td>
-                    <td width="340">
+                    <td width="312">
                         <ul>
                         <li class="type">Type</li>
                             <li class="rate">Rate<span class="hr"></span></li>
@@ -450,12 +450,12 @@ class Invoice
                    	<tr>
                     <td>
 						<ul>
-                        <li class="title"><input type="text" name="detail-title[]" id="detail-title" value="<?php the_detail_title(); ?>"></li>
+                        <li class="title"><input type="text" name="detail-title[]" id="detail-title" value="<?php the_detail_title(); ?>" /></li>
                         <li class="description"><textarea name="detail-description[]" id="detail-description"><?php echo get_the_detail_description(); ?></textarea>
                         </li>
                         </ul>
                     </td>
-                    <td width="340">
+                    <td width="312">
                         <ul>
                        	<li class="type">
                         	<select name="detail-type[]" id="detail-type">
@@ -464,14 +464,14 @@ class Invoice
                             </select>
                         </li>
                         <li class="rate">
-							<?php wp3i_currency(); ?><input onBlur="if (this.value == '') {this.value = '0.00';}" onFocus="if(this.value == '0.00') {this.value = '';}"  type="text" name="detail-rate[]" id="detail-rate" value="<?php the_detail_rate(); ?>">
+							<input onBlur="if (this.value == '') {this.value = '0.00';}" onFocus="if(this.value == '0.00') {this.value = '';}"  type="text" name="detail-rate[]" id="detail-rate" value="<?php echo get_the_detail_rate(); ?>" />
                         </li>
                         <li class="duration">
-                        	<input onBlur="if (this.value == '') {this.value = '0.0';}" onFocus="if(this.value == '0.0') {this.value = '';}"  type="text" name="detail-duration[]" id="detail-duration" value="<?php the_detail_duration(); ?>">
+                        	<input onBlur="if (this.value == '') {this.value = '0.0';}" onFocus="if(this.value == '0.0') {this.value = '';}"  type="text" name="detail-duration[]" id="detail-duration" value="<?php the_detail_duration(); ?>" />
                         </li>
                         <li class="subtotal">
                         	<input type="hidden" name="detail-subtotal[]" id="detail-subtotal" value="<?php the_detail_subtotal(); ?>" />
-                            <p id="detail-subtotal"><?php wp3i_currency(); ?> <?php the_detail_subtotal(); ?></p>
+                            <p><?php echo wp3i_format_amount('<span id="detail-subtotal">'.get_the_detail_subtotal().'</span>'); ?></p>
                         </li>
                         </ul>
                     </td>
@@ -487,7 +487,7 @@ class Invoice
                     	<tr>
                         	<td>
                                 <ul>
-                                	<li class="title"><input type="text" name="detail-title[]" id="detail-title"></li>
+                                	<li class="title"><input type="text" name="detail-title[]" id="detail-title" /></li>
                                 	<li class="description"><textarea name="detail-description[]" id="detail-description"></textarea></li>
                                 </ul>
                             </td>
@@ -499,11 +499,15 @@ class Invoice
                                         <option value="Fixed">Fixed</option>
                                     </select>
                                     </li>
-                                    <li class="rate"><?php wp3i_currency(); ?><input onBlur="if (this.value == '') {this.value = '0.00';}" onFocus="if(this.value == '0.00') {this.value = '';}"  type="text" name="detail-rate[]" id="detail-rate" value="0.00"><span class="hr"></span></li>
-                                    <li class="duration"><input onBlur="if (this.value == '') {this.value = '0.0';}" onFocus="if(this.value == '0.0') {this.value = '';}"  type="text" name="detail-duration[]" id="detail-duration" value="0.0"></li>
+                                    <li class="rate">
+							<input onBlur="if (this.value == '') {this.value = '0.00';}" onFocus="if(this.value == '0.00') {this.value = '';}"  type="text" name="detail-rate[]" id="detail-rate" value="0.00" />
+                            		</li>
+                                    <li class="duration">
+                                    <input onBlur="if (this.value == '') {this.value = '0.0';}" onFocus="if(this.value == '0.0') {this.value = '';}"  type="text" name="detail-duration[]" id="detail-duration" value="0.0" />
+                                    </li>
                                     <li class="subtotal">
                                     	<input type="hidden" name="detail-subtotal[]" id="detail-subtotal" value="0.00" />
-                                        <p id="detail-subtotal"><?php wp3i_currency(); ?> 0.00</p>
+                                        <p><?php echo wp3i_format_amount('<span id="detail-subtotal">0.00</span>'); ?></p>
                                     </li>
                                 </ul>
                             </td>
@@ -516,11 +520,14 @@ class Invoice
         </div>  
 		<div class="detail detail-footer">
         <p>
-        <strong>Subtotal:</strong> <?php wp3i_currency(); ?><span class="invoice-subtotal"><?php the_invoice_subtotal(); ?></span>&nbsp;&nbsp;&nbsp;
+        <strong>Subtotal:</strong> <?php echo wp3i_format_amount('<span class="invoice-subtotal">'.get_the_invoice_subtotal().'</span>'); ?>	
+        &nbsp;&nbsp;&nbsp;
         <?php //if(wp3i_has_tax()): ?>
-        	<strong>Tax:</strong> <?php wp3i_currency(); ?><span class="invoice-tax"><?php the_invoice_tax(); ?></span>&nbsp;&nbsp;&nbsp;
+        <strong>Tax:</strong> <?php echo wp3i_format_amount('<span class="invoice-tax">'.get_the_invoice_tax().'</span>'); ?>
+        &nbsp;&nbsp;&nbsp;
         <?php //endif; ?>
-        <strong>Total:</strong> <?php wp3i_currency(); ?><span class="invoice-total"><?php the_invoice_total(); ?></span>&nbsp;&nbsp;&nbsp;
+        <strong>Total:</strong> <?php echo wp3i_format_amount('<span class="invoice-total">'.get_the_invoice_total().'</span>'); ?>
+        &nbsp;&nbsp;&nbsp;
         <a class="add-detail button-primary" href="#" title="Add Detail">Add Detail</a>
         </p>
         </div> 
@@ -580,17 +587,22 @@ class Invoice
 		
 		$post_type = get_query_var('post_type');
 		$email = $_GET['email'];
-		
-		// 1. find invoice.php template file
-		$invoice_template = get_stylesheet_directory().'/invoice/invoice.php';
-		if(!file_exists($invoice_template)){$invoice_template = $this->plugin_path.'/template/invoice.php';}
-		
-		// 2. find email.php template file
-		$email_template = get_stylesheet_directory().'/invoice/email.php';
-		if(!file_exists($email_template)){$email_template = $this->plugin_path.'/template/email.php';}
+		$paid = $_GET['paid'];
 		
 		if($post_type == 'invoice')
 		{
+			if($paid == 'true')
+			{
+				update_post_meta($post->ID, 'invoice_paid',date('d/m/Y'));
+			}
+			// 1. find invoice.php template file
+			$invoice_template = get_stylesheet_directory().'/invoice/invoice.php';
+			if(!file_exists($invoice_template)){$invoice_template = $this->plugin_path.'/template/invoice.php';}
+			
+			// 2. find email.php template file
+			$email_template = get_stylesheet_directory().'/invoice/email.php';
+			if(!file_exists($email_template)){$email_template = $this->plugin_path.'/template/email.php';}
+			
 			$this->invoice_security();
 			if($email == 'send')
 			{
@@ -605,7 +617,7 @@ class Invoice
 			{
 				include($email_template);
 			}
-			else
+			elseif(is_single())
 			{
 				include($invoice_template);
 			}
@@ -637,7 +649,7 @@ class Invoice
 background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png") repeat-x scroll center top #87B500;border-color:#DDDDDD #689300 #689300 #DDDDDD;border-style:solid;border-width:0 1px 1px 0;color:#FFFFFF;cursor:pointer;font-size:15px;height:30px;line-height:30px;margin:0;overflow:visible;padding:0 15px;text-shadow:1px 1px #719E03;}
 				</style>
                 <div class="form">
-                	<img src="<?php echo $this->plugin_dir; ?>admin/images/password-protected.png">
+                	<img src="<?php echo $this->plugin_dir; ?>admin/images/password-protected.png" />
                     <form method="post" action="<?php bloginfo('url'); ?>/wp-pass.php">
                     <p>This <?php invoice_type(); ?> is password protected.</p>
                     <input type="text" id="pwbox-531" name="post_password" value="Enter Password" onfocus="if(this.value == 'Enter Password') {this.value = '';this.type='password'}" onblur="if (this.value == '') {this.value = 'Enter Password'; this.type='text'}"/>
@@ -665,12 +677,14 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
 		}
 		if(get_post_type($post->ID) == 'invoice'): ?>
         	<style type="text/css" media="all">
-				.task_bar {position:fixed; bottom:0px; left:0px; width:100%; height:30px; background:url("<?php echo $this->plugin_dir; ?>admin/images/task-bar.png") repeat-x scroll left top #F2F2F2; font-size:11px; color:#999; text-shadow:#000 0px -1px 0px; overflow:hidden;}
+				.task_bar {position:fixed; bottom:0px; left:0px; width:100%; height:30px; background:url("<?php echo $this->plugin_dir; ?>admin/images/task-bar.png") repeat-x scroll left top #F2F2F2; font-size:11px; color:#999; text-shadow:#000 0px -1px 0px; overflow:hidden; border-top:#343434 solid 1px;
+}
 				.task_bar .container {width:600px; margin:0 auto; background:none transparent; border:none; padding:0px; overflow:hidden; height:30px; line-height:30px;}
 				.task_bar p {color:#999; margin:0px; padding:0px; }
 				.task_bar .status {float:left; color:#999;}
+				.task_bar .status.paid {float:left; color:#95db30;}
 				.task_bar .buttons {float:right;}
-				.task_bar .buttons a {-moz-border-radius: 11px; -webkit-border-radius: 11px;-khtml-border-radius: 11px; border-radius: 11px; cursor:pointer; font-size:11px; padding:4px 8px 3px 8px; text-decoration:none; background:url("<?php bloginfo('url'); ?>/wp-admin/images/white-grad.png") repeat-x scroll left top #F2F2F2; text-shadow:0 1px 0 #FFFFFF; margin-left:5px;}
+				.task_bar .buttons a {-moz-border-radius: 11px; -webkit-border-radius: 11px;-khtml-border-radius: 11px; border-radius: 11px; cursor:pointer; font-size:11px; padding:4px 8px 3px 8px; text-decoration:none; background:url("<?php bloginfo('url'); ?>/wp-admin/images/white-grad.png") repeat-x scroll left top #F2F2F2; text-shadow:0 1px 0 #FFFFFF; margin-left:5px; display:block; float:left; line-height:13px; margin-top:4px;}
 				.task_bar .print a:hover {background:#fff none;}
 			</style>
             <style type="text/css" media="print">
@@ -678,7 +692,7 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
 			</style>
 			<div class="task_bar">
             	<div class="container">
-                <div class="status">
+                <div class="status <?php if(get_invoice_status() == 'Paid'){echo'paid';} ?>">
 					<?php if(get_invoice_type() == 'Invoice'): ?>
                         Invoice status: <?php invoice_status(); ?>
                     <?php else: ?>
@@ -693,6 +707,7 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
                     		<a href="<?php echo add_query_arg('email', 'view', get_permalink($post->ID)); ?>">Email Version</a>
                         <?php endif; ?>
                         <a href="javascript:print()">Print PDF</a>
+                        <?php $this->wp3i_payment_gateway_button(); ?>
                     <?php elseif($_GET['email'] == 'view'): //viewing email version?>
                     	<a href="<?php the_permalink(); ?>">Online Version</a>
                         <?php //if(get_invoice_client_email()): // only send if there is a client email ?>
@@ -707,7 +722,28 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
 		<?php endif;
 	 }
 	
+	/**
+	 * wp3i_payment_gateway_button
+	 *
+	 * @author Elliot Condon
+	 * @since 2.0.1
+	 *
+	 * Creates the chosen payment gateway button
+	 **/
+	function wp3i_payment_gateway_button()
+	{
+		$payment_gateway_name = wp3i_get_payment_gateway();
+		$payment_gateway_account = wp3i_get_payment_gateway_account();
+		
+		if(get_invoice_status() == 'Paid'){return false;}
+		if($payment_gateway_name == 'None'){return false;}
+		if($payment_gateway_account == ''){return false;}
 	
+		include $this->plugin_path.'gateways/'.$payment_gateway_name.'.php';
+		$gateway = new $payment_gateway_name($this);
+		
+		
+	}
 }
 
 ?>

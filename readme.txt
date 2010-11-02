@@ -42,6 +42,17 @@ See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
 
+= 2.0.1 =
+* Invoice archive is now a blank page
+* Added currency formating throughout wp3i
+* New Currency drop down list on options page
+* New Twitter feed on Help page (stay updated!)
+* General Housekeeping
+* Added Gateway folder (PayPal gateway $1.00)
+* Added backup and restore functionality for gateway files on auto update
+* All template functions that display a price, also display currency in appropriate format
+* Remove all wp3i_currency() calls from your custom invoice and email templates.
+
 = 2.0.0 =
 * Re writen as an object oriented plugin
 * Many bug fixes

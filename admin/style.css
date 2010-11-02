@@ -46,7 +46,7 @@ Invoice Edit Page
 #project_breakdown .detail ul li.description textarea {font-size:10px; line-height:12px;}
 #project_breakdown .detail ul li.type{width:65px;}
 #project_breakdown .detail ul li.type select{margin-top:7px;}
-#project_breakdown .detail ul li.rate {width:80px;}
+#project_breakdown .detail ul li.rate {width:52px;}
 #project_breakdown .detail ul li.rate input {width:50px;}
 #project_breakdown .detail ul li.rate p {float:left;}
 #project_breakdown .detail ul li.duration {width:50px;}
@@ -72,9 +72,6 @@ Invoice Edit Page
 .wp3i-heading h2 {margin:18px 0px 0px;}
 .wp3i-heading ul {margin:2px 0px 0px;}
 .wp3i-heading p {color:#666; font-size:11px; margin:6px 0px 0px;}
-
-
-
 
 #wp3i-stats #wp3i-stats-graph .inside {padding:20px 0px; margin:0px; position:relative;}
 #wp3i-stats #wp3i-stats-graph .inside .wp3i-stats-graph {width:900px; height:300px; }
@@ -113,14 +110,7 @@ Invoice Edit Page
 --------------------------------------------------------------------------------------------*/
 #wp3i-options p.submit {padding:0px; margin:20px 6px 14px;}
 
-#new {}
-#new .inside p{color:#333; font-family:"Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif; font-size:12px; line-height:22px;}
-#new .inside ul{list-style:square outside none; margin-left:22px;}
-#new .inside ul li{color:#333; font-family:"Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif; font-size:12px; line-height:22px;}
-
 #poststuff {overflow:hidden;}
-.left-column { margin-right:430px;}
-.right-column {width:410px; float:right;}
 
 .form-table th span {font-size:10px; font-weight:normal; color:#666; clear:both; display:block; }
 
@@ -134,10 +124,13 @@ Invoice Edit Page
 								Invoice Help Page
 --------------------------------------------------------------------------------------------*/
 .wrap.wp3i{}
-.wrap.wp3i.help .left-column { width:736px; float:left; margin-right:20px;}
-.wrap.wp3i.help .left-column iframe{ height:430px; width:720px; overflow:hidden; }
-.wrap.wp3i.help .left-column ul{ list-style:square outside none; margin-left:22px;}
-.wrap.wp3i.help .left-column ul li{ color:#333333; font-family:"Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif; font-size:12px; line-height:22px;}
+
+.wrap.wp3i p{color:#333; font-family:"Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif; font-size:12px; line-height:22px;}
+.wrap.wp3i ul{list-style:square outside none; margin-left:22px;}
+.wrap.wp3i ul li{color:#333; font-family:"Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif; font-size:12px; line-height:22px;}
+
+.wrap.wp3i .left-column { width:736px; float:left; margin-right:20px;}
+.wrap.wp3i .left-column iframe{ height:430px; width:720px; overflow:hidden; }
 
 .wrap.wp3i td {padding-top:10px; font-size:11px; line-height:16px;}
 .wrap.wp3i label {font-size:14px; line-height:14px; font-weight:bold; padding:6px;}
@@ -147,4 +140,18 @@ Invoice Edit Page
 .wrap.wp3i .api tr.odd td {background-color:#f5f9fa;}
 .wrap.wp3i .api p {font-size:11px; line-height:16px; color:#333;}
 
-.wrap.wp3i.help .right-column { float:left;}
+.wrap.wp3i.help .right-column { width:385px; float:left;}
+
+.wrap.wp3i.help .buttons{ margin-bottom:20px;}
+.wrap.wp3i.help .buttons table td{padding-top:0px; padding-right:10px; vertical-align:top;}
+.wp3i-button {display:block; width:187px; height:51px; cursor:pointer; border:none 0; padding:0px; margin:0px; background-image:url('images/wp3i-buttons.png'); overflow:hidden; white-space:nowrap; text-indent:400px;}
+.wp3i-button.rate { background-position:187px 0px;}
+.wp3i-button.rate:hover {background-position:187px -51px;}
+.wp3i-button.donate {background-position:0px 0px;}
+.wp3i-button.donate:hover {background-position:0px -51px;}
+
+.postbox.twitter {}
+.postbox.twitter .inside {margin:0px !important;}
+.postbox.twitter #twtr-widget-1 .twtr-hd h3 {background:none transparent !important;}
+.postbox.twitter .twtr-hd{background:url('../../../../wp-admin/images/gray-grad.png') repeat-x scroll left top #DFDFDF; text-shadow:0 1px 0 #FFFFFF; color:#333;}
+.postbox.twitter .twtr-bd {padding:0px;}

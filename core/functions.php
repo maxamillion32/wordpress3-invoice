@@ -129,7 +129,7 @@
 	}
 	function the_detail_rate()
 	{
-		echo get_the_detail_rate();
+		echo wp3i_format_amount(get_the_detail_rate());
 	}
 	
 	
@@ -157,7 +157,7 @@
 	}
 	function the_detail_subtotal()
 	{
-		echo get_the_detail_subtotal();
+		echo wp3i_format_amount(get_the_detail_subtotal());
 	}
 	
 
@@ -363,10 +363,10 @@
 	--------------------------------------------------------------------------------------------*/
 	function wp3i_currency()
 	{
-		echo get_wp3i_currency();
+		echo wp3i_get_currency();
 	}
 	
-	function get_wp3i_currency()
+	function wp3i_get_currency()
 	{
 		$wp3i_currency =  get_option('wp3i_currency');	
 		if($wp3i_currency)
@@ -375,8 +375,118 @@
 		}
 		else
 		{
-			return '$';	
+			return 'AU'; // australia is default	
 		}
+	}
+	
+	function wp3i_currency_code()
+	{
+		echo wp3i_get_currency_code();
+	}
+	
+	function wp3i_get_currency_code()
+	{
+		$countries = wp3i_get_countries();
+		return $countries[wp3i_get_currency()]['currency']['code'];
+	}
+	
+	function wp3i_currency_format()
+	{
+		echo wp3i_get_currency_format();
+	}
+	
+	function wp3i_get_currency_format()
+	{
+		$countries = wp3i_get_countries();
+		return $countries[wp3i_get_currency()]['currency']['format'];
+	}
+	
+	function wp3i_format_amount($amount)
+	{
+		return str_replace('#',$amount,wp3i_get_currency_format());
+	}
+	
+	function wp3i_get_countries() 
+	{
+		$countries = array();
+		$countries['CA'] = array('name'=>'Canada','currency'=>array('code'=>'CAD','format'=>'$#')); 
+		$countries['US'] = array('name'=>'USA','currency'=>array('code'=>'USD','format'=>'$#')); 
+		$countries['GB'] = array('name'=>'United Kingdom','currency'=>array('code'=>'GBP','format'=>'£#')); 
+		$countries['DZ'] = array('name'=>'Algeria','currency'=>array('code'=>'DZD','format'=>'# د.ج')); 
+		$countries['AR'] = array('name'=>'Argentina','currency'=>array('code'=>'ARS','format'=>'$#'));
+		$countries['AW'] = array('name'=>'Aruba','currency'=>array('code'=>'AWG','format'=>'ƒ#'));
+		$countries['AU'] = array('name'=>'Australia','currency'=>array('code'=>'AUD','format'=>'$#'));
+		$countries['AT'] = array('name'=>'Austria','currency'=>array('code'=>'EUR','format'=>'€#'));
+		$countries['BB'] = array('name'=>'Barbados','currency'=>array('code'=>'BBD','format'=>'$#'));
+		$countries['BS'] = array('name'=>'Bahamas','currency'=>array('code'=>'BSD','format'=>'$#'));
+		$countries['BH'] = array('name'=>'Bahrain','currency'=>array('code'=>'BHD','format'=>'ب.د #'));
+		$countries['BE'] = array('name'=>'Belgium','currency'=>array('code'=>'EUR','format'=>'# €'));
+		$countries['BR'] = array('name'=>'Brazil','currency'=>array('code'=>'BRL','format'=>'R$#'));
+		$countries['BG'] = array('name'=>'Bulgaria','currency'=>array('code'=>'BGN','format'=>'# лв.'));
+		$countries['CL'] = array('name'=>'Chile','currency'=>array('code'=>'CLP','format'=>'$#'));
+		$countries['CN'] = array('name'=>'China','currency'=>array('code'=>'CNY','format'=>'¥#'));
+		$countries['CO'] = array('name'=>'Colombia','currency'=>array('code'=>'COP','format'=>'$#'));
+		$countries['CR'] = array('name'=>'Costa Rica','currency'=>array('code'=>'CRC','format'=>'₡#'));
+		$countries['HR'] = array('name'=>'Croatia','currency'=>array('code'=>'HRK','format'=>'# kn'));
+		$countries['CY'] = array('name'=>'Cyprus','currency'=>array('code'=>'CYP','format'=>'£#'));
+		$countries['CZ'] = array('name'=>'Czech Republic','currency'=>array('code'=>'CZK','format'=>'# Kč'));
+		$countries['DK'] = array('name'=>'Denmark','currency'=>array('code'=>'DKK','format'=>'# kr')); 
+		$countries['DO'] = array('name'=>'Dominican Republic','currency'=>array('code'=>'DOP','format'=>'$#')); 
+		$countries['EC'] = array('name'=>'Ecuador','currency'=>array('code'=>'ESC','format'=>'$#')); 
+		$countries['EG'] = array('name'=>'Egypt','currency'=>array('code'=>'EGP','format'=>'£#'));
+		$countries['EE'] = array('name'=>'Estonia','currency'=>array('code'=>'EEK','format'=>'# EEK'));
+		$countries['FI'] = array('name'=>'Finland','currency'=>array('code'=>'EUR','format'=>'€#'));
+		$countries['FR'] = array('name'=>'France','currency'=>array('code'=>'EUR','format'=>'€#'));
+		$countries['DE'] = array('name'=>'Germany','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['GR'] = array('name'=>'Greece','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['GP'] = array('name'=>'Guadeloupe','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['GT'] = array('name'=>'Guatemala','currency'=>array('code'=>'GTQ','format'=>'Q#')); 
+		$countries['HK'] = array('name'=>'Hong Kong','currency'=>array('code'=>'HKD','format'=>'$#')); 
+		$countries['HU'] = array('name'=>'Hungary','currency'=>array('code'=>'HUF','format'=>'# Ft')); 
+		$countries['IS'] = array('name'=>'Iceland','currency'=>array('code'=>'ISK','format'=>'# kr.')); 
+		$countries['IN'] = array('name'=>'India','currency'=>array('code'=>'INR','format'=>'₨#')); 
+		$countries['ID'] = array('name'=>'Indonesia','currency'=>array('code'=>'IDR','format'=>'Rp #')); 
+		$countries['IE'] = array('name'=>'Ireland','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['IL'] = array('name'=>'Israel','currency'=>array('code'=>'ILS','format'=>'₪ #')); 
+		$countries['IT'] = array('name'=>'Italy','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['JM'] = array('name'=>'Jamaica','currency'=>array('code'=>'JMD','format'=>'$#')); 
+		$countries['JP'] = array('name'=>'Japan','currency'=>array('code'=>'JPY','format'=>'¥#')); 
+		$countries['LV'] = array('name'=>'Latvia','currency'=>array('code'=>'LVL','format'=>'# Ls')); 
+		$countries['LT'] = array('name'=>'Lithuania','currency'=>array('code'=>'LTL','format'=>'# Lt')); 
+		$countries['LU'] = array('name'=>'Luxembourg','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['MY'] = array('name'=>'Malaysia','currency'=>array('code'=>'MYR','format'=>'RM#')); 
+		$countries['MT'] = array('name'=>'Malta','currency'=>array('code'=>'MTL','format'=>'€#')); 
+		$countries['MX'] = array('name'=>'Mexico','currency'=>array('code'=>'MXN','format'=>'$#')); 
+		$countries['NL'] = array('name'=>'Netherlands','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['NZ'] = array('name'=>'New Zealand','currency'=>array('code'=>'NZD','format'=>'$#')); 
+		$countries['NG'] = array('name'=>'Nigeria','currency'=>array('code'=>'NGN','format'=>'₦#'));
+		$countries['NO'] = array('name'=>'Norway','currency'=>array('code'=>'NOK','format'=>'kr #')); 
+		$countries['PK'] = array('name'=>'Pakistan','currency'=>array('code'=>'PKR','format'=>'₨#')); 
+		$countries['PE'] = array('name'=>'Peru','currency'=>array('code'=>'PEN','format'=>'S/. #')); 
+		$countries['PH'] = array('name'=>'Philippines','currency'=>array('code'=>'PHP','format'=>'Php #')); 
+		$countries['PL'] = array('name'=>'Poland','currency'=>array('code'=>'PLZ','format'=>'# zł')); 
+		$countries['PT'] = array('name'=>'Portugal','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['PR'] = array('name'=>'Puerto Rico','currency'=>array('code'=>'USD','format'=>'$#')); 
+		$countries['RO'] = array('name'=>'Romania','currency'=>array('code'=>'ROL','format'=>'# lei'));
+		$countries['RU'] = array('name'=>'Russia','currency'=>array('code'=>'RUB','format'=>'# руб')); 
+		$countries['SG'] = array('name'=>'Singapore','currency'=>array('code'=>'SGD','format'=>'$#')); 
+		$countries['SK'] = array('name'=>'Slovakia','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['SI'] = array('name'=>'Slovenia','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['ZA'] = array('name'=>'South Africa','currency'=>array('code'=>'ZAR','format'=>'R#')); 
+		$countries['KR'] = array('name'=>'South Korea','currency'=>array('code'=>'KRW','format'=>'₩#')); 
+		$countries['ES'] = array('name'=>'Spain','currency'=>array('code'=>'EUR','format'=>'€#')); 
+		$countries['VC'] = array('name'=>'St. Vincent','currency'=>array('code'=>'XCD','format'=>'$#')); 
+		$countries['SE'] = array('name'=>'Sweden','currency'=>array('code'=>'SEK','format'=>'# kr')); 
+		$countries['CH'] = array('name'=>'Switzerland','currency'=>array('code'=>'CHF','format'=>"# CHF")); 
+		$countries['TW'] = array('name'=>'Taiwan','currency'=>array('code'=>'TWD','format'=>'NT$#')); 
+		$countries['TH'] = array('name'=>'Thailand','currency'=>array('code'=>'THB','format'=>'#฿')); 
+		$countries['TT'] = array('name'=>'Trinidad and Tobago','currency'=>array('code'=>'TTD','format'=>'TT$#')); 
+		$countries['TR'] = array('name'=>'Turkey','currency'=>array('code'=>'TRL','format'=>'# TL')); 
+		$countries['UA'] = array('name'=>'Ukraine','currency'=>array('code'=>'UAH','format'=>'# ₴')); 
+		$countries['AE'] = array('name'=>'United Arab Emirates','currency'=>array('code'=>'AED','format'=>'Dhs. #')); 
+		$countries['UY'] = array('name'=>'Uruguay','currency'=>array('code'=>'UYP','format'=>'$#')); 
+		$countries['VE'] = array('name'=>'Venezuela','currency'=>array('code'=>'VUB','format'=>'Bs. #')); 
+		return apply_filters('shopp_countries',$countries);
 	}
 	
 	
@@ -497,6 +607,56 @@
 		echo get_wp3i_email();
 	}
 	
+	/**
+	 * wp3i_payment_gateway
+	 *
+	 * @author Elliot Condon
+	 * @since 2.0.1
+	 *
+	 * Returns an array of files found in the gateway folder
+	 **/
+	function wp3i_get_payment_gateway()
+	{
+		$wp3i_payment_gateway = get_option('wp3i_payment_gateway');	
+		if($wp3i_payment_gateway)
+		{
+			return $wp3i_payment_gateway;
+		}
+		else
+		{
+			return 'None';	
+		}
+	}
+	
+	function wp3i_payment_gateway()
+	{
+		echo wp3i_get_payment_gateway();
+	}
+	
+	/**
+	 * wp3i_payment_gateway_account
+	 *
+	 * @author Elliot Condon
+	 * @since 2.0.1
+	 *
+	 **/
+	 function wp3i_get_payment_gateway_account()
+	{
+		$wp3i_payment_gateway_account = get_option('wp3i_payment_gateway_account');	
+		if($wp3i_payment_gateway_account)
+		{
+			return $wp3i_payment_gateway_account;
+		}
+		else
+		{
+			return '';	
+		}
+	}
+	function wp3i_payment_gateway_account()
+	{
+		echo wp3i_get_payment_gateway_account();
+	}
+	
 	
 	/*--------------------------------------------------------------------------------------------
 										the_invoice_total
@@ -509,7 +669,7 @@
 	function the_invoice_subtotal()
 	{
 		global $post;
-		echo wp3i_get_invoice_subtotal($post->ID);
+		echo wp3i_format_amount(wp3i_get_invoice_subtotal($post->ID));
 	}
 	
 	function get_the_invoice_tax()
@@ -520,7 +680,7 @@
 	function the_invoice_tax()
 	{
 		global $post;
-		echo wp3i_get_invoice_tax($post->ID);
+		echo wp3i_format_amount(wp3i_get_invoice_tax($post->ID));
 	}
 	
 	function get_the_invoice_total()
@@ -531,7 +691,7 @@
 	function the_invoice_total()
 	{
 		global $post;
-		echo wp3i_get_invoice_total($post->ID);
+		echo wp3i_format_amount(wp3i_get_invoice_total($post->ID));
 	}
 	
 	
