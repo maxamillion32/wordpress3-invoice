@@ -224,6 +224,11 @@ class Help
 								<td><p>Displays the client's (VAT or other) Number</p></td>
 								<td><p>Client</p></td>
 							</tr>
+                            <tr class="odd">
+								<td><h4>wp3i_payment_gateway_button()</h4></td>
+								<td><p>Display's the chosen payment gateway button. Good for email template</p></td>
+								<td><p>Gateway</p></td>
+							</tr>
 						</table>
 					</div>
 				</div>
