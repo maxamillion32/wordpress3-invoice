@@ -707,7 +707,9 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
                     		<a href="<?php echo add_query_arg('email', 'view', get_permalink($post->ID)); ?>">Email Version</a>
                         <?php endif; ?>
                         <a href="javascript:print()">Print PDF</a>
-                        <?php $this->wp3i_payment_gateway_button(); ?>
+                        <?php if(get_invoice_type() == 'Invoice'): ?>
+                        	<?php $this->wp3i_payment_gateway_button(); ?>
+                        <?php endif; ?>
                     <?php elseif($_GET['email'] == 'view'): //viewing email version?>
                     	<a href="<?php the_permalink(); ?>">Online Version</a>
                         <?php //if(get_invoice_client_email()): // only send if there is a client email ?>
