@@ -1,0 +1,813 @@
+# Translation of the WordPress plugin   by .
+# Copyright (C) 2010 
+# This file is distributed under the same license as the  package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wordpress3-invoice\n"
+"POT-Creation-Date: 2010-11-25 10:25+0000\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin/email.php:30
+msgid "Error: No recipient email address found"
+msgstr ""
+
+#: admin/email.php:35
+msgid "Error: No message body found"
+msgstr ""
+
+#: admin/email.php:51
+msgid "Email was successfully sent!"
+msgstr ""
+
+#: admin/email.php:65
+msgid "Email failed to send"
+msgstr ""
+
+#: admin/help.php:35
+msgid "WordPress 3 Invoice Help"
+msgstr ""
+
+#: admin/help.php:36
+msgid "Topics"
+msgstr ""
+
+#: admin/help.php:36 admin/help.php:44
+msgid "Creating an Invoice"
+msgstr ""
+
+#: admin/help.php:36 admin/help.php:54
+msgid "Invoice Passwords"
+msgstr ""
+
+#: admin/help.php:36 admin/help.php:64
+msgid "Managing Clients"
+msgstr ""
+
+#: admin/help.php:36 admin/help.php:78
+msgid "Custom Templates"
+msgstr ""
+
+#: admin/help.php:36
+msgid "Template API"
+msgstr ""
+
+#: admin/help.php:36 wp3-invoice.php:146
+msgid "Help"
+msgstr ""
+
+#: admin/help.php:36
+msgid "Support"
+msgstr ""
+
+#: admin/help.php:36
+msgid "Developers"
+msgstr ""
+
+#: admin/help.php:48
+msgid ""
+"Creating an Invoice is simple, enter a name, input data, enter your "
+"breakdown costs, select a client and click Publish!"
+msgstr ""
+
+#: admin/help.php:58
+msgid ""
+"v2.0.0 now includes Invoice password privacy! Passwords will inherit from "
+"the client, but can be manually set."
+msgstr ""
+
+#: admin/help.php:68
+msgid ""
+"Clients can hold lots of useful data which can be extracted for use in your "
+"invoice template."
+msgstr ""
+
+#: admin/help.php:70
+msgid "Adding an email address enables Invoice emailing"
+msgstr ""
+
+#: admin/help.php:71
+msgid ""
+"Passwords will automatically populate the password field in invoice "
+"visibility"
+msgstr ""
+
+#: admin/help.php:82
+msgid "Invoices can run off custom templates located inside your theme."
+msgstr ""
+
+#: admin/help.php:84
+msgid "1. Copy the template folder to your current theme"
+msgstr ""
+
+#: admin/help.php:85
+msgid "2. Rename the folder \"invoice\""
+msgstr ""
+
+#: admin/help.php:86
+msgid "3. View the Template API for functions"
+msgstr ""
+
+#: admin/help.php:93
+msgid "WordPress 3 Invoice Template API"
+msgstr ""
+
+#: admin/help.php:98
+msgid "Displays the current invoice type (Invoice or Quote)"
+msgstr ""
+
+#: admin/help.php:99 admin/help.php:104 admin/help.php:110 admin/help.php:180
+#: admin/help.php:185 admin/help.php:190 core/functions.php:236
+#: core/invoice.php:54 core/invoice.php:251
+msgid "Invoice"
+msgstr ""
+
+#: admin/help.php:103
+msgid "Displays the current invoice number"
+msgstr ""
+
+#: admin/help.php:108
+msgid ""
+"Displays the url of your invoice template folder.<br />\n"
+"\t\t\t\t\t\t\t\t\t\tThis function will first look in your WordPress theme "
+"folder for a folder called \"invoice\" and a file named \"invoice.php\". If "
+"no folder or file is found, the default template files (found in the plugin "
+"template folder) will be used"
+msgstr ""
+
+#: admin/help.php:114
+msgid "Displays the name of your blog"
+msgstr ""
+
+#: admin/help.php:115 admin/help.php:120 admin/help.php:125 admin/help.php:130
+msgid "WordPress"
+msgstr ""
+
+#: admin/help.php:119
+msgid "Displays the current invoice title"
+msgstr ""
+
+#: admin/help.php:124
+msgid "Displays the current invoice content"
+msgstr ""
+
+#: admin/help.php:129
+msgid ""
+"Displays the date when the invoice was created. (Not when it was sent or "
+"paid) <a href=\"http://codex.wordpress.org/Formatting_Date_and_Time\">Read "
+"more about formating date and time here</a>"
+msgstr ""
+
+#: admin/help.php:134
+msgid "Loads the details into an array to use in the detail loop"
+msgstr ""
+
+#: admin/help.php:135 admin/help.php:140 admin/help.php:145 admin/help.php:150
+#: admin/help.php:155 admin/help.php:160 admin/help.php:165
+msgid "Invoice Detail"
+msgstr ""
+
+#: admin/help.php:139
+msgid "Loops through the details for the current invoice"
+msgstr ""
+
+#: admin/help.php:144
+msgid "Displays the detail title"
+msgstr ""
+
+#: admin/help.php:149
+msgid "Displays the detail type"
+msgstr ""
+
+#: admin/help.php:154
+msgid "Displays the detail rate"
+msgstr ""
+
+#: admin/help.php:159
+msgid "Displays the detail duration"
+msgstr ""
+
+#: admin/help.php:164
+msgid "Displays the detail subtotal"
+msgstr ""
+
+#: admin/help.php:169
+msgid "Displays the chosen currency"
+msgstr ""
+
+#: admin/help.php:170 admin/help.php:175
+msgid "Option"
+msgstr ""
+
+#: admin/help.php:174
+msgid "Returns true if tax is set above 0.00"
+msgstr ""
+
+#: admin/help.php:179
+msgid "Displays the invoice subtotal amount"
+msgstr ""
+
+#: admin/help.php:184
+msgid "Displays the amount off tax (subtotal * tax)"
+msgstr ""
+
+#: admin/help.php:189
+msgid "Displays the current invoice total (subtotal + tax)"
+msgstr ""
+
+#: admin/help.php:194
+msgid "Displays the client name for the current invoice"
+msgstr ""
+
+#: admin/help.php:195 admin/help.php:200 admin/help.php:205 admin/help.php:210
+#: admin/help.php:215 admin/help.php:220 admin/help.php:225
+#: admin/stats.php:399
+msgid "Client"
+msgstr ""
+
+#: admin/help.php:199
+msgid "Displays the client Description"
+msgstr ""
+
+#: admin/help.php:204
+msgid "Displays the client Email Address"
+msgstr ""
+
+#: admin/help.php:209
+msgid "Displays the client's business name"
+msgstr ""
+
+#: admin/help.php:214
+msgid "Displays the client's business address"
+msgstr ""
+
+#: admin/help.php:219
+msgid "Displays the client's Phone Number"
+msgstr ""
+
+#: admin/help.php:224
+msgid "Displays the client's (VAT or other) Number"
+msgstr ""
+
+#: admin/help.php:229
+msgid "Display's the chosen payment gateway button. Good for email template"
+msgstr ""
+
+#: admin/help.php:230
+msgid "Gateway"
+msgstr ""
+
+#: admin/help.php:294
+msgid "New in "
+msgstr ""
+
+#: admin/help.php:297
+msgid "Added I18l support for languages (fingers crossed it all works)"
+msgstr ""
+
+#: admin/help.php:298
+msgid "General Housekeeping"
+msgstr ""
+
+#: admin/options.php:42
+msgid "WordPress 3 Invoice Options"
+msgstr ""
+
+#: admin/options.php:43
+msgid "Version"
+msgstr ""
+
+#: admin/options.php:51
+msgid "Currency"
+msgstr ""
+
+#: admin/options.php:51
+msgid "This is used throughout the plugin"
+msgstr ""
+
+#: admin/options.php:54
+msgid "Select a Currency"
+msgstr ""
+
+#: admin/options.php:64 core/invoice.php:507
+msgid "Tax"
+msgstr ""
+
+#: admin/options.php:64
+msgid "Enter Tax Amount (5% = .05)"
+msgstr ""
+
+#: admin/options.php:68
+msgid "Send Invoice"
+msgstr ""
+
+#: admin/options.php:68
+msgid "Select invoice recipients"
+msgstr ""
+
+#: admin/options.php:70
+msgid "Send Invoice to Client Only"
+msgstr ""
+
+#: admin/options.php:72
+msgid ""
+"Send Invoice to Client &amp; Me (<a href=\"profile.php\">see Profile</a>)"
+msgstr ""
+
+#: admin/options.php:75
+msgid "Permalinks"
+msgstr ""
+
+#: admin/options.php:75
+msgid "Encoded is more secure"
+msgstr ""
+
+#: admin/options.php:77
+msgid "Encoded"
+msgstr ""
+
+#: admin/options.php:79
+msgid "Standard"
+msgstr ""
+
+#: admin/options.php:82
+msgid "Content Editor"
+msgstr ""
+
+#: admin/options.php:82
+msgid "Add content to your invoice"
+msgstr ""
+
+#: admin/options.php:84
+msgid "Enabled"
+msgstr ""
+
+#: admin/options.php:86
+msgid "Disabled"
+msgstr ""
+
+#: admin/options.php:90
+msgid "Email"
+msgstr ""
+
+#: admin/options.php:90
+msgid "Appears as \"sent from\" in emails"
+msgstr ""
+
+#: admin/options.php:94
+msgid "Payment Gateway"
+msgstr ""
+
+#: admin/options.php:94
+msgid "Let clients pay invoice's online"
+msgstr ""
+
+#: admin/options.php:104
+msgid "Purchase a payment gateway"
+msgstr ""
+
+#: admin/options.php:105
+msgid "and upload it to the wordpress3-invoice/gateway/ folder"
+msgstr ""
+
+#: admin/options.php:110
+msgid "Enter your account email."
+msgstr ""
+
+#: admin/options.php:118
+msgid "Save Changes"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:279 core/invoice.php:310
+msgid "Jan"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:280 core/invoice.php:311
+msgid "Feb"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:281 core/invoice.php:312
+msgid "Mar"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:282 core/invoice.php:313
+msgid "Apr"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:283 core/invoice.php:314
+msgid "May"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:284 core/invoice.php:315
+msgid "Jun"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:285 core/invoice.php:316
+msgid "Jul"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:286 core/invoice.php:317
+msgid "Aug"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:287 core/invoice.php:318
+msgid "Sep"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:288 core/invoice.php:319
+msgid "Oct"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:289 core/invoice.php:320
+msgid "Nov"
+msgstr ""
+
+#: admin/stats.php:100 core/functions.php:264 core/functions.php:307
+#: core/invoice.php:290 core/invoice.php:321
+msgid "Dec"
+msgstr ""
+
+#: admin/stats.php:228
+msgid "WordPress 3 Invoice Statistics"
+msgstr ""
+
+#: admin/stats.php:231
+msgid "Display from "
+msgstr ""
+
+#: admin/stats.php:238
+msgid "Financial Year"
+msgstr ""
+
+#: admin/stats.php:247
+msgid "Graph"
+msgstr ""
+
+#: admin/stats.php:253
+msgid "Financial Year "
+msgstr ""
+
+#: admin/stats.php:257
+msgid "Normal Year "
+msgstr ""
+
+#: admin/stats.php:375
+msgid "Income"
+msgstr ""
+
+#: admin/stats.php:379
+msgid "Awaiting Payment"
+msgstr ""
+
+#: admin/stats.php:383
+msgid "Quotes"
+msgstr ""
+
+#: admin/stats.php:394
+msgid "List"
+msgstr ""
+
+#: admin/stats.php:399
+msgid "Invoice No."
+msgstr ""
+
+#: admin/stats.php:399 core/invoice.php:417
+msgid "Type"
+msgstr ""
+
+#: admin/stats.php:399
+msgid "Invoice Name"
+msgstr ""
+
+#: admin/stats.php:399 core/invoice.php:510
+msgid "Total"
+msgstr ""
+
+#: admin/stats.php:399
+msgid "Date"
+msgstr ""
+
+#: admin/stats.php:399
+msgid "Status"
+msgstr ""
+
+#: admin/stats.php:414 core/functions.php:342
+msgid "Paid"
+msgstr ""
+
+#: admin/stats.php:422 core/functions.php:350
+msgid "Sent today"
+msgstr ""
+
+#: admin/stats.php:423 core/functions.php:351
+msgid "Sent 1 day ago"
+msgstr ""
+
+#: admin/stats.php:424 core/functions.php:352
+msgid "Sent "
+msgstr ""
+
+#: admin/stats.php:424 core/functions.php:352
+msgid " days ago"
+msgstr ""
+
+#: admin/stats.php:426 core/functions.php:356
+msgid "Not sent yet"
+msgstr ""
+
+#: core/client.php:60
+msgctxt "taxonomy general name"
+msgid "Clients"
+msgstr ""
+
+#: core/client.php:61
+msgctxt "taxonomy singular name"
+msgid "Client"
+msgstr ""
+
+#: core/client.php:62
+msgid "Search Clients"
+msgstr ""
+
+#: core/client.php:63
+msgid "All Clients"
+msgstr ""
+
+#: core/client.php:64
+msgid "Parent Client"
+msgstr ""
+
+#: core/client.php:65
+msgid "Parent Client:"
+msgstr ""
+
+#: core/client.php:66 core/invoice.php:373 core/invoice.php:375
+msgid "Edit Client"
+msgstr ""
+
+#: core/client.php:67
+msgid "Update Client"
+msgstr ""
+
+#: core/client.php:68
+msgid "Add New Client"
+msgstr ""
+
+#: core/client.php:69
+msgid "New Client Name"
+msgstr ""
+
+#: core/client.php:92 core/client.php:137
+msgid "Email Address"
+msgstr ""
+
+#: core/client.php:96 core/client.php:141
+msgid "Password"
+msgstr ""
+
+#: core/client.php:100 core/client.php:145
+msgid "Business Name"
+msgstr ""
+
+#: core/client.php:104 core/client.php:149
+msgid "Business Address"
+msgstr ""
+
+#: core/client.php:108 core/client.php:153
+msgid "Phone Number"
+msgstr ""
+
+#: core/client.php:112 core/client.php:157
+msgid "Client Number"
+msgstr ""
+
+#: core/client.php:114 core/client.php:159
+msgid "Could be used as a VAT Number"
+msgstr ""
+
+#: core/functions.php:120 core/invoice.php:479
+msgid "Timed"
+msgstr ""
+
+#: core/functions.php:124 core/invoice.php:480
+msgid "Fixed"
+msgstr ""
+
+#: core/functions.php:240 core/invoice.php:252
+msgid "Quote"
+msgstr ""
+
+#: core/invoice.php:53
+msgid "Invoices"
+msgstr ""
+
+#: core/invoice.php:55
+msgid "Search Invoices"
+msgstr ""
+
+#: core/invoice.php:56
+msgid "All Invoices"
+msgstr ""
+
+#: core/invoice.php:57
+msgid "Parent Invoice"
+msgstr ""
+
+#: core/invoice.php:58
+msgid "Parent Invoice:"
+msgstr ""
+
+#: core/invoice.php:59
+msgid "Edit Invoice"
+msgstr ""
+
+#: core/invoice.php:60
+msgid "Update Invoice"
+msgstr ""
+
+#: core/invoice.php:61
+msgid "Add New Invoice"
+msgstr ""
+
+#: core/invoice.php:62
+msgid "New Invoice Name"
+msgstr ""
+
+#: core/invoice.php:164
+msgid "View all Clients"
+msgstr ""
+
+#: core/invoice.php:232
+msgid "Number:"
+msgstr ""
+
+#: core/invoice.php:235 core/invoice.php:247 core/invoice.php:262
+#: core/invoice.php:274 core/invoice.php:305
+msgid "Edit"
+msgstr ""
+
+#: core/invoice.php:239 core/invoice.php:254 core/invoice.php:266
+#: core/invoice.php:296 core/invoice.php:327
+msgid "OK"
+msgstr ""
+
+#: core/invoice.php:240 core/invoice.php:255 core/invoice.php:267
+#: core/invoice.php:298 core/invoice.php:329
+msgid "Cancel"
+msgstr ""
+
+#: core/invoice.php:244
+msgid "Type:"
+msgstr ""
+
+#: core/invoice.php:259
+msgid "Tax:"
+msgstr ""
+
+#: core/invoice.php:271
+msgid "Sent:"
+msgstr ""
+
+#: core/invoice.php:297 core/invoice.php:328
+msgid "Reset"
+msgstr ""
+
+#: core/invoice.php:302
+msgid "Paid:"
+msgstr ""
+
+#: core/invoice.php:353
+msgid "Invoice sent successfully!"
+msgstr ""
+
+#: core/invoice.php:357
+msgid "Invoice failed to send."
+msgstr ""
+
+#: core/invoice.php:362
+msgid "View Invoice"
+msgstr ""
+
+#: core/invoice.php:362
+msgid "copy link, print as pdf, style invoice template"
+msgstr ""
+
+#: core/invoice.php:368
+msgid "View Email"
+msgstr ""
+
+#: core/invoice.php:368
+msgid "check before sending, style email template"
+msgstr ""
+
+#: core/invoice.php:373 core/invoice.php:375 core/invoice.php:378
+#: core/invoice.php:697
+msgid "Send Email"
+msgstr ""
+
+#: core/invoice.php:373
+msgid "to"
+msgstr ""
+
+#: core/invoice.php:375
+msgid "no email address"
+msgstr ""
+
+#: core/invoice.php:378
+msgid "no Client Selected"
+msgstr ""
+
+#: core/invoice.php:411
+msgid "Title"
+msgstr ""
+
+#: core/invoice.php:412
+msgid "Description"
+msgstr ""
+
+#: core/invoice.php:418
+msgid "Rate"
+msgstr ""
+
+#: core/invoice.php:419
+msgid "Time"
+msgstr ""
+
+#: core/invoice.php:420 core/invoice.php:504
+msgid "Subtotal"
+msgstr ""
+
+#: core/invoice.php:512
+msgid "Add Detail"
+msgstr ""
+
+#: core/invoice.php:635
+msgid "This"
+msgstr ""
+
+#: core/invoice.php:635
+msgid "is password protected"
+msgstr ""
+
+#: core/invoice.php:636
+msgid "Enter Password"
+msgstr ""
+
+#: core/invoice.php:676
+msgid "paid"
+msgstr ""
+
+#: core/invoice.php:678
+msgid "Invoice status"
+msgstr ""
+
+#: core/invoice.php:680
+msgid "Invoice status: Quote"
+msgstr ""
+
+#: core/invoice.php:688
+msgid "Email Version"
+msgstr ""
+
+#: core/invoice.php:690
+msgid "Print PDF"
+msgstr ""
+
+#: core/invoice.php:695
+msgid "Online Version"
+msgstr ""
+
+#: wp3-invoice.php:42
+msgid "WordPress 3 Invoice"
+msgstr ""
+
+#: wp3-invoice.php:142
+msgid "WP3 Invoice"
+msgstr ""
+
+#: wp3-invoice.php:144
+msgid "Stats"
+msgstr ""
+
+#: wp3-invoice.php:145
+msgid "Options"
+msgstr ""
