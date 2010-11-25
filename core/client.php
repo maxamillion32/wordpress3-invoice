@@ -89,29 +89,29 @@ class Client
 	{
 		?>
 		<div class="form-field">
-			<label for="client_email">Email Address</label>
+			<label for="client_email"><?php _e('Email Address','wp3i'); ?></label>
 			<input type="text" id="client_email" name="client_email" size="40" value="">
 		</div>
         <div class="form-field">
-			<label for="client_password">Password</label>
+			<label for="client_password"><?php _e('Password','wp3i'); ?></label>
 			<input type="text" id="client_password" name="client_password" size="40" value="">
 		</div>
 		<div class="form-field">
-			<label for="client_business">Business Name</label>
+			<label for="client_business"><?php _e('Business Name','wp3i'); ?></label>
 			<input type="text" id="client_business" name="client_business" size="40" value="">
 		</div>
 		<div class="form-field">
-			<label for="client_address">Business Address</label>
+			<label for="client_address"><?php _e('Business Address','wp3i'); ?></label>
 			<textarea id="client_address" name="client_address" cols="40" value="" rows="5"></textarea>
 		</div>
         <div class="form-field">
-			<label for="client_phone">Phone Number</label>
+			<label for="client_phone"><?php _e('Phone Number','wp3i'); ?></label>
 			<input type="text" id="client_phone" name="client_phone" size="40" value="">
 		</div>
         <div class="form-field">
-			<label for="client_number">Client Number</label>
+			<label for="client_number"><?php _e('Client Number','wp3i'); ?></label>
 			<input type="text" id="client_number" name="client_number" size="40" value="">
-            <p>Could be used as a VAT Number</p>
+            <p><?php _e('Could be used as a VAT Number','wp3i'); ?></p>
 		</div>
 		
 		<?php
@@ -134,29 +134,29 @@ class Client
 		$client_number = get_term_meta($tag->term_id, 'client_number', true);
 		?>
 		<tr class="form-field">
-			<th scope="row" valign="top"><label for="client_email">Email Address</label></th>
+			<th scope="row" valign="top"><label for="client_email"><?php _e('Email Address','wp3i'); ?></label></th>
 			<td><input type="text" id="client_email" name="client_email" size="40" value="<?php echo $client_email; ?>"></td>
 		</tr>
         <tr class="form-field">
-			<th scope="row" valign="top"><label for="client_password">Password</label></th>
+			<th scope="row" valign="top"><label for="client_password"><?php _e('Password','wp3i'); ?></label></th>
 			<td><input type="text" id="client_password" name="client_password" size="40" value="<?php echo $client_password; ?>"></td>
 		</tr>
 		<tr class="form-field">
-			<th scope="row" valign="top"><label for="client_business">Business Name</label></th>
+			<th scope="row" valign="top"><label for="client_business"><?php _e('Business Name','wp3i'); ?></label></th>
 			<td><input type="text" id="client_business" name="client_business" size="40" value="<?php echo $client_business; ?>"></td>
 		</tr>
 		<tr class="form-field">
-			<th scope="row" valign="top"><label for="client_address">Business Address</label></th>
+			<th scope="row" valign="top"><label for="client_address"><?php _e('Business Address','wp3i'); ?></label></th>
 			<td><textarea id="client_address" name="client_address" cols="40" value="" rows="5"><?php echo $client_address; ?></textarea></td>
 		</tr>
         <tr class="form-field">
-			<th scope="row" valign="top"><label for="client_phone">Phone Number</label></th>
+			<th scope="row" valign="top"><label for="client_phone"><?php _e('Phone Number','wp3i'); ?></label></th>
 			<td><input type="text" id="client_phone" name="client_phone" size="40" value="<?php echo $client_phone; ?>"></td>
 		</tr>
 		<tr class="form-field">
-			<th scope="row" valign="top"><label for="client_number">Client Number</label></th>
+			<th scope="row" valign="top"><label for="client_number"><?php _e('Client Number','wp3i'); ?></label></th>
 			<td><input type="text" id="client_number" name="client_number" size="40" value="<?php echo $client_number; ?>"><br />
-            <span class="description">Could be used as a VAT Number</span></td>
+            <span class="description"><?php _e('Could be used as a VAT Number','wp3i'); ?></span></td>
 		</tr>
 		<?php
 	}

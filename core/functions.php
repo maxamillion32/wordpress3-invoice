@@ -115,7 +115,14 @@
 	
 	function the_detail_type()
 	{
-		echo get_the_detail_type();
+		if(get_the_detail_type() == '1')
+		{
+			_e('Timed','wp3i');	
+		}
+		else
+		{
+			_e('Fixed','wp3i');	
+		}
 	}
 	
 	
@@ -221,15 +228,23 @@
 	/*--------------------------------------------------------------------------------------------
 										get_invoice_type
 	--------------------------------------------------------------------------------------------*/
-	function invoice_type()
+	function invoice_type($postID = NULL)
 	{
-		echo get_invoice_type();	
+		if(!$postID){global $post; $postID = $post->ID;}
+		if(get_invoice_type($postID) == '1')
+		{
+			_e('Invoice','wp3i');	
+		}
+		else
+		{
+			_e('Quote','wp3i');	
+		}
 	}
 	
 	function get_invoice_type($postID = NULL)
 	{
 		if(!$postID){global $post; $postID = $post->ID;}
-		return get_post_meta($postID, 'invoice_type', true)? get_post_meta($postID, 'invoice_type', true): 'Invoice';
+		return get_post_meta($postID, 'invoice_type', true)? get_post_meta($postID, 'invoice_type', true): '1';
 	}
 	
 	
@@ -246,7 +261,7 @@
 	function get_invoice_sent_pretty()
 	{
 		$sent = get_invoice_sent();
-		$months = array('','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
+		$months = array('',__('Jan','wp3i'), __('Feb','wp3i'), __('Mar','wp3i'), __('Apr','wp3i'), __('May','wp3i'), __('Jun','wp3i'), __('Jul','wp3i'), __('Aug','wp3i'), __('Sep','wp3i'), __('Oct','wp3i'), __('Nov','wp3i'), __('Dec','wp3i'));
 		if($sent == 'Not yet')
 		{
 			return $sent;	
@@ -289,7 +304,7 @@
 	function get_invoice_paid_pretty()
 	{
 		$sent = get_invoice_paid();
-		$months = array('','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
+		$months = array('',__('Jan','wp3i'), __('Feb','wp3i'), __('Mar','wp3i'), __('Apr','wp3i'), __('May','wp3i'), __('Jun','wp3i'), __('Jul','wp3i'), __('Aug','wp3i'), __('Sep','wp3i'), __('Oct','wp3i'), __('Nov','wp3i'), __('Dec','wp3i'));
 		if($sent == 'Not yet')
 		{
 			return $sent;	
@@ -317,14 +332,14 @@
 	/*--------------------------------------------------------------------------------------------
 										get_invoice_status
 	--------------------------------------------------------------------------------------------*/
-	function get_invoice_status() 
+	function get_invoice_status($postID = NULL) 
 	{
-		global $post;
-		$invoice_paid = get_post_meta($post->ID, 'invoice_paid', true);
-		$invoice_sent = get_post_meta($post->ID, 'invoice_sent', true);
+		if(!$postID){global $post; $postID = $post->ID;}
+		$invoice_paid = get_post_meta($postID, 'invoice_paid', true);
+		$invoice_sent = get_post_meta($postID, 'invoice_sent', true);
 		if($invoice_paid && $invoice_paid != 'Not yet')
 		{
-			return 'Paid';
+			return __('Paid','wp3i');
 		}
 		elseif($invoice_sent && $invoice_sent != 'Not yet')
 		{
@@ -332,13 +347,13 @@
 			$invoice_sent = intval($invoice_sent[2]).'-'.intval($invoice_sent[1]).'-'.intval($invoice_sent[0]);
 	
 			$days = wp3i_date_diff($invoice_sent, date_i18n('Y-m-d'));
-			if($days == 0){return 'Sent today';}
-			elseif($days == 1){return 'Sent 1 day ago';}
-			else{ return 'Sent '.$days.' days ago';} 
+			if($days == 0){return __('Sent today','wp3i');}
+			elseif($days == 1){return __('Sent 1 day ago','wp3i');}
+			else{ return __('Sent ','wp3i').$days.__(' days ago','wp3i');} 
 		}
 		else
 		{
-			return 'Not sent yet';
+			return __('Not sent yet','wp3i');
 		}
 	}
 	function invoice_status() 

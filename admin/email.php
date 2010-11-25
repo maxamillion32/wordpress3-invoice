@@ -27,12 +27,12 @@ $subject = get_invoice_type().' # '.get_invoice_number().' - '.get_the_title();	
 
 if(!$to)																			// 6. Quick validation check
 {
-	echo '<p class="error">Error: No recipient email address found</p>';
+	echo '<p class="error">'.__('Error: No recipient email address found','wp3i').'</p>';
 	die;
 }
 if(!$message)
 {
-	echo '<p class="error">Error: No message body found</p>';	
+	echo '<p class="error">'.__('Error: No message body found','wp3i').'</p>';	
 	die;
 }
 
@@ -48,7 +48,7 @@ if ( mail($to,$subject,$message,$headers) )
 	}
 	else
 	{
-		echo '<p class="success">Email was successfully sent!</p>';
+		echo '<p class="success">'.__('Email was successfully sent!','wp3i').'</p>';
 	}
 } 
 else 
@@ -62,7 +62,7 @@ else
 	}
 	else
 	{
-		echo '<p class="error">Email failed to send.</p>';
+		echo '<p class="error">'.__('Email failed to send','wp3i').'</p>';
 	}
    
 }

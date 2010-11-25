@@ -20,6 +20,7 @@ Wp3i is a WordPress plugin to manage invoices for freelance web designers / deve
 * Well designed interface
 * Customise Currency, tax and more
 * Completely FREE! 
+* Supports I18n
 
 = Please Vote and Enjoy =
 
@@ -41,6 +42,10 @@ http://www.wordpress3invoice.com/support/
 See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
+
+= 2.0.2 =
+* Added I18l support for languages (fingers crossed it all works)
+* General Housekeeping
 
 = 2.0.1 =
 * Invoice archive is now a blank page

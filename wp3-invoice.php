@@ -3,12 +3,13 @@
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.wordpress3invoice.com/
 Description: An online Invoice solution for web designers. Manage, print and email invoices through WordPress and customise with php + html + css invoice templates.
-Version: 2.0.1
+Version: 2.0.2
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
 Copyright Elliot Condon
 */
+
 
 include('core/functions.php');
 include('core/invoice.php');
@@ -38,13 +39,14 @@ class Wp3i
 	{
 		
 		// set class variables
-		$this->name = 'WordPress 3 Invoice';
+		$this->name = __('WordPress 3 Invoice','wp3i');
 		$this->path = dirname(__FILE__).'/';
 		$this->dir = plugins_url('/',__FILE__);
 		$this->siteurl = get_bloginfo('url');
 		$this->wpadminurl = admin_url();
-		$this->version = '2.0.1';
+		$this->version = '2.0.2';
 		
+		load_plugin_textdomain('wp3i', false, $this->path.'lang/' );
 		
 		$this->invoice = new Invoice($this);
 		$this->client = new Client($this);
@@ -106,39 +108,18 @@ class Wp3i
 		
 		foreach($invoices as $invoice)
 		{
-			$invoice_paid = get_post_meta($invoice->ID, 'invoice_paid', true);
-			$invoice_sent = get_post_meta($invoice->ID, 'invoice_sent', true);
+			// update to v2.0.2
 			$invoice_type = get_post_meta($invoice->ID, 'invoice_type', true);
+			if($invoice_type == 'Invoice'){update_post_meta($invoice->ID, 'invoice_type', '1');}
+			elseif($invoice_type == 'Quote'){update_post_meta($invoice->ID, 'invoice_type', '2');}
 			
-			if(!$invoice_paid) // if 1.0.5 invoice_paid doesnt exist
+			$detail_type = unserialize(get_post_meta($invoice->ID, 'detail_type', true));
+			foreach($detail_type as $key => $value)
 			{
-				if(get_post_meta($invoice->ID, 'invoice_status', true) == 'Invoice Paid')// if 1.0.4 invoice_status is paid
-				{
-					update_post_meta($invoice->ID, 'invoice_paid', get_the_time('j/m/Y',$invoice->ID));
-					update_post_meta($invoice->ID, 'invoice_sent', get_the_time('j/m/Y',$invoice->ID));
-				}
-				elseif(get_post_meta($invoice->ID, 'invoice_status', true) == 'Invoice Sent')// if 1.0.4 invoice_status is sent
-				{
-					update_post_meta($invoice->ID, 'invoice_paid', 'Not yet');
-					update_post_meta($invoice->ID, 'invoice_sent', get_the_time('j/m/Y',$invoice->ID));
-				}
-				else
-				{
-					update_post_meta($invoice->ID, 'invoice_paid', 'Not yet');
-					update_post_meta($invoice->ID, 'invoice_sent', 'Not yet');
-				}
+				if($value == 'Timed'){$detail_type[$key] = '1';}
+				elseif($value == 'Fixed'){$detail_type[$key] = '2';}
 			}
-			if(!$invoice_type) // if 1.0.5 invoice_type doesnt exist
-			{
-				if(get_post_meta($invoice->ID, 'invoice_status', true) == 'Quote')// if 1.0.4 invoice_status is Quote
-				{
-					update_post_meta($invoice->ID, 'invoice_type', 'Quote');
-				}
-				else
-				{
-					update_post_meta($invoice->ID, 'invoice_type', 'Invoice');	
-				}
-			}
+			update_post_meta($invoice->ID, 'detail_type', serialize($detail_type));
 			
 		}// end for each invoice
 		
@@ -158,11 +139,11 @@ class Wp3i
 	 **/
 	function create_menu() {
 	
-		add_menu_page('wp3i', 'WP3 Invoice', 'manage_options', 'edit.php?post_type=invoice','',$this->dir.'admin/images/menu-icon.png');
+		add_menu_page('wp3i', __('WP3 Invoice','wp3i'), 'manage_options', 'edit.php?post_type=invoice','',$this->dir.'admin/images/menu-icon.png');
 		//add_submenu_page('edit.php?post_type=invoice', 'Clients', 'Clients', 'manage_options','edit-tags.php?taxonomy=client&post_type=invoice');
-		add_submenu_page('edit.php?post_type=invoice', 'Stats', 'Stats', 'manage_options','stats',array($this->stats,'admin_page'));
-		add_submenu_page('edit.php?post_type=invoice', 'Options', 'Options', 'manage_options','options',array($this->options,'admin_page'));
-		add_submenu_page('edit.php?post_type=invoice', 'Help', 'Help', 'manage_options','help',array($this->help,'admin_page'));
+		add_submenu_page('edit.php?post_type=invoice', __('Stats','wp3i'), __('Stats','wp3i'), 'manage_options','stats',array($this->stats,'admin_page'));
+		add_submenu_page('edit.php?post_type=invoice', __('Options','wp3i'), __('Options','wp3i'), 'manage_options','options',array($this->options,'admin_page'));
+		add_submenu_page('edit.php?post_type=invoice', __('Help','wp3i'), __('Help','wp3i'), 'manage_options','help',array($this->help,'admin_page'));
 		
 		global $menu;
 		global $submenu;

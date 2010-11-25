@@ -97,7 +97,7 @@ class Stats
 		$total = 0.00;
 		
 		// create blank/default graph arrays
-		$this->graphDates = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+		$this->graphDates = array(__('Jan','wp3i'), __('Feb','wp3i'), __('Mar','wp3i'), __('Apr','wp3i'), __('May','wp3i'), __('Jun','wp3i'), __('Jul','wp3i'), __('Aug','wp3i'), __('Sep','wp3i'), __('Oct','wp3i'), __('Nov','wp3i'), __('Dec','wp3i'));
 		$this->graphTitles = array('', '', '', '', '', '', '', '', '', '', '', '');
 		$this->graphTotals = array(0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
 		$this->graphTitlesOutstanding = array('', '', '', '', '', '', '', '', '', '', '', '');
@@ -124,7 +124,7 @@ class Stats
 				$this->graphTitlesOutstanding[$invoiceMonth-1] .= '#'.get_post_meta($invoice->ID, 'invoice_number', true) . '. ' . $invoice->post_title . '<br>';
 				$this->graphTotalsOutstanding[$invoiceMonth-1] += wp3i_get_invoice_total($invoice->ID);
 			}
-			elseif(get_invoice_type($invoice->ID)=='Quote') // is quote
+			elseif(get_invoice_type($invoice->ID)=='2') // is quote
 			{
 				$invoiceMonth = get_the_time('n',$invoice->ID);
 				$this->graphTitlesQuotes[$invoiceMonth-1] .= '#'.get_post_meta($invoice->ID, 'invoice_number', true) . '. ' . $invoice->post_title . '<br>';
@@ -225,17 +225,17 @@ class Stats
 <div class="wrap" id="wp3i-stats">
 	<div class="wp3i-heading">
         <div class="icon32" id="icon-wp3i"><br></div>
-        <h2>WordPress 3 Invoice Statistics</h2>
+        <h2><?php _e('WordPress 3 Invoice Statistics','wp3i'); ?></h2>
         <form method="post">
             <ul class="subsubsub">
-                <li>Display from </li>
+                <li><?php _e('Display from ','wp3i'); ?></li>
                 <li><select name="filter-year" id="filter-year">
                     <?php for($i= $this->invoiceRange['lastYear']; $i >= $this->invoiceRange['firstYear']; $i--): ?>
                         <option value="<?php echo $i; ?>" <?php if($i == $this->invoiceFilter['yearStart']){echo 'selected="selected"';} ?>><?php echo $i; ?> - <?php echo $i+1; ?></option>
                     <?php endfor; ?>
                 </select></li>
                 <li>
-                    <input type="checkbox" name="financial-year" id="financial-year" value="yes" <?php if($this->invoiceFilter['financial'] == true){echo 'checked="checked"';} ?> /> Financial Year
+                    <input type="checkbox" name="financial-year" id="financial-year" value="yes" <?php if($this->invoiceFilter['financial'] == true){echo 'checked="checked"';} ?> /> <?php _e('Financial Year','wp3i'); ?>
                 </li>
                 <li><input type="submit" class="button-secondary" value="Filter" id="post-query-submit"></li>
             </ul>
@@ -244,17 +244,17 @@ class Stats
         <div id="poststuff">
         	
             <div class="postbox" id="wp3i-stats-graph">
-                <h3 class="hndle"><span>Graph</span></h3>
+                <h3 class="hndle"><span><?php _e('Graph','wp3i'); ?></span></h3>
                 <div class="inside">
  
                     	<?php
                         if($this->invoiceFilter['financial'] == true)
                         {
-                            $graphTitle = 'Financial Year ';
+                            $graphTitle = __('Financial Year ','wp3i');
                         }
                         else
                         {
-                            $graphTitle = 'Normal Year ';
+                            $graphTitle =  __('Normal Year ','wp3i');
                         }
                         $graphTitle .= $this->invoiceFilter['yearStart'].' - '.$this->invoiceFilter['yearFinish'];
                         
@@ -372,15 +372,15 @@ class Stats
                         <div class="summary">
                             <ul>
                                 <li class="income">
-                                    <h3><span></span>Income</h3>
+                                    <h3><span></span><?php _e('Income','wp3i'); ?></h3>
                                     <h2><?php echo wp3i_format_amount($this->get_stats_total('paid')); ?></h2>
                                 </li>
                                 <li class="awaiting-payment">
-                                    <h3><span></span>Awaiting Payment</h3>
+                                    <h3><span></span><?php _e('Awaiting Payment','wp3i'); ?></h3>
                                     <h2><?php echo wp3i_format_amount($this->get_stats_total('sent')); ?></h2>
                                 </li>
                                 <li class="quotes">
-                                    <h3><span></span>Quotes</h3>
+                                    <h3><span></span><?php _e('Quotes','wp3i'); ?></h3>
                                     <h2><?php echo wp3i_format_amount($this->get_stats_total('quote')); ?></h2>
                                 </li>
                             </ul>
@@ -391,17 +391,17 @@ class Stats
             
             
             <div class="postbox" id="wp3i-stats-list">
-                <h3 class="hndle"><span>List</span></h3>
+                <h3 class="hndle"><span><?php _e('List','wp3i'); ?></span></h3>
                 <div class="inside">
                 <?php if($this->invoices): $counter = 0;?>
                     <table>
                         <tr>
-                            <th>Invoice No.</th><th>Type</th><th>Invoice Name</th><th>Total</th><th>Date</th><th>Client</th><th>Status</th>
+                            <th><?php _e('Invoice No.','wp3i'); ?></th><th><?php _e('Type','wp3i'); ?></th><th><?php _e('Invoice Name','wp3i'); ?></th><th><?php _e('Total','wp3i'); ?></th><th><?php _e('Date','wp3i'); ?></th><th><?php _e('Client','wp3i'); ?></th><th><?php _e('Status','wp3i'); ?></th>
                         </tr>
                         <?php foreach($this->invoices as $invoice): $counter++; ?>
                         <tr <?php if($counter % 2 == 0){echo 'class="alternate"';} ?>>
                             <td class="invoice-number"><?php echo get_post_meta($invoice->ID, 'invoice_number', true); ?></td>
-                            <td class="invoice-type"><?php echo get_post_meta($invoice->ID, 'invoice_type', true); ?></td>
+                            <td class="invoice-type"><?php invoice_type($invoice->ID); ?></td>
                             <td class="invoice-title"><?php edit_post_link($invoice->post_title,'','',$invoice->ID); ?></td>
                             <td class="invoice-total"><?php echo wp3i_format_amount(wp3i_get_invoice_total($invoice->ID)) ?></td>
                             <td class="invoice-date"><?php echo get_the_time('d M Y',$invoice->ID); ?></td>
@@ -411,7 +411,7 @@ class Stats
                             $invoice_sent = get_post_meta($invoice->ID, 'invoice_sent', true);
                             if($invoice_paid && $invoice_paid != 'Not yet')
                             {
-                                echo 'Paid';
+                                _e('Paid','wp3i');
                             }
                             elseif($invoice_sent && $invoice_sent != 'Not yet')
                             {
@@ -419,11 +419,11 @@ class Stats
                                 $invoice_sent = intval($invoice_sent[2]).'-'.intval($invoice_sent[1]).'-'.intval($invoice_sent[0]);
                     
                                 $days = $this->wp3i_date_diff($invoice_sent, date_i18n('Y-m-d'));
-                                if($days == 0){echo 'Sent today';}
-                                elseif($days == 1){echo 'Sent 1 day ago';}
-                                else{ echo 'Sent '.$days.' days ago';} 
+                                if($days == 0){ _e('Sent today','wp3i');}
+                                elseif($days == 1){ _e('Sent 1 day ago','wp3i');}
+                                else{ _e('Sent ','wp3i'); echo $days; _e(' days ago','wp3i');} 
                             }
-                            else{echo 'Not sent yet';}
+                            else{ _e('Not sent yet','wp3i');}
                             ?></td>
                         </tr>
                         <?php endforeach; ?>

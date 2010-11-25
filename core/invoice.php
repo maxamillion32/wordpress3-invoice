@@ -115,29 +115,10 @@ class Invoice
 		if ("ID" == $column) echo $post->ID;
 		elseif ("description" == $column) echo $post->post_content;
 		elseif ("invoice_no" == $column) echo get_post_meta($post->ID, 'invoice_number', true);
-		elseif ("invoice_type" == $column) echo get_post_meta($post->ID, 'invoice_type', true);
+		elseif ("invoice_type" == $column) invoice_type($post->ID);
 		elseif ("amount" == $column) echo wp3i_format_amount(wp3i_get_invoice_total($post->ID));
 		elseif ("client" == $column) echo get_invoice_client_edit($post->ID);
-		elseif ("status" == $column)
-		{
-			$invoice_paid = get_post_meta($post->ID, 'invoice_paid', true);
-			$invoice_sent = get_post_meta($post->ID, 'invoice_sent', true);
-			if($invoice_paid && $invoice_paid != 'Not yet')
-			{
-				echo 'Paid';
-			}
-			elseif($invoice_sent && $invoice_sent != 'Not yet')
-			{
-				$invoice_sent = explode('/',$invoice_sent);
-				$invoice_sent = intval($invoice_sent[2]).'-'.intval($invoice_sent[1]).'-'.intval($invoice_sent[0]);
-	
-				$days = wp3i_date_diff($invoice_sent, date_i18n('Y-m-d'));
-				if($days == 0){echo 'Sent today';}
-				elseif($days == 1){echo 'Sent 1 day ago';}
-				else{ echo 'Sent '.$days.' days ago';} 
-			}
-			else{echo 'Not sent yet';}
-		}
+		elseif ("status" == $column) echo get_invoice_status($post->ID); 
 	}
 	
 	/**
@@ -180,7 +161,7 @@ class Invoice
 			$the_terms = get_terms('client','orderby=name&hide_empty=0' );
 						
 			$content  = '<select name="client" id="client" class="postform">';
-			$content .= '<option value="0">View all Clients</option>';
+			$content .= '<option value="0">'.__('View all Clients','wp3i').'</option>';
 			foreach ($the_terms as $term){
 				$content .= '<option value="' . $term->slug . '">'. $term->name . ' ('.$term->count.')</option>';
 			}
@@ -248,104 +229,104 @@ class Invoice
 
 		<ul>
         	<li class="normal-detail">
-            	<label>Number: </label>
+            	<label><?php _e('Number:','wp3i'); ?> </label>
                 <div class="front">
                 	<span><?php invoice_number(); ?></span>
-                	<a href="#" class="wp3i-edit">Edit</a>
+                	<a href="#" class="wp3i-edit"><?php _e('Edit','wp3i'); ?></a>
                 </div>
                 <div class="back">
                 	<input type="text" name="invoice-number" id="invoice-number" value="<?php invoice_number(); ?>" size="2" />
-                    <a href="#" class="button wp3i-ok">OK</a>
-                    <a href="#" class="wp3i-cancel">Cancel</a>
+                    <a href="#" class="button wp3i-ok"><?php _e('OK','wp3i'); ?></a>
+                    <a href="#" class="wp3i-cancel"><?php _e('Cancel','wp3i'); ?></a>
                 </div>
             </li>
             <li class="normal-detail">
-            	<label>Type: </label>
+            	<label><?php _e('Type:','wp3i'); ?> </label>
                 <div class="front">
-                	<span><?php echo get_invoice_type(); ?></span>
-                	<a href="#" class="wp3i-edit">Edit</a>
+                	<span><?php invoice_type(); ?></span>
+                	<a href="#" class="wp3i-edit"><?php _e('Edit','wp3i'); ?></a>
                 </div>
                 <div class="back">
                 	<select name="invoice-type" id="invoice-type">
-                    	<option value="Invoice" <?php if(get_invoice_type() == 'Invoice'){echo'selected="selected"';} ?>>Invoice</option>
-                        <option value="Quote" <?php if(get_invoice_type() == 'Quote'){echo'selected="selected"';} ?>>Quote</option>
+                    	<option value="Invoice" <?php if(get_invoice_type() == '1'){echo'selected="selected"';} ?>><?php _e('Invoice','wp3i'); ?></option>
+                        <option value="Quote" <?php if(get_invoice_type() == '2'){echo'selected="selected"';} ?>><?php _e('Quote','wp3i'); ?></option>
                     </select>
-                    <a href="#" class="button wp3i-ok">OK</a>
-                    <a href="#" class="wp3i-cancel">Cancel</a>
+                    <a href="#" class="button wp3i-ok"><?php _e('OK','wp3i'); ?></a>
+                    <a href="#" class="wp3i-cancel"><?php _e('Cancel','wp3i'); ?></a>
                 </div>
             </li>
             <li class="normal-detail">
-            	<label>Tax: </label>
+            	<label><?php _e('Tax:','wp3i'); ?> </label>
                 <div class="front">
                 	<span><?php wp3i_tax(); ?></span>
-                	<a href="#" class="wp3i-edit">Edit</a>
+                	<a href="#" class="wp3i-edit"><?php _e('Edit','wp3i'); ?></a>
                 </div>
                 <div class="back">
                 	<input type="text" name="invoice-tax" id="invoice-tax" value="<?php wp3i_tax(); ?>" size="2" />
-                    <a href="#" class="button wp3i-ok update-subtotal">OK</a>
-                    <a href="#" class="wp3i-cancel update-subtotal">Cancel</a>
+                    <a href="#" class="button wp3i-ok update-subtotal"><?php _e('OK','wp3i'); ?></a>
+                    <a href="#" class="wp3i-cancel update-subtotal"><?php _e('Cancel','wp3i'); ?></a>
                 </div>
             </li>
             <li class="date-detail">
-            	<label>Sent: </label>
+            	<label><?php _e('Sent:','wp3i'); ?> </label>
                 <div class="front">
                 	<span><?php echo get_invoice_sent_pretty(); ?></span>
-                	<a href="#" class="wp3i-edit">Edit</a>
+                	<a href="#" class="wp3i-edit"><?php _e('Edit','wp3i'); ?></a>
                 </div>
                 <div class="back">
                 	<select name="mm" id="mm">
                     	<option></option>
-                        <option value="01">Jan</option>
-                        <option value="02">Feb</option>
-                        <option value="03">Mar</option>
-                        <option value="04">Apr</option>
-                        <option value="05">May</option>
-                        <option value="06">Jun</option>
-                        <option value="07">Jul</option>
-                        <option value="08">Aug</option>
-                        <option value="09">Sep</option>
-                        <option value="10">Oct</option>
-                        <option value="11">Nov</option>
-                        <option value="12">Dec</option>
+                        <option value="01"><?php _e('Jan','wp3i'); ?></option>
+                        <option value="02"><?php _e('Feb','wp3i'); ?></option>
+                        <option value="03"><?php _e('Mar','wp3i'); ?></option>
+                        <option value="04"><?php _e('Apr','wp3i'); ?></option>
+                        <option value="05"><?php _e('May','wp3i'); ?></option>
+                        <option value="06"><?php _e('Jun','wp3i'); ?></option>
+                        <option value="07"><?php _e('Jul','wp3i'); ?></option>
+                        <option value="08"><?php _e('Aug','wp3i'); ?></option>
+                        <option value="09"><?php _e('Sep','wp3i'); ?></option>
+                        <option value="10"><?php _e('Oct','wp3i'); ?></option>
+                        <option value="11"><?php _e('Nov','wp3i'); ?></option>
+                        <option value="12"><?php _e('Dec','wp3i'); ?></option>
             		</select>
                     <input type="text" maxlength="2" size="1" value="" name="dd" id="dd" />, 
                     <input type="text" maxlength="4" size="3" value="" name="yyyy" id="yyyy" />
                 	<input type="hidden" name="invoice-sent" id="invoice-sent" value="<?php echo get_invoice_sent(); ?>" />
 
-                    <a href="#" class="button wp3i-ok">OK</a>
-                    <a href="#" class="wp3i-clear">Reset</a>
-                    <a href="#" class="wp3i-cancel">Cancel</a>
+                    <a href="#" class="button wp3i-ok"><?php _e('OK','wp3i'); ?></a>
+                    <a href="#" class="wp3i-clear"><?php _e('Reset','wp3i'); ?></a>
+                    <a href="#" class="wp3i-cancel"><?php _e('Cancel','wp3i'); ?></a>
                 </div>
             </li>
             <li class="date-detail">
-            	<label>Paid: </label>
+            	<label><?php _e('Paid:','wp3i'); ?> </label>
                 <div class="front">
                 	<span><?php echo get_invoice_paid_pretty(); ?></span>
-                	<a href="#" class="wp3i-edit">Edit</a>
+                	<a href="#" class="wp3i-edit"><?php _e('Edit','wp3i'); ?></a>
                 </div>
                 <div class="back">
                 	<select name="mm" id="mm">
                     	<option></option>
-                        <option value="01">Jan</option>
-                        <option value="02">Feb</option>
-                        <option value="03">Mar</option>
-                        <option value="04">Apr</option>
-                        <option value="05">May</option>
-                        <option value="06">Jun</option>
-                        <option value="07">Jul</option>
-                        <option value="08">Aug</option>
-                        <option value="09">Sep</option>
-                        <option value="10">Oct</option>
-                        <option value="11">Nov</option>
-                        <option value="12">Dec</option>
+                        <option value="01"><?php _e('Jan','wp3i'); ?></option>
+                        <option value="02"><?php _e('Feb','wp3i'); ?></option>
+                        <option value="03"><?php _e('Mar','wp3i'); ?></option>
+                        <option value="04"><?php _e('Apr','wp3i'); ?></option>
+                        <option value="05"><?php _e('May','wp3i'); ?></option>
+                        <option value="06"><?php _e('Jun','wp3i'); ?></option>
+                        <option value="07"><?php _e('Jul','wp3i'); ?></option>
+                        <option value="08"><?php _e('Aug','wp3i'); ?></option>
+                        <option value="09"><?php _e('Sep','wp3i'); ?></option>
+                        <option value="10"><?php _e('Oct','wp3i'); ?></option>
+                        <option value="11"><?php _e('Nov','wp3i'); ?></option>
+                        <option value="12"><?php _e('Dec','wp3i'); ?></option>
             		</select>
                     <input type="text" maxlength="2" size="1" value="31" name="dd" id="dd" />, 
                     <input type="text" maxlength="4" size="3" value="2010" name="yyyy" id="yyyy" />
                 	<input type="hidden" name="invoice-paid" id="invoice-paid" value="<?php echo get_invoice_paid(); ?>" />
 
-                    <a href="#" class="button wp3i-ok">OK</a>
-                    <a href="#" class="wp3i-clear">Reset</a>
-                    <a href="#" class="wp3i-cancel">Cancel</a>
+                    <a href="#" class="button wp3i-ok"><?php _e('OK','wp3i'); ?>OK</a>
+                    <a href="#" class="wp3i-clear"><?php _e('Reset','wp3i'); ?></a>
+                    <a href="#" class="wp3i-cancel"><?php _e('Cancel','wp3i'); ?></a>
                 </div>
             </li>
 		</ul>
@@ -369,32 +350,32 @@ class Invoice
 		?>
 		<?php if($_GET['sent'] == 'success'): ?>
         	<div class="updated">
-            	<p>Invoice sent successfully!</p>
+            	<p><?php _e('Invoice sent successfully!','wp3i'); ?></p>
             </div>
         <?php elseif($_GET['sent'] == 'fail'): ?>
         	<div class="error">
-            	<p>Invoice failed to send.</p>
+            	<p><?php _e('Invoice failed to send.','wp3i'); ?></p>
             </div>
         <?php endif; ?>
         <ul>
         	<li>
-            	<a href="<?php the_permalink(); ?>" class="button">View Invoice</a> copy link, print as pdf, style invoice template
+            	<a href="<?php the_permalink(); ?>" class="button"><?php _e('View Invoice','wp3i'); ?></a> <?php _e('copy link, print as pdf, style invoice template','wp3i'); ?>
             </li>
             <!--<li>
             	<a href="<?php echo add_query_arg('do', 'pdf', get_permalink($post->ID)); ?>" class="button">Save as PDF</a> 
             </li>-->
             <li>
-            	<a href="<?php echo add_query_arg('email', 'view', get_permalink($post->ID)); ?>" class="button">View Email</a> check before sending, style email template
+            	<a href="<?php echo add_query_arg('email', 'view', get_permalink($post->ID)); ?>" class="button"><?php _e('View Email','wp3i'); ?></a> <?php _e('check before sending, style email template','wp3i'); ?>
             </li>
             <li>
             	<?php if(get_invoice_client_name()): ?>
 					<?php if(get_invoice_client_email()): ?>
-                        <a href="<?php echo add_query_arg('email', 'send', get_permalink($post->ID)); ?>" class="button">Send Email</a> to <?php invoice_client_email(); ?> <a href="<?php invoice_client_edit_link(); ?>">Edit Client</a>  
+                        <a href="<?php echo add_query_arg('email', 'send', get_permalink($post->ID)); ?>" class="button"><?php _e('Send Email','wp3i'); ?></a> <?php _e('to','wp3i'); ?> <?php invoice_client_email(); ?> <a href="<?php invoice_client_edit_link(); ?>"><?php _e('Edit Client','wp3i'); ?></a>  
                     <?php else: ?>
-                        <a class="button disabled">Send Email</a> no email address <a href="<?php invoice_client_edit_link(); ?>">Edit Client</a> 
+                        <a class="button disabled"><?php _e('Send Email','wp3i'); ?></a> <?php _e('no email address','wp3i'); ?> <a href="<?php invoice_client_edit_link(); ?>"><?php _e('Edit Client','wp3i'); ?></a> 
                     <?php endif; ?>
                 <?php else: ?>
-                    <a class="button disabled"> Send Email</a> no Client Selected
+                    <a class="button disabled"><?php _e('Send Email','wp3i'); ?></a> <?php _e('no Client Selected','wp3i'); ?>
                 <?php endif; ?>
             </li>
         </ul>
@@ -427,16 +408,16 @@ class Invoice
             	<tr>
                 	<td>
                     	<ul>
-                        	<li class="title">Title</li>
-                            <li class="description">Description</li>
+                        	<li class="title"><?php _e('Title','wp3i'); ?></li>
+                            <li class="description"><?php _e('Description','wp3i'); ?></li>
                         </ul>
                     </td>
                     <td width="312">
                         <ul>
-                        <li class="type">Type</li>
-                            <li class="rate">Rate<span class="hr"></span></li>
-                            <li class="duration">Time</li>
-                            <li class="subtotal">Subtotal</li>
+                        <li class="type"><?php _e('Type','wp3i'); ?></li>
+                            <li class="rate"><?php _e('Rate','wp3i'); ?><span class="hr"></span></li>
+                            <li class="duration"><?php _e('Time','wp3i'); ?></li>
+                            <li class="subtotal"><?php _e('Subtotal','wp3i'); ?></li>
                         </ul>
                     </td>
                 </tr>
@@ -459,8 +440,8 @@ class Invoice
                         <ul>
                        	<li class="type">
                         	<select name="detail-type[]" id="detail-type">
-                            	<option value="Timed" <?php if(get_the_detail_type() == 'Timed'){echo'selected="selected"';} ?>>Timed</option>
-                            	<option value="Fixed" <?php if(get_the_detail_type() == 'Fixed'){echo'selected="selected"';} ?>>Fixed</option>
+                            	<option value="Timed" <?php if(get_the_detail_type() == '1'){echo'selected="selected"';} ?>>Timed</option>
+                            	<option value="Fixed" <?php if(get_the_detail_type() == '2'){echo'selected="selected"';} ?>>Fixed</option>
                             </select>
                         </li>
                         <li class="rate">
@@ -491,12 +472,12 @@ class Invoice
                                 	<li class="description"><textarea name="detail-description[]" id="detail-description"></textarea></li>
                                 </ul>
                             </td>
-                            <td width="340">
+                            <td width="312">
                             	<ul>
                                     <li class="type">
                                     <select name="detail-type[]" id="detail-type">
-                                        <option value="Timed">Timed</option>
-                                        <option value="Fixed">Fixed</option>
+                                        <option value="Timed"><?php _e('Timed','wp3i'); ?></option>
+                                        <option value="Fixed"><?php _e('Fixed','wp3i'); ?></option>
                                     </select>
                                     </li>
                                     <li class="rate">
@@ -520,15 +501,15 @@ class Invoice
         </div>  
 		<div class="detail detail-footer">
         <p>
-        <strong>Subtotal:</strong> <?php echo wp3i_format_amount('<span class="invoice-subtotal">'.get_the_invoice_subtotal().'</span>'); ?>	
+        <strong><?php _e('Subtotal','wp3i'); ?>:</strong> <?php echo wp3i_format_amount('<span class="invoice-subtotal">'.get_the_invoice_subtotal().'</span>'); ?>	
         &nbsp;&nbsp;&nbsp;
         <?php //if(wp3i_has_tax()): ?>
-        <strong>Tax:</strong> <?php echo wp3i_format_amount('<span class="invoice-tax">'.get_the_invoice_tax().'</span>'); ?>
+        <strong><?php _e('Tax','wp3i'); ?>:</strong> <?php echo wp3i_format_amount('<span class="invoice-tax">'.get_the_invoice_tax().'</span>'); ?>
         &nbsp;&nbsp;&nbsp;
         <?php //endif; ?>
-        <strong>Total:</strong> <?php echo wp3i_format_amount('<span class="invoice-total">'.get_the_invoice_total().'</span>'); ?>
+        <strong><?php _e('Total','wp3i'); ?>:</strong> <?php echo wp3i_format_amount('<span class="invoice-total">'.get_the_invoice_total().'</span>'); ?>
         &nbsp;&nbsp;&nbsp;
-        <a class="add-detail button-primary" href="#" title="Add Detail">Add Detail</a>
+        <a class="add-detail button-primary" href="#" title="Add Detail"><?php _e('Add Detail','wp3i'); ?></a>
         </p>
         </div> 
 		<?php
@@ -651,8 +632,8 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
                 <div class="form">
                 	<img src="<?php echo $this->plugin_dir; ?>admin/images/password-protected.png" />
                     <form method="post" action="<?php bloginfo('url'); ?>/wp-pass.php">
-                    <p>This <?php invoice_type(); ?> is password protected.</p>
-                    <input type="text" id="pwbox-531" name="post_password" value="Enter Password" onfocus="if(this.value == 'Enter Password') {this.value = '';this.type='password'}" onblur="if (this.value == '') {this.value = 'Enter Password'; this.type='text'}"/>
+                    <p><?php _e('This','wp3i'); ?> <?php invoice_type(); ?> <?php _e('is password protected','wp3i'); ?>.</p>
+                    <input type="text" id="pwbox-531" name="post_password" value="<?php _e('Enter Password','wp3i'); ?>" onfocus="if(this.value == '<?php _e('Enter Password','wp3i'); ?>') {this.value = '';this.type='password'}" onblur="if (this.value == '') {this.value = '<?php _e('Enter Password','wp3i'); ?>'; this.type='text'}"/>
                     <input type="submit" value="Submit" name="Submit"/>
                     </form>
                 </div>
@@ -684,7 +665,7 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
 				.task_bar .status {float:left; color:#999;}
 				.task_bar .status.paid {float:left; color:#95db30;}
 				.task_bar .buttons {float:right;}
-				.task_bar .buttons a {-moz-border-radius: 11px; -webkit-border-radius: 11px;-khtml-border-radius: 11px; border-radius: 11px; cursor:pointer; font-size:11px; padding:4px 8px 3px 8px; text-decoration:none; background:url("<?php bloginfo('url'); ?>/wp-admin/images/white-grad.png") repeat-x scroll left top #F2F2F2; text-shadow:0 1px 0 #FFFFFF; margin-left:5px; display:block; float:left; line-height:13px; margin-top:4px;}
+				.task_bar .buttons a {-moz-border-radius: 11px; -webkit-border-radius: 11px;-khtml-border-radius: 11px; border-radius: 11px; cursor:pointer; font-size:11px; padding:4px 8px 3px 8px; text-decoration:none; background:url("<?php bloginfo('url'); ?>/wp-admin/images/white-grad.png") repeat-x scroll left top #F2F2F2; text-shadow:0 1px 0 #FFFFFF; margin-left:5px; display:block; float:left; line-height:13px; margin-top:4px; color:#333;}
 				.task_bar .print a:hover {background:#fff none;}
 			</style>
             <style type="text/css" media="print">
@@ -692,11 +673,11 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
 			</style>
 			<div class="task_bar">
             	<div class="container">
-                <div class="status <?php if(get_invoice_status() == 'Paid'){echo'paid';} ?>">
-					<?php if(get_invoice_type() == 'Invoice'): ?>
-                        Invoice status: <?php invoice_status(); ?>
+                <div class="status <?php if(get_invoice_status() == 'Paid'){_e('paid','wp3i'); } ?>">
+					<?php if(get_invoice_type() == '1'): ?>
+                        <?php _e('Invoice status','wp3i'); ?>: <?php invoice_status(); ?>
                     <?php else: ?>
-                        Invoice status: Quote	
+                        <?php _e('Invoice status: Quote','wp3i'); ?>	
                     <?php endif; ?>
                  </div>
             	
@@ -704,16 +685,16 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
                 	<?php edit_post_link('Edit '.get_invoice_type()); ?> 
                     <?php if(!$_GET['email']): //viewing online version ?>
                     	<?php if(is_user_logged_in()): ?>
-                    		<a href="<?php echo add_query_arg('email', 'view', get_permalink($post->ID)); ?>">Email Version</a>
+                    		<a href="<?php echo add_query_arg('email', 'view', get_permalink($post->ID)); ?>"><?php _e('Email Version','wp3i'); ?></a>
                         <?php endif; ?>
-                        <a href="javascript:print()">Print PDF</a>
+                        <a href="javascript:print()"><?php _e('Print PDF','wp3i'); ?></a>
                         <?php if(get_invoice_type() == 'Invoice'): ?>
                         	<?php $this->wp3i_payment_gateway_button(); ?>
                         <?php endif; ?>
                     <?php elseif($_GET['email'] == 'view'): //viewing email version?>
-                    	<a href="<?php the_permalink(); ?>">Online Version</a>
+                    	<a href="<?php the_permalink(); ?>"><?php _e('Online Version','wp3i'); ?></a>
                         <?php //if(get_invoice_client_email()): // only send if there is a client email ?>
-                        	<a href="<?php echo add_query_arg('email', 'send', get_permalink($post->ID)); ?>">Send Email</a>
+                        	<a href="<?php echo add_query_arg('email', 'send', get_permalink($post->ID)); ?>"><?php _e('Send Email','wp3i'); ?></a>
                         <?php //endif; ?>
                     <?php endif; ?>
                 	

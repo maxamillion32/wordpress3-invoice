@@ -39,8 +39,8 @@ class Options
 	<div class="wrap" id="wp3i-options"> 
         <div class="wp3i-heading">
             <div class="icon32" id="icon-wp3i"><br></div>
-            <h2>WordPress 3 Invoice Options</h2>
-            <p>Version <?php echo $this->version; ?></p>
+            <h2><?php _e('WordPress 3 Invoice Options','wp3i'); ?></h2>
+            <p><?php _e('Version','wp3i'); ?> <?php echo $this->version; ?></p>
         </div>
         
         <div id="poststuff">
@@ -48,10 +48,10 @@ class Options
             <?php wp_nonce_field('update-options'); ?>
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row"><label>Currency</label><span>This is used throughout the plugin</span></th>
+                    <th scope="row"><label><?php _e('Currency','wp3i'); ?></label><span><?php _e('This is used throughout the plugin','wp3i'); ?></span></th>
                     <td>
                     <select name="wp3i_currency">
-                    <option value="Select a Currency">Select a Currency</option>
+                    <option value="Select a Currency"><?php _e('Select a Currency','wp3i'); ?></option>
                     <?php foreach(wp3i_get_countries() as $key => $value): ?>
                     	<option value="<?php echo $key; ?>" <?php if(wp3i_get_currency() == $key){echo 'selected="selected"'; } ?> >
 						<?php echo $value['name']; ?> (<?php echo $value['currency']['code']; ?>)
@@ -61,37 +61,37 @@ class Options
                     </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><label>Tax</label><span>Enter Tax Amount (5% = .05)</span></th>
+                    <th scope="row"><label><?php _e('Tax','wp3i'); ?></label><span><?php _e('Enter Tax Amount (5% = .05)','wp3i'); ?></span></th>
                     <td><input name="wp3i_tax" value="<?php wp3i_tax(); ?>" type="text" size="2" maxlength="5"> </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><label>Send Invoice</label><span>Select invoice recipients</span></th>
+                    <th scope="row"><label><?php _e('Send Invoice','wp3i'); ?></label><span><?php _e('Select invoice recipients','wp3i'); ?></span></th>
                     <td><input name="wp3i_emailrecipients" type="radio" value="client" <?php if(wp3i_get_emailrecipients() == 'client'){echo'checked="checked"';} ?>>
-                        Send Invoice to Client Only <br />
+                        <?php _e('Send Invoice to Client Only','wp3i'); ?> <br />
                         <input name="wp3i_emailrecipients" type="radio" value="both" <?php if(wp3i_get_emailrecipients() == 'both'){echo'checked="checked"';} ?>>
-                        Send Invoice to Client &amp; Me (<a href="profile.php">see Profile</a>)</td>
+                        <?php _e('Send Invoice to Client &amp; Me (<a href="profile.php">see Profile</a>)','wp3i'); ?></td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><label>Permalinks</label><span> Encoded is more secure</span></th>
+                    <th scope="row"><label><?php _e('Permalinks','wp3i'); ?></label><span><?php _e('Encoded is more secure','wp3i'); ?></span></th>
                     <td><input name="wp3i_permalink" type="radio" value="encoded" <?php if(wp3i_get_permalink() == 'encoded'){echo'checked="checked"';} ?>>
-                        Encoded <br />
+                        <?php _e('Encoded','wp3i'); ?><br />
                         <input name="wp3i_permalink" type="radio" value="standard" <?php if(wp3i_get_permalink() == 'standard'){echo'checked="checked"';} ?>>
-                        Standard</td>
+                        <?php _e('Standard','wp3i'); ?></td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><label>Content Editor</label><span>Add content to your invoice</span></th>
+                    <th scope="row"><label><?php _e('Content Editor','wp3i'); ?></label><span><?php _e('Add content to your invoice','wp3i'); ?></span></th>
                     <td><input name="wp3i_content_editor" type="radio" value="enabled" <?php if(wp3i_get_content_editor() == 'enabled'){echo'checked="checked"';} ?>>
-                        Enabled <br />
+                        <?php _e('Enabled','wp3i'); ?> <br />
                         <input name="wp3i_content_editor" type="radio" value="disabled" <?php if(wp3i_get_content_editor() == 'disabled'){echo'checked="checked"';} ?>>				
-                        Disabled 
+                        <?php _e('Disabled','wp3i'); ?> 
                         </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><label>Email</label><span>Appears as "sent from" in emails</span></th>
-                    <td><input name="wp3i_email" value="<?php wp3i_email(); ?>" type="text" size="30"> </td>
+                    <th scope="row"><label><?php _e('Email','wp3i'); ?></label><span><?php _e('Appears as "sent from" in emails','wp3i'); ?></span></th>
+                    <td><input name="wp3i_email" value="<?php wp3i_email(); ?>" type="text" size="30"></td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><label>Payment Gateway</label><span>Let clients pay invoice's online</span></th>
+                    <th scope="row"><label><?php _e('Payment Gateway','wp3i'); ?></label><span><?php _e('Let clients pay invoice\'s online','wp3i'); ?></span></th>
                     <td>
                     <select name="wp3i_payment_gateway" style="float:left; margin-right:10px;">
                     <option value="None">None</option>
@@ -100,11 +100,14 @@ class Options
                     <?php endforeach; ?>
                     </select>
                     <div class="none" style="float:left; margin-right:10px;">
-                    	<span class="description show"><a href="http://www.wordpress3invoice.com/shop/">Purchase a payment gateway</a> and upload it to the wordpress3-invoice/gateway/ folder</span>
+                    	<span class="description show">
+                        <a href="http://www.wordpress3invoice.com/shop/"><?php _e('Purchase a payment gateway','wp3i'); ?></a> 
+						<?php _e('and upload it to the wordpress3-invoice/gateway/ folder','wp3i'); ?>
+                        </span>
                     </div>
                     <div class="account" style="float:left; margin-right:10px;">
-                    	<input name="wp3i_payment_gateway_account" value="<?php wp3i_payment_gateway_account(); ?>" type="text" size="30"> <br />
-                    	<label for="wp3i_payment_gateway_account">Enter your account email.</label>
+                    	<input name="wp3i_payment_gateway_account" value="<?php wp3i_payment_gateway_account(); ?>" type="text" size="30"><br />
+                    	<label for="wp3i_payment_gateway_account"><?php _e('Enter your account email.','wp3i'); ?></label>
                     </div>
                     </td>
                 </tr>
