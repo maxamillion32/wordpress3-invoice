@@ -68,7 +68,7 @@ class Invoice
 		}
 		else
 		{
-			$supports = array('title','custom-fields'/*, 'editor','custom-fields'*/);
+			$supports = array('title'/*,'custom-fields', 'editor','custom-fields'*/);
 		}
 		
 		register_post_type('invoice', array(
