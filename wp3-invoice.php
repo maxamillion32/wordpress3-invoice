@@ -3,7 +3,7 @@
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.wordpress3invoice.com/
 Description: An online Invoice solution for web designers. Manage, print and email invoices through WordPress and customise with php + html + css invoice templates.
-Version: 2.0.2
+Version: 2.0.3
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -44,7 +44,7 @@ class Wp3i
 		$this->dir = plugins_url('/',__FILE__);
 		$this->siteurl = get_bloginfo('url');
 		$this->wpadminurl = admin_url();
-		$this->version = '2.0.2';
+		$this->version = '2.0.3';
 		
 		load_plugin_textdomain('wp3i', false, $this->path.'lang/' );
 		
@@ -110,14 +110,21 @@ class Wp3i
 		{
 			// update to v2.0.2
 			$invoice_type = get_post_meta($invoice->ID, 'invoice_type', true);
-			if($invoice_type == 'Invoice'){update_post_meta($invoice->ID, 'invoice_type', '1');}
-			elseif($invoice_type == 'Quote'){update_post_meta($invoice->ID, 'invoice_type', '2');}
+	
+			if($invoice_type == 'Invoice'){update_post_meta($invoice->ID, 'invoice_type', __('Invoice','wp3i'));}
+			elseif($invoice_type == 'Quote'){update_post_meta($invoice->ID, 'invoice_type', __('Invoice','wp3i'));}
+			
+			if($invoice_type == '1'){update_post_meta($invoice->ID, 'invoice_type', __('Invoice','wp3i'));}
+			elseif($invoice_type == '2'){update_post_meta($invoice->ID, 'invoice_type', __('Invoice','wp3i'));}
 			
 			$detail_type = unserialize(get_post_meta($invoice->ID, 'detail_type', true));
 			foreach($detail_type as $key => $value)
 			{
-				if($value == 'Timed'){$detail_type[$key] = '1';}
-				elseif($value == 'Fixed'){$detail_type[$key] = '2';}
+				if($value == 'Timed'){$detail_type[$key] = __('Timed','wp3i');}
+				elseif($value == 'Fixed'){$detail_type[$key] = __('Fixed','wp3i');}
+				
+				if($value == '1'){$detail_type[$key] = __('Timed','wp3i');}
+				elseif($value == '2'){$detail_type[$key] = __('Fixed','wp3i');}
 			}
 			update_post_meta($invoice->ID, 'detail_type', serialize($detail_type));
 			

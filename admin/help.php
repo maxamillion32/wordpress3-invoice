@@ -291,11 +291,11 @@ class Help
 				</div>
                 
 				<div class="postbox" id="new">
-					<h3 class="hndle"><span><?php _e('New in ','wp3i'); ?>v2.0.2</span></h3>
+					<h3 class="hndle"><span><?php _e('New in ','wp3i'); ?>v<?php echo $this->version;?></span></h3>
 					<div class="inside">
 						<ul>
-							<li><?php _e('Added I18l support for languages (fingers crossed it all works)','wp3i'); ?></li>
-							<li><?php _e('General Housekeeping','wp3i'); ?></li>
+							<li><?php _e('Fixed Invoice type and detail type problem caused byI18l support','wp3i'); ?></li>
+                            <li><?php _e('Made change to invoice template if(get_invoice_type() ==). Please update your template to match','wp3i'); ?></li>
 						</ul>
 					</div>
 				</div>

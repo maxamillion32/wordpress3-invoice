@@ -43,6 +43,10 @@ See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
 
+= 2.0.3 =
+* Fixed Invoice type and detail type problem caused byI18l support
+* Made change to invoice template if(get_invoice_type() ==). Please update your template to match
+
 = 2.0.2 =
 * Added I18l support for languages (fingers crossed it all works)
 * General Housekeeping

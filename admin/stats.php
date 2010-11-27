@@ -108,8 +108,13 @@ class Stats
 		// add invoice data into array
 		foreach($invoicesReversed as $invoice)
 		{
-			
-			if(invoice_has_paid($invoice->ID)) // income
+			if(get_invoice_type($invoice->ID)==__('Quote','wp3i')) // is quote
+			{
+				$invoiceMonth = get_the_time('n',$invoice->ID);
+				$this->graphTitlesQuotes[$invoiceMonth-1] .= '#'.get_post_meta($invoice->ID, 'invoice_number', true) . '. ' . $invoice->post_title . '<br>';
+				$this->graphTotalsQuotes[$invoiceMonth-1] += wp3i_get_invoice_total($invoice->ID);
+			}
+			elseif(invoice_has_paid($invoice->ID)) // income
 			{
 				$invoiceMonth = explode('/',get_post_meta($invoice->ID,'invoice_paid',true));
 				$invoiceMonth = intval($invoiceMonth[1]);
@@ -124,12 +129,7 @@ class Stats
 				$this->graphTitlesOutstanding[$invoiceMonth-1] .= '#'.get_post_meta($invoice->ID, 'invoice_number', true) . '. ' . $invoice->post_title . '<br>';
 				$this->graphTotalsOutstanding[$invoiceMonth-1] += wp3i_get_invoice_total($invoice->ID);
 			}
-			elseif(get_invoice_type($invoice->ID)=='2') // is quote
-			{
-				$invoiceMonth = get_the_time('n',$invoice->ID);
-				$this->graphTitlesQuotes[$invoiceMonth-1] .= '#'.get_post_meta($invoice->ID, 'invoice_number', true) . '. ' . $invoice->post_title . '<br>';
-				$this->graphTotalsQuotes[$invoiceMonth-1] += wp3i_get_invoice_total($invoice->ID);
-			}
+			
 		}
 		
 		// if financial year is selected, arange the arrays so they start from Jun

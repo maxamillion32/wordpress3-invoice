@@ -97,7 +97,7 @@
         <div class="payment-details">
         	<fieldset class="last">
             	<legend>Payment Details</legend>
-                <?php if(get_invoice_type() == '1' ): ?>
+                <?php if(get_invoice_type() == __('Invoice','wp3i') ): ?>
                 	<p><strong>Bank: </strong>XXXXXXX</p>
                     <p><strong>Acc Name: </strong>XXXXXXX XXXXXXX</p>
                     <p><strong>Acc BSB: </strong>XXX-XXX</p>
@@ -109,7 +109,7 @@
             </fieldset>
         </div>
         
-        <?php if(get_invoice_type() == '1' ): ?>
+        <?php if(get_invoice_type() == __('Invoice','wp3i') ): ?>
             <p class="credits">
         		IMPORTANT: The above invoice must be payed by Electronic Funds Transfer. Payment is due within 30 days from the date in this invoice. 
                 Late payment is subject to a fee of 5% per month.
