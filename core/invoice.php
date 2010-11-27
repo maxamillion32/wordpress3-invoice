@@ -248,8 +248,8 @@ class Invoice
                 </div>
                 <div class="back">
                 	<select name="invoice-type" id="invoice-type">
-                    	<option value="Invoice" <?php if(get_invoice_type() == '1'){echo'selected="selected"';} ?>><?php _e('Invoice','wp3i'); ?></option>
-                        <option value="Quote" <?php if(get_invoice_type() == '2'){echo'selected="selected"';} ?>><?php _e('Quote','wp3i'); ?></option>
+                    	<option value="1" <?php if(get_invoice_type() == '1'){echo'selected="selected"';} ?>><?php _e('Invoice','wp3i'); ?></option>
+                        <option value="2" <?php if(get_invoice_type() == '2'){echo'selected="selected"';} ?>><?php _e('Quote','wp3i'); ?></option>
                     </select>
                     <a href="#" class="button wp3i-ok"><?php _e('OK','wp3i'); ?></a>
                     <a href="#" class="wp3i-cancel"><?php _e('Cancel','wp3i'); ?></a>
@@ -440,8 +440,8 @@ class Invoice
                         <ul>
                        	<li class="type">
                         	<select name="detail-type[]" id="detail-type">
-                            	<option value="Timed" <?php if(get_the_detail_type() == '1'){echo'selected="selected"';} ?>>Timed</option>
-                            	<option value="Fixed" <?php if(get_the_detail_type() == '2'){echo'selected="selected"';} ?>>Fixed</option>
+                            	<option value="1" <?php if(get_the_detail_type() == '1'){echo'selected="selected"';} ?>>Timed</option>
+                            	<option value="2" <?php if(get_the_detail_type() == '2'){echo'selected="selected"';} ?>>Fixed</option>
                             </select>
                         </li>
                         <li class="rate">
