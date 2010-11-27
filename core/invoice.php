@@ -68,7 +68,7 @@ class Invoice
 		}
 		else
 		{
-			$supports = array('title'/*, 'editor','custom-fields'*/);
+			$supports = array('title','custom-fields'/*, 'editor','custom-fields'*/);
 		}
 		
 		register_post_type('invoice', array(
@@ -248,8 +248,8 @@ class Invoice
                 </div>
                 <div class="back">
                 	<select name="invoice-type" id="invoice-type">
-                    	<option value="1" <?php if(get_invoice_type() == '1'){echo'selected="selected"';} ?>><?php _e('Invoice','wp3i'); ?></option>
-                        <option value="2" <?php if(get_invoice_type() == '2'){echo'selected="selected"';} ?>><?php _e('Quote','wp3i'); ?></option>
+                    	<option value="<?php _e('Invoice','wp3i'); ?>" <?php if(get_invoice_type() == __('Invoice','wp3i')){echo'selected="selected"';} ?>><?php _e('Invoice','wp3i'); ?></option>
+                        <option value="<?php _e('Quote','wp3i'); ?>" <?php if(get_invoice_type() == __('Quote','wp3i')){echo'selected="selected"';} ?>><?php _e('Quote','wp3i'); ?></option>
                     </select>
                     <a href="#" class="button wp3i-ok"><?php _e('OK','wp3i'); ?></a>
                     <a href="#" class="wp3i-cancel"><?php _e('Cancel','wp3i'); ?></a>
@@ -440,8 +440,8 @@ class Invoice
                         <ul>
                        	<li class="type">
                         	<select name="detail-type[]" id="detail-type">
-                            	<option value="1" <?php if(get_the_detail_type() == '1'){echo'selected="selected"';} ?>>Timed</option>
-                            	<option value="2" <?php if(get_the_detail_type() == '2'){echo'selected="selected"';} ?>>Fixed</option>
+                            	<option value="<?php _e('Timed','wp3i'); ?>" <?php if(get_the_detail_type() == __('Timed','wp3i')){echo'selected="selected"';} ?>>Timed</option>
+                            	<option value="<?php _e('Fixed','wp3i'); ?>" <?php if(get_the_detail_type() == __('Fixed','wp3i')){echo'selected="selected"';} ?>>Fixed</option>
                             </select>
                         </li>
                         <li class="rate">
@@ -674,7 +674,7 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
 			<div class="task_bar">
             	<div class="container">
                 <div class="status <?php if(get_invoice_status() == 'Paid'){_e('paid','wp3i'); } ?>">
-					<?php if(get_invoice_type() == '1'): ?>
+					<?php if(get_invoice_type() == __('Invoice','wp3i')): ?>
                         <?php _e('Invoice status','wp3i'); ?>: <?php invoice_status(); ?>
                     <?php else: ?>
                         <?php _e('Invoice status: Quote','wp3i'); ?>	
@@ -688,7 +688,7 @@ background:url("<?php echo $this->plugin_dir; ?>admin/images/big_button_bg.png")
                     		<a href="<?php echo add_query_arg('email', 'view', get_permalink($post->ID)); ?>"><?php _e('Email Version','wp3i'); ?></a>
                         <?php endif; ?>
                         <a href="javascript:print()"><?php _e('Print PDF','wp3i'); ?></a>
-                        <?php if(get_invoice_type() == 'Invoice'): ?>
+                        <?php if(get_invoice_type() == __('Invoice','wp3i')): ?>
                         	<?php $this->wp3i_payment_gateway_button(); ?>
                         <?php endif; ?>
                     <?php elseif($_GET['email'] == 'view'): //viewing email version?>

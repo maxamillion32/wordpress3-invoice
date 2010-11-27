@@ -115,14 +115,7 @@
 	
 	function the_detail_type()
 	{
-		if(get_the_detail_type() == '1')
-		{
-			_e('Timed','wp3i');	
-		}
-		else
-		{
-			_e('Fixed','wp3i');	
-		}
+		echo get_the_detail_type();
 	}
 	
 	
@@ -231,20 +224,13 @@
 	function invoice_type($postID = NULL)
 	{
 		if(!$postID){global $post; $postID = $post->ID;}
-		if(get_invoice_type($postID) == '1')
-		{
-			_e('Invoice','wp3i');	
-		}
-		else
-		{
-			_e('Quote','wp3i');	
-		}
+		echo get_invoice_type($postID);
 	}
 	
 	function get_invoice_type($postID = NULL)
 	{
 		if(!$postID){global $post; $postID = $post->ID;}
-		return get_post_meta($postID, 'invoice_type', true)? get_post_meta($postID, 'invoice_type', true): '1';
+		return get_post_meta($postID, 'invoice_type', true)? get_post_meta($postID, 'invoice_type', true): __('Invoice','wp3i');
 	}
 	
 	
