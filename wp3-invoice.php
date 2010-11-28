@@ -3,7 +3,7 @@
 Plugin Name: WordPress 3 Invoice
 Plugin URI: http://www.wordpress3invoice.com/
 Description: An online Invoice solution for web designers. Manage, print and email invoices through WordPress and customise with php + html + css invoice templates.
-Version: 2.0.3
+Version: 2.0.3.b
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -112,10 +112,10 @@ class Wp3i
 			$invoice_type = get_post_meta($invoice->ID, 'invoice_type', true);
 	
 			if($invoice_type == 'Invoice'){update_post_meta($invoice->ID, 'invoice_type', __('Invoice','wp3i'));}
-			elseif($invoice_type == 'Quote'){update_post_meta($invoice->ID, 'invoice_type', __('Invoice','wp3i'));}
+			elseif($invoice_type == 'Quote'){update_post_meta($invoice->ID, 'invoice_type', __('Quote','wp3i'));}
 			
 			if($invoice_type == '1'){update_post_meta($invoice->ID, 'invoice_type', __('Invoice','wp3i'));}
-			elseif($invoice_type == '2'){update_post_meta($invoice->ID, 'invoice_type', __('Invoice','wp3i'));}
+			elseif($invoice_type == '2'){update_post_meta($invoice->ID, 'invoice_type', __('Quote','wp3i'));}
 			
 			$detail_type = unserialize(get_post_meta($invoice->ID, 'detail_type', true));
 			foreach($detail_type as $key => $value)
