@@ -21,6 +21,11 @@ Wp3i is a WordPress plugin to manage invoices for freelance web designers / deve
 * Customise Currency, tax and more
 * Completely FREE! 
 * Supports I18n
+* Pay online though PayPal
+
+= Need help? =
+Support Forum
+http://support.plugins.elliotcondon.com/categories/wordpress-3-invoice
 
 = Please Vote and Enjoy =
 
@@ -42,6 +47,11 @@ http://www.wordpress3invoice.com/support/
 See demo videos here: http://www.wordpress3invoice.com/tour/
 
 == Changelog ==
+
+= 2.0.4 =
+* Fixed WP 3.1 Column Bug
+* Included PayPal payment gateway!
+* Opened Support forum http://support.plugins.elliotcondon.com/categories/wordpress-3-invoice
 
 = 2.0.3 =
 * Fixed Invoice type and detail type problem caused byI18l support

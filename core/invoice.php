@@ -27,10 +27,12 @@ class Invoice
 		add_action('init', array($this, 'action_init'));
 		
 		add_filter('manage_edit-invoice_columns', array($this, 'invoice_columns_setup'));
+		add_filter('manage_edit-invoice_sortable_columns', array($this, 'invoice_columns_setup_sortable'));
+		add_filter('request', array($this, 'invoice_column_orderby') );
 		add_action('manage_posts_custom_column', array($this, 'invoice_columns_data'));
 		
 		add_action('restrict_manage_posts', array($this, 'invoice_columns_filter'));
-		add_filter('pre_get_posts', array($this, 'invoice_number_order'));
+		//add_filter('pre_get_posts', array($this, 'invoice_number_order'));
 		
 		add_action('admin_menu', array($this, 'create_meta_boxes'));
 		add_action('save_post', array($this, 'save_invoice'));
@@ -62,14 +64,15 @@ class Invoice
 			'new_item_name' => __( 'New Invoice Name' ),
 		); 	
 		
+		$supports = array('title');
+		//$supports[] = 'custom-fields';
+		
 		if(wp3i_get_content_editor() == 'enabled')
 		{
-			$supports = array('title','editor'/*,'custom-fields'*/);
+			$supports[] = 'editor';
+			
 		}
-		else
-		{
-			$supports = array('title'/*,'custom-fields', 'editor','custom-fields'*/);
-		}
+
 		
 		register_post_type('invoice', array(
 			'labels' => $labels,
@@ -98,6 +101,15 @@ class Invoice
 	 **/
 	function invoice_columns_setup($columns)
 	{	
+		/*unset($columns['cb']);
+		$columns["invoice_no"] = "Invoice No.";
+		$columns["invoice_type"] = "Type";
+		$columns["invoice_type"] = "Type";
+		$columns["title"] = "Title";
+		$columns["amount"] = "Amount";
+		$columns["status"] = "Status";
+		$columns["client"] = "Client";
+		return $columns;*/
 		$columns = array(
 			"cb" => "<input type=\"checkbox\" />",
 			"invoice_no" => "Invoice No.",
@@ -109,11 +121,45 @@ class Invoice
 		);
 		return $columns;
 	}
+	
+	function invoice_columns_setup_sortable( $columns ) 
+	{
+		$columns["invoice_no"] = "invoice_no";
+		$columns["invoice_type"] = "invoice_type";
+		return $columns;
+	}
+
+	function invoice_column_orderby($vars) 
+	{
+		if(!isset($vars['orderby']))
+		{
+			return $vars;
+		}
+		
+		if ($vars['orderby'] == 'invoice_no')
+		{
+			$vars = array_merge( $vars, array(
+		      'meta_key' => 'invoice_number',
+		      'orderby' => 'meta_value_num'
+		    ) );
+		}
+		
+		if ($vars['orderby'] == 'invoice_type')
+		{
+			$vars = array_merge( $vars, array(
+		      'meta_key' => 'invoice_type',
+		      'orderby' => 'meta_value'
+		    ) );
+		}
+
+	 
+		return $vars;
+	}
+
 	function invoice_columns_data($column)
 	{
 		global $post, $Wp3i;
 		if ("ID" == $column) echo $post->ID;
-		elseif ("description" == $column) echo $post->post_content;
 		elseif ("invoice_no" == $column) echo get_post_meta($post->ID, 'invoice_number', true);
 		elseif ("invoice_type" == $column) invoice_type($post->ID);
 		elseif ("amount" == $column) echo wp3i_format_amount(wp3i_get_invoice_total($post->ID));
@@ -130,16 +176,22 @@ class Invoice
 	 **/
 	function invoice_number_order( $query ) 
 	{
-		if( !is_admin() )
-			return $query;
-		if($query->query['post_type'] == 'invoice') 
+		if(!is_admin())
 		{
-			$query->set( 'meta_key', 'invoice_number' );
-			$query->set( 'meta_value', false );
-			$query->set('orderby', 'invoice_number');
-			$query->set('order', 'DESC');
 			return $query;
 		}
+			
+		if($query->query['post_type'] == 'invoice') 
+		{
+			$query->set('meta_key', 'invoice_number' );
+			$query->set('meta_compare', '>=');
+			$query->set('meta_value', false );
+			$query->set('orderby', 'meta_value');
+			$query->set('order', 'ASC');
+			//$query->set('post_status', 'publish,pending,draft,future,private');
+
+		}
+		return $query;
 	}
 
 	
@@ -324,7 +376,7 @@ class Invoice
                     <input type="text" maxlength="4" size="3" value="2010" name="yyyy" id="yyyy" />
                 	<input type="hidden" name="invoice-paid" id="invoice-paid" value="<?php echo get_invoice_paid(); ?>" />
 
-                    <a href="#" class="button wp3i-ok"><?php _e('OK','wp3i'); ?>OK</a>
+                    <a href="#" class="button wp3i-ok"><?php _e('OK','wp3i'); ?></a>
                     <a href="#" class="wp3i-clear"><?php _e('Reset','wp3i'); ?></a>
                     <a href="#" class="wp3i-cancel"><?php _e('Cancel','wp3i'); ?></a>
                 </div>

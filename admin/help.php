@@ -33,7 +33,7 @@ class Help
         <div class="wp3i-heading">
             <div class="icon32" id="icon-wp3i"><br></div>
             <h2><?php _e('WordPress 3 Invoice Help','wp3i'); ?></h2>
-            <p><?php _e('Topics','wp3i'); ?>: <a href="#creating-an-invoice"><?php _e('Creating an Invoice','wp3i'); ?></a> &nbsp;<a href="#invoice-passwords"><?php _e('Invoice Passwords','wp3i'); ?></a> &nbsp;<a href="#managing-clients"><?php _e('Managing Clients','wp3i'); ?></a> &nbsp;<a href="#custom-templates"><?php _e('Custom Templates','wp3i'); ?></a> &nbsp;<a href="#template-api"><?php _e('Template API','wp3i'); ?></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?php _e('Help','wp3i'); ?>: <a href="http://www.wordpress3invoice.com/support/"><?php _e('Support','wp3i'); ?></a> &nbsp;<a href="http://www.wordpress3invoice.com/developers/"><?php _e('Developers','wp3i'); ?></a></p>
+            <p><?php _e('Topics','wp3i'); ?>: <a href="#creating-an-invoice"><?php _e('Creating an Invoice','wp3i'); ?></a> &nbsp;<a href="#invoice-passwords"><?php _e('Invoice Passwords','wp3i'); ?></a> &nbsp;<a href="#managing-clients"><?php _e('Managing Clients','wp3i'); ?></a> &nbsp;<a href="#custom-templates"><?php _e('Custom Templates','wp3i'); ?></a> &nbsp;<a href="#template-api"><?php _e('Template API','wp3i'); ?></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?php _e('Help','wp3i'); ?>: <a href="http://support.plugins.elliotcondon.com/categories/wordpress-3-invoice"><?php _e('Support Forum','wp3i'); ?></a></p>
         </div>
 		<div id="poststuff">
 			
@@ -294,8 +294,9 @@ class Help
 					<h3 class="hndle"><span><?php _e('New in ','wp3i'); ?>v<?php echo $this->version;?></span></h3>
 					<div class="inside">
 						<ul>
-							<li><?php _e('Fixed Invoice type and detail type problem caused byI18l support','wp3i'); ?></li>
-                            <li><?php _e('Made change to invoice template if(get_invoice_type() ==). Please update your template to match','wp3i'); ?></li>
+							<li>Fixed WP 3.1 Column Bug</li>
+							<li>Included PayPal payment gateway!</li>
+                            <li>Opened Support forum <a href="http://support.plugins.elliotcondon.com/categories/wordpress-3-invoice">here</a></li>
 						</ul>
 					</div>
 				</div>

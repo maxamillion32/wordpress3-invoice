@@ -101,8 +101,7 @@ class Options
                     </select>
                     <div class="none" style="float:left; margin-right:10px;">
                     	<span class="description show">
-                        <a href="http://www.wordpress3invoice.com/shop/"><?php _e('Purchase a payment gateway','wp3i'); ?></a> 
-						<?php _e('and upload it to the wordpress3-invoice/gateway/ folder','wp3i'); ?>
+						<?php _e('Wp3i now come standard with PayPal!','wp3i'); ?>
                         </span>
                     </div>
                     <div class="account" style="float:left; margin-right:10px;">
